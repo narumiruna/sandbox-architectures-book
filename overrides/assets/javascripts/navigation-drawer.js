@@ -17,8 +17,6 @@
   const closeLabels = {
     en: "Close navigation",
     "zh-TW": "關閉導覽列",
-    ja: "ナビゲーションを閉じる",
-    ko: "탐색 메뉴 닫기",
   };
   let drawer;
   let navigation;

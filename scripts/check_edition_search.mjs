@@ -86,9 +86,7 @@ async function search(request, input, index) {
 
 const cases = [
   ["en"],
-  ["ja", "運用", controlPlanes],
   ["zh-TW", "資源上限", "practice/operations/resource-limits/"],
-  ["ko", "격리", "sandbox-isolation-boundaries/"],
 ];
 const translations = cases.slice(1).map(([edition]) => edition);
 

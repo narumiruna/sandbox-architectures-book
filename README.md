@@ -1,6 +1,6 @@
 # Sandbox Architectures Book
 
-A book about software sandboxes: how they isolate programs and control what those programs can access. English is the source edition. The home page, introductory chapter, and glossary are also available in [正體中文](docs/zh-TW/index.md), [日本語](docs/ja/index.md), and [한국어](docs/ko/index.md).
+A book about software sandboxes: how they isolate programs and control what those programs can access. English is the source edition. The book is also available in [正體中文 (Traditional Chinese)](docs/zh-TW/index.md).
 
 Use the [book home page](docs/index.md) to choose a starting point. Begin with [Sandbox isolation boundaries](docs/sandbox-isolation-boundaries.md) if you are new to sandboxes, or follow the worked example in [From issue to patch](docs/practice/design/from-issue-to-patch.md) if you already know the basics.
 
@@ -56,7 +56,7 @@ After a strict build, run `node --test scripts/check_edition_search.mjs` to veri
 
 To add or maintain a translation:
 
-1. For each new English page under `docs/`, add a translation at the same relative path for every edition listed in `[project.extra.editions]` in `zensical.toml`. For example, `docs/glossary/policy.md` needs a copy under each of `docs/zh-TW/`, `docs/ja/`, and `docs/ko/`.
+1. For each new English page under `docs/`, except shared source records, add a Traditional Chinese translation at the same relative path under `docs/zh-TW/`. For example, `docs/glossary/policy.md` has a translation at `docs/zh-TW/glossary/policy.md`.
 2. Preserve English technical terms, product names, abbreviations, glossary term headings, code, and citations. For cross-page references, keep the source heading IDs with explicit anchors such as `{#follow-a-request-to-open-a-file}`.
 3. Link to chapters and glossary entries in the same edition.
 4. Register the English page and its translations in `zensical.toml`. Run the strict build and check that the language links open the same page in each edition.
