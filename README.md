@@ -48,7 +48,11 @@ Theme CSS and JavaScript live in [`overrides/assets/`](overrides/assets/). Edit 
 
 ### Translation editions
 
-Use the **Language** button next to Search to open the same page in another edition. Unavailable translations are listed without links; **English (original)** opens the source. If the button is unavailable, use the language links above the article instead. Site controls and the shared technical figures remain in English.
+Use the **Language** button next to Search to open the same page in another edition. If the same section exists in the target edition, the switch keeps your place. **English (original)** opens the source. If the button is unavailable, use the language links above the article instead.
+
+The sidebar, previous and next links, and search show the current edition. Shared technical figures and some controls, including **Language** and **Daytime paper**, remain in English.
+
+After a strict build, run `node --test scripts/check_edition_search.mjs` to verify that search finds terms in each language and returns results only from the current edition. The search adapter uses the message protocol of the Zensical UI worker pinned in `uv.lock`.
 
 To add or maintain a translation:
 

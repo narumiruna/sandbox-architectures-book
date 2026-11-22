@@ -186,6 +186,7 @@ nav = [
 extra_css = [
   "assets/stylesheets/parchment.css",
   "assets/stylesheets/language-switcher.css",
+  "assets/stylesheets/navigation-drawer.css",
 ]
 
 [project.extra]

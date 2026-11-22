@@ -1,0 +1,7 @@
+{% from "partials/edition.html" import edition_for with context %}
+{% set edition = edition_for(page.url | d(none)) %}
+{% import "partials/languages/" ~ edition ~ ".html" as lang %}
+{% import "partials/languages/en.html" as fallback %}
+{% macro t(key) -%}
+  {{- edition if key == "language" else lang.t(key) or fallback.t(key) or key -}}
+{%- endmacro %}

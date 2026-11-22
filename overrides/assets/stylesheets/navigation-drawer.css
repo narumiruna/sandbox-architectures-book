@@ -1,0 +1,28 @@
+.md-header__button.navigation-drawer__trigger:focus-visible,
+.navigation-drawer__close:focus-visible,
+#book-navigation[aria-modal="true"] :is(a, label[role="button"]):focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -2px;
+}
+
+#book-navigation[aria-modal="true"] .md-nav--primary {
+  position: relative;
+}
+
+#book-navigation[aria-modal="true"] .md-nav__title[for="__drawer"] {
+  padding-inline-end: 3rem;
+}
+
+.navigation-drawer__close:not([hidden]) {
+  position: absolute;
+  inset-block-start: .4rem;
+  inset-inline-end: .4rem;
+  display: grid;
+  place-items: center;
+  min-inline-size: 44px;
+  min-block-size: 44px;
+  border-radius: .25rem;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
