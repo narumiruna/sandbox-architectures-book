@@ -17,9 +17,12 @@ edition: "[Book edition]"
 
 # {{ Source title }}
 
+<!-- Omit the original-source link if the record has no URL. -->
+[Original source]([Canonical source URL])
+
 ## Content
 
-<!-- For a web page, paste the page's main content converted to Markdown. Preserve headings, links, tables, and code as applicable; omit site navigation and make relative links resolve to the original site. -->
+<!-- For a web page, summarize the content relevant to the citation in your own words. If useful, name the relevant section so readers can find it at the original URL. -->
 <!-- For a paper or book, record the relevant section or page numbers and any excerpt needed for the citation; do not copy the full work. -->
 
 {{ Source content }}
