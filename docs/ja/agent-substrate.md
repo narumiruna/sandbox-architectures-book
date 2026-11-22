@@ -1,10 +1,10 @@
 # Agent Substrate
 
-**Agent Substrate は、長期間状態を保持する多数の workload を、より少ない Kubernetes worker pods で動かす仕組みです。** 処理が断続的に発生する場合に適しています。workload は待機中に計算資源を手放し、次のリクエストが来たら保存済みの状態から再開できます。
+**[Agent Substrate](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/concepts/architecture.md) は、長期間状態を保持する多数の [workload](glossary/workload.md) を、より少ない [Kubernetes](https://kubernetes.io/docs/concepts/overview/) worker [pods](glossary/pod.md) で動かす仕組みです。** 処理が断続的に発生する場合に適しています。workload は待機中に計算資源を手放し、次のリクエストが来たら保存済みの状態から再開できます。
 
 ## Agent Substrate とは？ {#what-is-agent-substrate}
 
-[Agent Substrate](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/concepts/architecture.md) は、[Kubernetes](https://kubernetes.io/docs/concepts/overview/) 上で動く [sandbox](glossary/sandbox.md) プラットフォームです。agent framework や単体の sandbox runtime ではありません。*Actor* は、coding [agent](glossary/agent.md) や HTTP サービスなど、名前を持つ [workload](glossary/workload.md) のインスタンスです。Kubernetes は worker [pods](glossary/pod.md) をあらかじめ用意し、Substrate は実行する Actor ごとに worker の容量と専用の sandbox を割り当てます。同じ worker で複数の Actor が同時に動いても、sandbox は共有しません。
+Agent Substrate は、Kubernetes 上で動く [sandbox](glossary/sandbox.md) プラットフォームです。agent framework や単体の sandbox runtime ではありません。*Actor* は、coding [agent](glossary/agent.md) や HTTP サービスなど、名前を持つ workload のインスタンスです。Kubernetes は worker pods をあらかじめ用意し、Substrate は実行する Actor ごとに worker の容量と専用の sandbox を割り当てます。同じ worker で複数の Actor が同時に動いても、sandbox は共有しません。
 
 隔離方式は worker pool が選びます。**[gVisor](https://gvisor.dev/docs/architecture_guide/intro/)**、または [Cloud Hypervisor](https://github.com/cloud-hypervisor/cloud-hypervisor) 上の **[Kata Containers](https://github.com/kata-containers/kata-containers/blob/main/docs/design/architecture/README.md) [microVM](glossary/microvm.md)** です。アプリケーションが Actor を休止すると、Substrate は [snapshot](glossary/snapshot.md) を保存して Actor の枠を解放します。後からリクエストが来ると、同じ Actor を、場合によっては別の互換 worker 上で再開できます。どこまで再開できるかは、snapshot に保存した状態によります。このページは revision `f5428049` を対象とします。
 

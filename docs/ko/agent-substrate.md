@@ -1,10 +1,10 @@
 # Agent Substrate
 
-**Agent Substrate는 오랫동안 상태를 유지해야 하는 여러 workload를 더 적은 수의 Kubernetes worker pod에서 실행합니다.** 작업 요청이 간헐적으로 들어올 때 특히 유용합니다. workload는 대기 중에 컴퓨팅 자원을 반환하고 다음 요청이 오면 저장된 상태에서 이어서 실행할 수 있습니다.
+**[Agent Substrate](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/concepts/architecture.md)는 오랫동안 상태를 유지해야 하는 여러 [workload](glossary/workload.md)를 더 적은 수의 [Kubernetes](https://kubernetes.io/docs/concepts/overview/) worker [pod](glossary/pod.md)에서 실행합니다.** 작업 요청이 간헐적으로 들어올 때 특히 유용합니다. workload는 대기 중에 컴퓨팅 자원을 반환하고 다음 요청이 오면 저장된 상태에서 이어서 실행할 수 있습니다.
 
 ## Agent Substrate란? {#what-is-agent-substrate}
 
-[Agent Substrate](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/concepts/architecture.md)는 [Kubernetes](https://kubernetes.io/docs/concepts/overview/)에서 실행되는 [sandbox](glossary/sandbox.md) 플랫폼입니다. Agent framework나 단일 sandbox runtime은 아닙니다. *Actor*는 coding [agent](glossary/agent.md)나 HTTP 서비스처럼 이름을 가진 [workload](glossary/workload.md) 인스턴스입니다. Kubernetes는 worker [pod](glossary/pod.md)를 미리 준비하고, Substrate는 실행할 Actor마다 worker 자원과 전용 sandbox를 할당합니다. 한 worker가 여러 Actor를 동시에 실행할 수 있지만 Actor끼리 sandbox를 공유하지는 않습니다.
+Agent Substrate는 Kubernetes에서 실행되는 [sandbox](glossary/sandbox.md) 플랫폼입니다. Agent framework나 단일 sandbox runtime은 아닙니다. *Actor*는 coding [agent](glossary/agent.md)나 HTTP 서비스처럼 이름을 가진 workload 인스턴스입니다. Kubernetes는 worker pod를 미리 준비하고, Substrate는 실행할 Actor마다 worker 자원과 전용 sandbox를 할당합니다. 한 worker가 여러 Actor를 동시에 실행할 수 있지만 Actor끼리 sandbox를 공유하지는 않습니다.
 
 격리 방식은 worker pool에서 선택합니다. **[gVisor](https://gvisor.dev/docs/architecture_guide/intro/)** 또는 [Cloud Hypervisor](https://github.com/cloud-hypervisor/cloud-hypervisor) 기반 **[Kata Containers](https://github.com/kata-containers/kata-containers/blob/main/docs/design/architecture/README.md) [microVM](glossary/microvm.md)** 중 하나입니다. 애플리케이션이 Actor를 일시 중지하면 Substrate는 [snapshot](glossary/snapshot.md)을 저장하고 Actor가 차지하던 자원을 반환합니다. 다음 요청이 오면 같은 Actor를 다시 시작할 수 있으며, 호환되는 다른 worker에서도 가능합니다. 어떤 상태가 복원되는지는 snapshot에 무엇을 저장했는지에 따라 다릅니다. 이 페이지는 revision `f5428049`를 기준으로 합니다.
 

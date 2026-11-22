@@ -1,10 +1,10 @@
 # Agent Substrate
 
-**Agent Substrate 讓多個需要長期保留狀態的 workload，共用較少的 Kubernetes worker pods。** 它最適合工作一陣一陣到來的情況：閒置時可以讓出運算容量，下次收到請求再從已保存的狀態接續。
+**[Agent Substrate](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/concepts/architecture.md) 讓多個需要長期保留狀態的 [workload](glossary/workload.md)，共用較少的 [Kubernetes](https://kubernetes.io/docs/concepts/overview/) worker [pods](glossary/pod.md)。** 它最適合工作一陣一陣到來的情況：閒置時可以讓出運算容量，下次收到請求再從已保存的狀態接續。
 
 ## Agent Substrate 是什麼？ {#what-is-agent-substrate}
 
-[Agent Substrate](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/concepts/architecture.md) 是 [Kubernetes](https://kubernetes.io/docs/concepts/overview/) 上的 [sandbox](glossary/sandbox.md) 平台；它不是 agent framework，也不是單一 sandbox runtime。*Actor* 是一個有名稱的 [workload](glossary/workload.md) 實例，例如 coding [agent](glossary/agent.md) 或 HTTP 服務。Kubernetes 預先準備 worker [pods](glossary/pod.md)，Substrate 則為每個要執行的 Actor 分配 worker 容量及獨立的 sandbox。同一個 worker 可以同時執行多個 Actor，但它們不共用 sandbox。
+Agent Substrate 是 Kubernetes 上的 [sandbox](glossary/sandbox.md) 平台；它不是 agent framework，也不是單一 sandbox runtime。*Actor* 是一個有名稱的 workload 實例，例如 coding [agent](glossary/agent.md) 或 HTTP 服務。Kubernetes 預先準備 worker pods，Substrate 則為每個要執行的 Actor 分配 worker 容量及獨立的 sandbox。同一個 worker 可以同時執行多個 Actor，但它們不共用 sandbox。
 
 Worker pool 決定隔離方式：**[gVisor](https://gvisor.dev/docs/architecture_guide/intro/)**，或由 [Cloud Hypervisor](https://github.com/cloud-hypervisor/cloud-hypervisor) 提供虛擬機的 **[Kata Containers](https://github.com/kata-containers/kata-containers/blob/main/docs/design/architecture/README.md) [microVM](glossary/microvm.md)**。應用程式讓 Actor 休眠時，Substrate 會擷取 [snapshot](glossary/snapshot.md) 並釋放 Actor 占用的容量。下次收到請求時，Substrate 可以讓同一個 Actor 在相容的 worker 上恢復，不必回到原本的 worker。能接續多少狀態，取決於 snapshot 保存了什麼。本文以版本 `f5428049` 為準。
 

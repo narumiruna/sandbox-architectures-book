@@ -1,10 +1,10 @@
 # Agent Substrate
 
-**Agent Substrate runs many long-lived workloads on fewer Kubernetes worker pods.** It is most useful when work arrives in bursts: a workload can give up its compute capacity while idle and resume from saved state when the next request arrives.
+**[Agent Substrate](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/concepts/architecture.md) runs many long-lived [workloads](glossary/workload.md) on fewer [Kubernetes](https://kubernetes.io/docs/concepts/overview/) worker [pods](glossary/pod.md).** It is most useful when work arrives in bursts: a workload can give up its compute capacity while idle and resume from saved state when the next request arrives.
 
 ## What is Agent Substrate? {#what-is-agent-substrate}
 
-[Agent Substrate](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/concepts/architecture.md) is a [sandbox](glossary/sandbox.md) platform on [Kubernetes](https://kubernetes.io/docs/concepts/overview/), not an agent framework or a sandbox runtime by itself. An *Actor* is one named instance of a [workload](glossary/workload.md), such as a coding [agent](glossary/agent.md) or an HTTP service. Kubernetes keeps worker [pods](glossary/pod.md) ready; Substrate assigns each running Actor capacity on a worker and gives it its own sandbox. One worker can run several Actors at once without putting them in the same sandbox.
+Agent Substrate is a [sandbox](glossary/sandbox.md) platform on Kubernetes, not an agent framework or a sandbox runtime by itself. An *Actor* is one named instance of a workload, such as a coding [agent](glossary/agent.md) or an HTTP service. Kubernetes keeps worker pods ready; Substrate assigns each running Actor capacity on a worker and gives it its own sandbox. One worker can run several Actors at once without putting them in the same sandbox.
 
 The worker pool selects **[gVisor](https://gvisor.dev/docs/architecture_guide/intro/)** or a **[Kata Containers](https://github.com/kata-containers/kata-containers/blob/main/docs/design/architecture/README.md) [microVM](glossary/microvm.md)** backed by [Cloud Hypervisor](https://github.com/cloud-hypervisor/cloud-hypervisor). When the application suspends an Actor, Substrate captures a [snapshot](glossary/snapshot.md) and frees the Actor's slot. A later request can bring back that same Actor, possibly on another compatible worker. What comes back depends on what the snapshot captured. This page describes revision `f5428049`.
 
