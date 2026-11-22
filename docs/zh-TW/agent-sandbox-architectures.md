@@ -118,6 +118,10 @@ flowchart TB
 - [Google gVisor](https://gvisor.dev/docs/architecture_guide/intro/) 提供 OCI runtime `runsc`。其中的 **Sentry** 是 [user-space kernel](glossary/user-space-kernel.md)，負責處理 Linux [system calls](glossary/system-call.md)，這些呼叫來自 [workload](glossary/workload.md)。即使在 gVisor 的 KVM 平台上，Linux 系統介面仍由 Sentry 提供；Sentry 本身不是 Kata 那樣的獨立 Linux guest kernel。用實際的 workload 測試相容性與效能，不要假設每個 Linux 介面的行為都完全相同。
 - [Anthropic Sandbox Runtime](https://github.com/anthropic-experimental/sandbox-runtime) 不需要 guest VM 就能限制原生 process。它在 Linux 上使用 [Bubblewrap](https://github.com/containers/bubblewrap)，在 macOS 上使用 Seatbelt，並透過 proxy 限制網路。這是 [operating-system process sandbox](glossary/operating-system-process-sandbox.md)：與 gVisor 不同，workload 仍直接使用 host 作業系統的 kernel，並受該作業系統的限制。
 
+## Agent Substrate：在 Kubernetes 上為每個 Actor 建立獨立 sandbox {#agent-substrate}
+
+[Agent Substrate](agent-substrate.md) 用一組預先啟動的 Kubernetes worker pods 執行 Actor。一個 pod 可以同時承載多個 Actor，每個 Actor 都有自己的 gVisor sandbox，或由 Cloud Hypervisor 提供虛擬機的 Kata Containers microVM。Substrate 把休眠的 Actor 存成 [snapshot](glossary/snapshot.md)，收到請求時再還原，不需要讓每個 Actor 都占用一個持續運作的 pod。
+
 ## Code Mode：隔離 tool script，而不是 shell {#code-mode-isolating-tool-scripts-instead-of-shells}
 
 在 [Code Mode](glossary/code-mode.md) 中，模型會撰寫程式來呼叫 [tools](glossary/tool.md)，並整合它們的結果。外層應用程式決定哪些 tool 可用，以及各個 tool 可以做什麼。執行這個程式的 sandbox 不會自動限制 [host tool handlers](glossary/host-function.md) 或 agent 的其他部分。
@@ -163,7 +167,7 @@ Host tool handler 會查驗呼叫者是否有權讀取 issue。Sandbox 限制 sc
 
 ## 2026 年有哪些變化 {#what-is-changing-in-2026}
 
-1. **環境佈建正從開機轉向還原。** [E2B Runtime](https://github.com/e2b-dev/infra) 從已開機的 Firecracker 範本還原，並支援暫停與恢復 sandbox。[Vercel Sandbox](https://vercel.com/docs/sandbox) 也使用 Firecracker，並提供 [snapshots](glossary/snapshot.md)。[Amazon Bedrock AgentCore Runtime V2](https://aws.amazon.com/about-aws/whats-new/2026/11/new-agentcore-runtime-default/) 於 2026 年 11 月 12 日成為新 runtime 的預設版本，並從預先準備的 snapshot 還原 microVM session。區分 [cold boot](glossary/cold-boot.md) 和從 snapshot 還原。分別量測各種啟動方式要等多久才能執行第一個可用的命令。確認 snapshot 包含磁碟狀態、記憶體，還是兩者都有，以及其中是否可能含有憑證。
+1. **環境佈建正從開機轉向還原。** [E2B Runtime](https://github.com/e2b-dev/infra) 從已開機的 Firecracker 範本還原，並支援暫停與恢復 sandbox。[Vercel Sandbox](https://vercel.com/docs/sandbox) 也使用 Firecracker，並提供 snapshots。[Amazon Bedrock AgentCore Runtime V2](https://aws.amazon.com/about-aws/whats-new/2026/11/new-agentcore-runtime-default/) 於 2026 年 11 月 12 日成為新 runtime 的預設版本，並從預先準備的 snapshot 還原 microVM session。區分 [cold boot](glossary/cold-boot.md) 和從 snapshot 還原。分別量測各種啟動方式要等多久才能執行第一個可用的命令。確認 snapshot 包含磁碟狀態、記憶體，還是兩者都有，以及其中是否可能含有憑證。
 2. **Control plane 正逐漸與執行後端分開。** [Kubernetes Agent Sandbox](https://agent-sandbox.sigs.k8s.io/docs/) 增加了宣告式生命週期 API、範本、sandbox 領用申請和 [warm pools](glossary/warm-pool.md)。它可以使用 gVisor 或 Kata，但邊界由所選的 runtime 決定。[NVIDIA OpenShell](https://github.com/NVIDIA/OpenShell) 則示範了 policy 層：由 gateway 管理 sandbox 存取權，且只能向核准的對外目的地提供憑證。比較這些功能時，要與執行邊界分開評估。
 3. **硬體輔助隔離不限於 host KVM。** 2026 年 11 月 9 日，[AWS 宣布推出適用於 EKS、ECS 和 EC2 的 Nitro Sandboxes](https://aws.amazon.com/about-aws/whats-new/2026/11/nitro-sandboxes-eks-ecs-ec2/)。設定為使用 Nitro Sandboxes 的 EKS pod 或 ECS task 各自取得一台由 Nitro 管理的 VM。在 EC2 上，Firecracker 無須使用上層執行個體中的 KVM 就能管理 guest。
 4. **同一個 agent 可以使用不只一個邊界。** Cloudflare 的文件介紹了兩種做法：只需呼叫幾個方法的程式碼可在 isolate 中執行，需要完整環境的程式碼則在 Linux microVM 中執行。本機或自行架設的技術堆疊也可採用相同的分工：在 Wasm 或 restricted interpreter 中執行 tool script，只有需要時才將建置或測試交給 Linux sandbox。

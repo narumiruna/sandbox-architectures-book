@@ -118,6 +118,10 @@ Docker와 Kata 예시에서는 A와 B가 guest kernel을 공유합니다. Apple 
 - [Google gVisor](https://gvisor.dev/docs/architecture_guide/intro/)는 OCI runtime인 `runsc`를 제공합니다. [user-space kernel](glossary/user-space-kernel.md)인 **Sentry**가 Linux [system call](glossary/system-call.md)을 [workload](glossary/workload.md)에서 받아 처리합니다. gVisor의 KVM 플랫폼에서도 Linux 시스템 인터페이스를 제공하는 것은 Sentry입니다. Kata처럼 별도의 Linux guest kernel을 쓰는 것은 아닙니다. 모든 Linux 인터페이스가 똑같이 동작한다고 가정하지 말고, 실제 workload로 호환성과 성능을 시험합니다.
 - [Anthropic Sandbox Runtime](https://github.com/anthropic-experimental/sandbox-runtime)은 guest VM 없이 native process를 제한할 수 있습니다. Linux에서는 [Bubblewrap](https://github.com/containers/bubblewrap), macOS에서는 Seatbelt를 사용하며, 프록시를 통해 네트워크를 제한합니다. 이는 [operating-system process sandbox](glossary/operating-system-process-sandbox.md)입니다. gVisor와 달리 workload가 여전히 host OS kernel을 직접 사용하며 해당 OS의 제한을 받습니다.
 
+## Agent Substrate: Kubernetes에서 Actor마다 별도의 sandbox 사용 {#agent-substrate}
+
+[Agent Substrate](agent-substrate.md)는 미리 준비한 Kubernetes worker pod의 pool에서 Actor를 실행합니다. 한 pod가 여러 Actor를 동시에 실행하더라도 각 Actor는 전용 gVisor sandbox 또는 Cloud Hypervisor 기반 Kata Containers microVM을 사용합니다. 일시 중지한 Actor를 [snapshot](glossary/snapshot.md)으로 저장하고 요청이 오면 복원하므로 Actor마다 pod를 계속 실행할 필요가 없습니다.
+
 ## Code Mode: 셸 대신 tool 스크립트 격리하기 {#code-mode-isolating-tool-scripts-instead-of-shells}
 
 [Code Mode](glossary/code-mode.md)에서 모델은 [tool](glossary/tool.md)을 호출하고 그 결과를 조합하는 프로그램을 작성합니다. 외부 애플리케이션이 어떤 tool을 사용할 수 있고 그 tool이 무엇을 할 수 있는지 결정합니다. 이 프로그램을 실행하는 sandbox가 [host tool handler](glossary/host-function.md)나 agent의 나머지 부분까지 자동으로 제한하지는 않습니다.
@@ -163,7 +167,7 @@ Host tool handler가 호출자에게 이슈를 읽을 권한이 있는지 확인
 
 ## 2026년에 달라지는 점 {#what-is-changing-in-2026}
 
-1. **프로비저닝 방식이 부팅에서 복원으로 바뀌고 있습니다.** [E2B Runtime](https://github.com/e2b-dev/infra)은 미리 부팅한 Firecracker 템플릿을 복원하며 sandbox의 일시 중지와 재개를 지원합니다. [Vercel Sandbox](https://vercel.com/docs/sandbox)도 Firecracker를 사용하며 [snapshot](glossary/snapshot.md)을 제공합니다. [Amazon Bedrock AgentCore Runtime V2](https://aws.amazon.com/about-aws/whats-new/2026/11/new-agentcore-runtime-default/)는 2026년 11월 12일부터 새 runtime의 기본값이 되었으며, 준비된 snapshot에서 microVM session을 복원합니다. [cold boot](glossary/cold-boot.md)와 snapshot 복원을 구분합니다. 각 시작 경로에서 처음으로 명령을 사용할 수 있을 때까지 걸리는 시간을 측정합니다. Snapshot에 디스크 상태, 메모리, 또는 둘 다 포함되는지, credential이 들어갈 수 있는지 확인합니다.
+1. **프로비저닝 방식이 부팅에서 복원으로 바뀌고 있습니다.** [E2B Runtime](https://github.com/e2b-dev/infra)은 미리 부팅한 Firecracker 템플릿을 복원하며 sandbox의 일시 중지와 재개를 지원합니다. [Vercel Sandbox](https://vercel.com/docs/sandbox)도 Firecracker를 사용하며 snapshot을 제공합니다. [Amazon Bedrock AgentCore Runtime V2](https://aws.amazon.com/about-aws/whats-new/2026/11/new-agentcore-runtime-default/)는 2026년 11월 12일부터 새 runtime의 기본값이 되었으며, 준비된 snapshot에서 microVM session을 복원합니다. [cold boot](glossary/cold-boot.md)와 snapshot 복원을 구분합니다. 각 시작 경로에서 처음으로 명령을 사용할 수 있을 때까지 걸리는 시간을 측정합니다. Snapshot에 디스크 상태, 메모리, 또는 둘 다 포함되는지, credential이 들어갈 수 있는지 확인합니다.
 2. **Control plane이 실행 백엔드에서 분리되고 있습니다.** [Kubernetes Agent Sandbox](https://agent-sandbox.sigs.k8s.io/docs/)는 선언형 수명 주기 API, 템플릿, claim, [warm pool](glossary/warm-pool.md)을 추가합니다. gVisor나 Kata를 사용할 수 있지만 경계는 선택한 runtime이 결정합니다. [NVIDIA OpenShell](https://github.com/NVIDIA/OpenShell)은 policy 계층의 예입니다. 게이트웨이가 sandbox 접근을 관리하고 승인된 아웃바운드 목적지에만 credential을 제공할 수 있습니다. 이 기능은 실행 경계와 별도로 비교합니다.
 3. **하드웨어 지원 격리가 host KVM에 한정되지는 않습니다.** 2026년 11월 9일, [AWS는 EKS, ECS, EC2용 Nitro Sandboxes를 발표했습니다](https://aws.amazon.com/about-aws/whats-new/2026/11/nitro-sandboxes-eks-ecs-ec2/). Nitro Sandboxes를 사용하도록 설정한 EKS pod 또는 ECS 작업은 각각 Nitro가 관리하는 자체 VM을 받습니다. EC2에서는 Firecracker가 상위 인스턴스의 KVM을 사용하지 않고 guest를 관리할 수 있습니다.
 4. **Agent 하나가 여러 경계를 사용할 수 있습니다.** Cloudflare 문서는 몇 가지 메서드만 호출하는 코드에는 isolate를, 완전한 환경이 필요한 코드에는 Linux microVM을 사용하는 방식을 설명합니다. 로컬이나 자체 호스팅 스택에서도 같은 방식으로 나눌 수 있습니다. Tool 스크립트는 Wasm이나 restricted interpreter에서 실행하고, 빌드나 테스트는 필요할 때만 Linux sandbox로 보냅니다.
