@@ -1,0 +1,17 @@
+[project]
+name = "sandbox-architectures-book"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "narumi", email = "toucans-cutouts0f@icloud.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "zensical>=0.1.3",
+]
+
+[dependency-groups]
+dev = [
+    "zizmor>=1.32.0",
+]
