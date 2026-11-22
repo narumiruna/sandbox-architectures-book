@@ -25,7 +25,7 @@ flowchart TB
 
 ## 追蹤開啟檔案的請求 {#follow-a-request-to-open-a-file}
 
-假設 agent 為虛構專案 [Lamp（英文）](../practice/design/from-issue-to-patch.md) 啟動測試執行程式。這個執行中的程式實例稱為 [process](glossary/process.md)。[Kernel](glossary/kernel.md) 是作業系統中管理記憶體、檔案和裝置等資源的部分。[System call](glossary/system-call.md) 是 process 向 kernel 發出的請求，用來執行自己無法完成的操作，例如開啟檔案。
+假設 agent 為虛構專案 [Lamp](practice/design/from-issue-to-patch.md) 啟動測試執行程式。這個執行中的程式實例稱為 [process](glossary/process.md)。[Kernel](glossary/kernel.md) 是作業系統中管理記憶體、檔案和裝置等資源的部分。[System call](glossary/system-call.md) 是 process 向 kernel 發出的請求，用來執行自己無法完成的操作，例如開啟檔案。
 
 1. 測試執行程式要求開啟原始碼檔案 `total.c`。函式庫可以代它發出 system call。
 2. 實作作業系統介面的元件會在 process 可見的檔案中查找該路徑，並檢查它是否可以開啟該檔案。
@@ -60,19 +60,19 @@ flowchart TB
 
 [Virtual machine (VM)](glossary/virtual-machine.md) 提供獨立的電腦環境，有自己的作業系統 kernel，稱為 [guest kernel](glossary/guest.md)。它負責處理測試執行程式的檔案請求。同一台 VM 裡的程式共用這個 kernel。[MicroVM](glossary/microvm.md) 著重降低額外開銷，通常會提供較少的裝置，但仍有自己的 guest kernel。無論哪一種 VM，只要 host 開放目錄，guest 就能存取。
 
-**適用情況：** Agent 需要完整且有獨立 kernel 的 Linux [workspace](glossary/workspace.md)。確認 [isolation unit](glossary/isolation-unit.md)，也就是哪些 workload 共用同一個邊界實例。[閱讀硬體輔助虛擬化的 VM 說明（英文）](../isolation/native-programs/hardware-backed-virtual-machines.md)。
+**適用情況：** Agent 需要完整且有獨立 kernel 的 Linux [workspace](glossary/workspace.md)。確認 [isolation unit](glossary/isolation-unit.md)，也就是哪些 workload 共用同一個邊界實例。[閱讀硬體輔助虛擬化的 VM 說明](isolation/native-programs/hardware-backed-virtual-machines.md)。
 
 ### 2. User-space kernel {#2-user-space-kernels}
 
 [User-space kernel](glossary/user-space-kernel.md)（例如 [gVisor](https://gvisor.dev/docs/architecture_guide/intro/) 使用的 kernel）透過自己實作的 Linux 介面處理測試執行程式的請求。它可以自行向 host kernel 發出請求，底層資源仍由 host kernel 提供。這不會阻止程式存取 host 選擇開放的專案資料。
 
-**適用情況：** 你想執行 Linux [container](glossary/container.md)，同時限制它們直接接觸 host kernel 的範圍。請用實際的 [workload](glossary/workload.md)（也就是你要執行的程式碼）測試，因為相容性和效能可能與直接在 Linux 上執行不同。[閱讀 user-space kernel 說明（英文）](../isolation/native-programs/user-space-kernels.md)。
+**適用情況：** 你想執行 Linux [container](glossary/container.md)，同時限制它們直接接觸 host kernel 的範圍。請用實際的 [workload](glossary/workload.md)（也就是你要執行的程式碼）測試，因為相容性和效能可能與直接在 Linux 上執行不同。[閱讀 user-space kernel 說明](isolation/native-programs/user-space-kernels.md)。
 
 ### 3. 作業系統層級的 process sandbox {#3-operating-system-process-sandboxes}
 
 在 [operating-system process sandbox](glossary/operating-system-process-sandbox.md) 中，測試執行程式仍和機器上的其他程式共用 host kernel。Kernel 可以限制 process 看得到哪些檔案，或篩選特定的 system call。隱藏檔案並不會移除程式先前已取得的檔案內容副本。
 
-**適用情況：** 在本機執行的 agent 需要使用開發人員平常用的指令，但不應繼承對 host 不受限制的存取權。確認這些指令啟動的 process 也同樣受到限制。[閱讀作業系統層級的 process sandbox 說明（英文）](../isolation/native-programs/operating-system-process-sandboxes.md)。
+**適用情況：** 在本機執行的 agent 需要使用開發人員平常用的指令，但不應繼承對 host 不受限制的存取權。確認這些指令啟動的 process 也同樣受到限制。[閱讀作業系統層級的 process sandbox 說明](isolation/native-programs/operating-system-process-sandboxes.md)。
 
 ### 比較 VM、container 和 microVM {#compare-a-vm-a-container-and-a-microvm}
 
@@ -136,7 +136,7 @@ flowchart TB
 | 額外記憶體用量 | Guest 作業系統和應用程式都需要記憶體，host 上的 VMM 也需要。 | 不必為每個 container 配置獨立的 guest 或 VMM。每個應用程式仍需要記憶體。 | Guest 和 VMM 同樣需要記憶體。較精簡的虛擬裝置配置和 guest 可減少額外用量。 |
 | 適用情況 | 工作需要獨立的 kernel，還需要候選 microVM 不支援的 guest 作業系統或裝置。 | 工作需要已打包的 Linux 工具鏈，且可以接受共用 host kernel。 | 短時間的工作需要獨立 kernel，且支援的 guest 作業系統與裝置足以滿足需求。 |
 
-先選邊界，再比較速度。減少虛擬裝置種類可以讓 guest 透過裝置觸及的程式碼變少，但不能保證隔離更強，也不能保證固定的啟動時間。即使 VM 各有獨立的 guest kernel，也可以共用實體硬體。無論哪種 VM 設計，都要確認每項工作是否有自己的 guest；三種方案都要確認開放了哪些檔案與網路服務。接著[量測同一個 workload（英文）](../practice/verification/measuring-a-sandbox.md)，將從頭啟動、從 [snapshot](glossary/snapshot.md) 還原及從 [warm pool](glossary/warm-pool.md) 分配環境分開量測。
+先選邊界，再比較速度。減少虛擬裝置種類可以讓 guest 透過裝置觸及的程式碼變少，但不能保證隔離更強，也不能保證固定的啟動時間。即使 VM 各有獨立的 guest kernel，也可以共用實體硬體。無論哪種 VM 設計，都要確認每項工作是否有自己的 guest；三種方案都要確認開放了哪些檔案與網路服務。接著[量測同一個 workload](practice/verification/measuring-a-sandbox.md)，將從頭啟動、從 [snapshot](glossary/snapshot.md) 還原及從 [warm pool](glossary/warm-pool.md) 分配環境分開量測。
 
 ## 用於產生之指令碼的 sandbox {#sandboxes-for-generated-scripts}
 
@@ -150,19 +150,19 @@ Agent 如果只要查詢問題單的標題並排序，可能只需要執行一�
 
 [WebAssembly (Wasm)](glossary/webassembly.md) 是可攜的可執行模組格式。Wasm runtime 會檢查記憶體存取，並限制模組只能呼叫 host 提供的外部操作，例如用於查詢問題單的 [host function](glossary/host-function.md)。模組可以共用一個 host process，但預設不會共用彼此的記憶體。產生的程式碼本身可以是 Wasm 模組，也可以在編譯成 Wasm 的程式語言引擎中執行。
 
-**適用情況：** Workload 或其程式語言引擎能在 Wasm 中執行，而且不需要一般的 Linux binary。記憶體檢查不會限制查詢問題單的 tool 本身可以讀取什麼。[閱讀 WebAssembly 說明（英文）](../isolation/generated-scripts/webassembly.md)。
+**適用情況：** Workload 或其程式語言引擎能在 Wasm 中執行，而且不需要一般的 Linux binary。記憶體檢查不會限制查詢問題單的 tool 本身可以讀取什麼。[閱讀 WebAssembly 說明](isolation/generated-scripts/webassembly.md)。
 
 ### 5. Engine isolate {#5-engine-isolates}
 
 [Engine isolate](glossary/engine-isolate.md) 是程式語言引擎中的獨立執行環境。每個 isolate 有自己的物件及由引擎管理的狀態，但仍可共用同一個 host process。平台可以讓指令碼使用問題單服務，而不開放一般作業系統介面。
 
-**適用情況：** 指令碼需要引擎的語言功能及特定平台操作，但不需要 shell 或原生套件管理工具。如果服務不檢查每一筆請求，連上服務仍可能取得廣泛的存取權。[閱讀 engine isolate 說明（英文）](../isolation/generated-scripts/engine-isolates.md)。
+**適用情況：** 指令碼需要引擎的語言功能及特定平台操作，但不需要 shell 或原生套件管理工具。如果服務不檢查每一筆請求，連上服務仍可能取得廣泛的存取權。[閱讀 engine isolate 說明](isolation/generated-scripts/engine-isolates.md)。
 
 ### 6. Restricted interpreter {#6-restricted-interpreters}
 
 [Restricted interpreter](glossary/restricted-interpreter.md) 只執行自己實作的語言功能，也只開放自己提供的內建項目與 tool。排序由直譯器執行，查詢問題單則交給 host 提供的 tool。直譯器可以在 host 應用程式的 process 中執行；限制語言功能本身，不會提供獨立的作業系統，也不會限制 host 提供的 tool 能造成的影響。
 
-**適用情況：** 只靠一部分語言功能，就足以組合 tool 呼叫並處理結果。確認直譯器支援哪些功能與函式庫。[閱讀 restricted interpreter 說明（英文）](../isolation/generated-scripts/restricted-interpreters.md)。
+**適用情況：** 只靠一部分語言功能，就足以組合 tool 呼叫並處理結果。確認直譯器支援哪些功能與函式庫。[閱讀 restricted interpreter 說明](isolation/generated-scripts/restricted-interpreters.md)。
 
 ## 區分打包、管理與隔離 {#keep-packaging-management-and-isolation-separate}
 
@@ -182,4 +182,4 @@ Agent 如果只要查詢問題單的標題並排序，可能只需要執行一�
 2. 如果指令碼可以呼叫查詢問題單的 tool，由誰決定它能否取得 `LAMP-17` 的標題？請看[用於產生之指令碼的 sandbox](#sandboxes-for-generated-scripts)。
 3. 就算測試執行程式有自己的 kernel，為什麼還是要確認開放了哪些 host 目錄？請看[使用硬體輔助虛擬化的 VM](#1-hardware-backed-virtual-machines)。
 
-如需同時使用指令碼和 VM 邊界的完整範例，請看[從問題單到修補程式（英文）](../practice/design/from-issue-to-patch.md)；如需了解實際的實作方式，請看 [Agent sandbox 架構（英文）](../agent-sandbox-architectures.md)。
+如需同時使用指令碼和 VM 邊界的完整範例，請看[從問題單到修補程式](practice/design/from-issue-to-patch.md)；如需了解實際的實作方式，請看 [Agent sandbox 架構](agent-sandbox-architectures.md)。

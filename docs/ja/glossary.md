@@ -1,6 +1,6 @@
 # 用語集
 
-この用語集は、[Sandbox の隔離境界](sandbox-isolation-boundaries.md) や [Agent 向け sandbox のアーキテクチャ（英語）](../agent-sandbox-architectures.md) と併せて利用してください。用語は正式名称のアルファベット順です。用語を探すときは、正式名称または略称でこのページを検索してください。たとえば、`WebAssembly` と `Wasm` は同じ項目にあり、同じページにリンクしています。各項目では、用語を例とともに説明します。
+この用語集は、[Sandbox の隔離境界](sandbox-isolation-boundaries.md) や [Agent 向け sandbox のアーキテクチャ](agent-sandbox-architectures.md) と併せて利用してください。用語は正式名称のアルファベット順です。用語を探すときは、正式名称または略称でこのページを検索してください。たとえば、`WebAssembly` と `Wasm` は同じ項目にあり、同じページにリンクしています。各項目では、用語を例とともに説明します。
 
 - **[Agent](glossary/agent.md)** — モデルを使って次に何をするかを判断し、tool を呼び出して実行できるシステム。sandbox に入れるのは、agent 全体の場合も、agent が生成したコードだけの場合もある。
 - **[Allowlist](glossary/allowlist.md)** — policy が許可するリソースや操作の一覧。たとえば、egress の allowlist で、外部への接続を指定したサービスに限定できる。

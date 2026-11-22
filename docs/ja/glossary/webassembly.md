@@ -18,6 +18,6 @@ workload 自体が Wasm module の場合もあれば、module が workload を�
 
 ## 使用に適した場面
 
-完全な OS がなくても、選んだ host の操作だけで動くコードには Wasm を検討してください。通常の Linux の [native binary](native-binary.md) は Wasm module として直接実行できません。tool による検索の例は「[基礎編の WebAssembly（英語）](../../isolation/generated-scripts/webassembly.md)」を参照してください。
+完全な OS がなくても、選んだ host の操作だけで動くコードには Wasm を検討してください。通常の Linux の [native binary](native-binary.md) は Wasm module として直接実行できません。tool による検索の例は「[基礎編の WebAssembly](../isolation/generated-scripts/webassembly.md)」を参照してください。
 
 [用語集に戻る](../glossary.md)

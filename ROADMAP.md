@@ -14,7 +14,7 @@
 - [x] **驗證：** [存取測試](docs/practice/verification/verifying-access-rules.md)、[量測](docs/practice/verification/measuring-a-sandbox.md)、[實作評估](docs/agent-sandbox-architectures.md#how-to-evaluate-a-candidate)
 - [x] **遷移：** [雙租戶隔離、容量和切換演練及實測結果](docs/practice/operations/scaling-a-sandbox.md)
 
-- [x] **首批翻譯：** [台灣正體中文](docs/zh-TW/index.md)、[日文](docs/ja/index.md)、[韓文](docs/ko/index.md)均提供首頁、隔離邊界章、術語表和 62 個詞條。其餘見[尚未翻譯的頁面](#尚未翻譯的頁面)。
+- [x] **多語言版本：** [台灣正體中文](docs/zh-TW/index.md)、[日文](docs/ja/index.md)、[韓文](docs/ko/index.md)均已涵蓋全書 87 頁。見[章節翻譯進度](#章節翻譯進度)。
 - [x] **擴充案例：** [為需要下載套件的 CI 工作設定對外連線](docs/practice/data-and-access/network-policy.md#case-a-ci-job-that-needs-packages)。
 
 本機演練使用假資料與程序沙箱；不是對正式 VM 或服務的驗證。
@@ -112,41 +112,41 @@
 - [x] **翻譯版保留英文專有名詞。** 各語言版的正文與詞條都沿用同一套英文術語、產品名稱和縮寫。詞條以英文術語為標題，定義、解釋、使用情境與範例的說明文字使用該版本的語言。
 - [x] **完成條件：** 讀者能在同一章的已翻譯版本之間切換，點英文術語即可讀到所選語言的解釋。還沒有翻譯時，明確標示並提供英文原文連結。已驗證產生的語言與詞條連結，並在窄螢幕上測試切換、英文原文連結與圖表。
 
-其他章節依讀者需求逐步翻譯；新增時遵循 [翻譯版維護規則](README.md#translation-editions)。
+後續新增或更新譯文時，遵循 [翻譯版維護規則](README.md#translation-editions)。
 
-#### 尚未翻譯的頁面
+#### 章節翻譯進度
 
-87 個英文原稿中，三種語言各已有 65 頁譯本。以下 22 頁都只有英文原文；三語全部補齊共需 66 個譯本。各頁的三種譯本都完成並在 `zensical.toml` 登錄後，再勾選該項。
+台灣正體中文、日文及韓文各有 87 頁，與英文原稿一一對應。以下 22 頁的 66 個譯本均已補齊並在 `zensical.toml` 登錄。
 
 - **Foundations（6 頁）**
-  - [ ] [Hardware-backed virtual machines](docs/isolation/native-programs/hardware-backed-virtual-machines.md)
-  - [ ] [User-space kernels](docs/isolation/native-programs/user-space-kernels.md)
-  - [ ] [Operating-system process sandboxes](docs/isolation/native-programs/operating-system-process-sandboxes.md)
-  - [ ] [WebAssembly](docs/isolation/generated-scripts/webassembly.md)
-  - [ ] [Engine isolates](docs/isolation/generated-scripts/engine-isolates.md)
-  - [ ] [Restricted interpreters](docs/isolation/generated-scripts/restricted-interpreters.md)
+  - [x] [Hardware-backed virtual machines](docs/isolation/native-programs/hardware-backed-virtual-machines.md)
+  - [x] [User-space kernels](docs/isolation/native-programs/user-space-kernels.md)
+  - [x] [Operating-system process sandboxes](docs/isolation/native-programs/operating-system-process-sandboxes.md)
+  - [x] [WebAssembly](docs/isolation/generated-scripts/webassembly.md)
+  - [x] [Engine isolates](docs/isolation/generated-scripts/engine-isolates.md)
+  - [x] [Restricted interpreters](docs/isolation/generated-scripts/restricted-interpreters.md)
 - **Design a sandbox（3 頁）**
-  - [ ] [From issue to patch](docs/practice/design/from-issue-to-patch.md)
-  - [ ] [Choosing a sandbox](docs/practice/design/choosing-a-sandbox.md)
-  - [ ] [Deployment patterns](docs/practice/design/deployment-patterns.md)
+  - [x] [From issue to patch](docs/practice/design/from-issue-to-patch.md)
+  - [x] [Choosing a sandbox](docs/practice/design/choosing-a-sandbox.md)
+  - [x] [Deployment patterns](docs/practice/design/deployment-patterns.md)
 - **Set access rules（5 頁）**
-  - [ ] [Tool authorization](docs/practice/design/tool-authorization.md)
-  - [ ] [Workspaces and artifacts](docs/practice/data-and-access/workspaces-and-artifacts.md)
-  - [ ] [Network policy](docs/practice/data-and-access/network-policy.md)
-  - [ ] [Credentials and identity](docs/practice/data-and-access/credentials-and-identity.md)
-  - [ ] [Multi-tenant isolation](docs/practice/data-and-access/multi-tenant-isolation.md)
+  - [x] [Tool authorization](docs/practice/design/tool-authorization.md)
+  - [x] [Workspaces and artifacts](docs/practice/data-and-access/workspaces-and-artifacts.md)
+  - [x] [Network policy](docs/practice/data-and-access/network-policy.md)
+  - [x] [Credentials and identity](docs/practice/data-and-access/credentials-and-identity.md)
+  - [x] [Multi-tenant isolation](docs/practice/data-and-access/multi-tenant-isolation.md)
 - **Operate a sandbox（4 頁）**
-  - [ ] [Control planes](docs/practice/operations/control-planes.md)
-  - [ ] [Sandbox lifecycle](docs/practice/operations/sandbox-lifecycle.md)
-  - [ ] [Resource limits](docs/practice/operations/resource-limits.md)
-  - [ ] [Observability and debugging](docs/practice/operations/observability-and-debugging.md)
+  - [x] [Control planes](docs/practice/operations/control-planes.md)
+  - [x] [Sandbox lifecycle](docs/practice/operations/sandbox-lifecycle.md)
+  - [x] [Resource limits](docs/practice/operations/resource-limits.md)
+  - [x] [Observability and debugging](docs/practice/operations/observability-and-debugging.md)
 - **Verify a sandbox（2 頁）**
-  - [ ] [Verifying access rules](docs/practice/verification/verifying-access-rules.md)
-  - [ ] [Measuring a sandbox](docs/practice/verification/measuring-a-sandbox.md)
+  - [x] [Verifying access rules](docs/practice/verification/verifying-access-rules.md)
+  - [x] [Measuring a sandbox](docs/practice/verification/measuring-a-sandbox.md)
 - **Grow a sandbox service（1 頁）**
-  - [ ] [Grow a sandbox service](docs/practice/operations/scaling-a-sandbox.md)
+  - [x] [Grow a sandbox service](docs/practice/operations/scaling-a-sandbox.md)
 - **Reference（1 頁）**
-  - [ ] [Agent sandbox architectures](docs/agent-sandbox-architectures.md)
+  - [x] [Agent sandbox architectures](docs/agent-sandbox-architectures.md)
 
 ### 持續擴充內容
 

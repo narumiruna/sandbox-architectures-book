@@ -35,6 +35,6 @@ flowchart TB
 
 부팅과 복원은 모두 cold start의 일부가 될 수 있다. Warm pool에서 실행 중인 VM을 할당받으면 요청이 들어오기 전에 부팅이나 복원을 마칠 수 있지만, 프로젝트 workspace 연결과 같은 설정은 여전히 필요할 수 있다.
 
-설정이 필요한 요청과 이미 준비된 sandbox를 할당받는 요청을 비교한다. 독자가 측정에 무엇이 포함되었는지 알 수 있도록 어떤 파일이나 image가 이미 cache에 있었는지 명시한다. 여러 provisioning 경로의 예는 [Agent sandbox architectures (영어)](../../agent-sandbox-architectures.md#what-is-changing-in-2026)를 참고한다.
+설정이 필요한 요청과 이미 준비된 sandbox를 할당받는 요청을 비교한다. 독자가 측정에 무엇이 포함되었는지 알 수 있도록 어떤 파일이나 image가 이미 cache에 있었는지 명시한다. 여러 provisioning 경로의 예는 [Agent sandbox architectures](../agent-sandbox-architectures.md#what-is-changing-in-2026)를 참고한다.
 
 [용어집으로 돌아가기](../glossary.md)

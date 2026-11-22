@@ -8,6 +8,6 @@ Authorization とは、身元が判明している呼び出し元に対し、特
 
 ## 確認が必要な場面
 
-呼び出し元に代わってデータを返したり変更を加えたりできる操作では、Authorization の確認が必要です。[sandbox](sandbox.md) でスクリプトが呼び出せるツールを制限していても、呼び出し元に何が許可されているかはツールごとに確認します。具体例は[ツールの Authorization（英語）](../../practice/design/tool-authorization.md)を参照してください。
+呼び出し元に代わってデータを返したり変更を加えたりできる操作では、Authorization の確認が必要です。[sandbox](sandbox.md) でスクリプトが呼び出せるツールを制限していても、呼び出し元に何が許可されているかはツールごとに確認します。具体例は[ツールの Authorization](../practice/design/tool-authorization.md)を参照してください。
 
 [用語集に戻る](../glossary.md)

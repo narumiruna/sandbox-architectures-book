@@ -10,4 +10,4 @@ Lamp session에는 소스 수정 요청과 테스트 실행 요청이 각각 하
 
 여러 요청에서 session을 재사용할 때는 일시 중지, 재개, 정리를 거쳐도 어떤 파일과 상태가 남는지 확인한다. Session을 종료하면 명령 실행을 멈추고 worker를 해제하면서도 별도 저장소의 결과물은 삭제하지 않을 수 있다.
 
-[Sandbox lifecycle (영어)](../../practice/operations/sandbox-lifecycle.md)을 참고한다.
+[Sandbox lifecycle](../practice/operations/sandbox-lifecycle.md)을 참고한다.

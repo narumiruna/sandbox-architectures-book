@@ -8,7 +8,7 @@ Isolation unit 是共用同一道 isolation boundary 的一組 workloads，也�
 
 ## 這個單位指的是哪一層
 
-[isolation boundary](isolation-boundary.md) 說明工作*如何*隔開；單位則說明每一道邊界會隔開*哪些工作*。若每個 pod 各用一個 VM，單位就是 pod；若每個 container 各用一個 VM，單位就是 [container](container.md)。請參閱[哪些 workloads 共用 guest kernel（英文）](../../agent-sandbox-architectures.md#which-workloads-share-a-guest-kernel)中的圖，比較三種實作。
+[isolation boundary](isolation-boundary.md) 說明工作*如何*隔開；單位則說明每一道邊界會隔開*哪些工作*。若每個 pod 各用一個 VM，單位就是 pod；若每個 container 各用一個 VM，單位就是 [container](container.md)。請參閱[哪些 workloads 共用 guest kernel](../agent-sandbox-architectures.md#which-workloads-share-a-guest-kernel)中的圖，比較三種實作。
 
 同一個系統可以在另一層有更小的單位。同一個 VM 中的 processes 可以看到不同的檔案系統內容，但這不代表各自有獨立的 guest kernel。如果兩個 [tenants](tenant.md) 不得共用 guest kernel，除了確認服務是否使用 VM，也要確認 [control plane](control-plane.md) 如何安排它們的 workloads。
 

@@ -25,7 +25,7 @@ flowchart TB
 
 ## 파일 열기 요청이 처리되는 과정 {#follow-a-request-to-open-a-file}
 
-Agent가 가상 프로젝트 [Lamp (영어)](../practice/design/from-issue-to-patch.md)의 테스트 실행기를 시작한다고 가정해 봅시다. 테스트 실행기는 실행 중인 프로그램의 인스턴스, 즉 [process](glossary/process.md)입니다. [kernel](glossary/kernel.md)은 메모리, 파일, 장치 등의 자원을 관리하는 운영체제의 한 부분입니다. [system call](glossary/system-call.md)은 파일을 여는 일처럼 process가 혼자 할 수 없는 작업을 kernel에 요청하는 것입니다.
+Agent가 가상 프로젝트 [Lamp](practice/design/from-issue-to-patch.md)의 테스트 실행기를 시작한다고 가정해 봅시다. 테스트 실행기는 실행 중인 프로그램의 인스턴스, 즉 [process](glossary/process.md)입니다. [kernel](glossary/kernel.md)은 메모리, 파일, 장치 등의 자원을 관리하는 운영체제의 한 부분입니다. [system call](glossary/system-call.md)은 파일을 여는 일처럼 process가 혼자 할 수 없는 작업을 kernel에 요청하는 것입니다.
 
 1. 테스트 실행기가 소스 파일 `total.c`를 열어 달라고 요청합니다. 라이브러리가 실행기를 대신해 system call을 보낼 수 있습니다.
 2. 운영체제 인터페이스를 구현하는 구성 요소가 process에 보이는 파일 중에서 해당 경로를 찾아 파일을 열 수 있는지 확인합니다.
@@ -60,19 +60,19 @@ flowchart TB
 
 [virtual machine (VM)](glossary/virtual-machine.md)은 자체 운영체제 kernel인 [guest kernel](glossary/guest.md)을 갖춘 별도의 컴퓨터 환경을 제공합니다. 테스트 실행기의 파일 요청은 이 kernel이 처리합니다. 하나의 VM 안에 있는 프로그램은 그 kernel을 공유합니다. [microVM](glossary/microvm.md)은 보통 더 적은 수의 장치를 노출하여 부가 비용을 줄이도록 설계되지만, 여전히 guest kernel을 갖습니다. 어느 방식이든 host 디렉터리를 노출하면 guest에서 접근할 수 있습니다.
 
-**적합한 경우:** Agent에 별도의 kernel을 갖춘 완전한 Linux [workspace](glossary/workspace.md)가 필요할 때입니다. 경계 하나를 공유하는 workload 집합인 [isolation unit](glossary/isolation-unit.md)을 확인하세요. [하드웨어 지원을 받는 Virtual machine 자세히 보기 (영어)](../isolation/native-programs/hardware-backed-virtual-machines.md).
+**적합한 경우:** Agent에 별도의 kernel을 갖춘 완전한 Linux [workspace](glossary/workspace.md)가 필요할 때입니다. 경계 하나를 공유하는 workload 집합인 [isolation unit](glossary/isolation-unit.md)을 확인하세요. [하드웨어 지원을 받는 Virtual machine 자세히 보기](isolation/native-programs/hardware-backed-virtual-machines.md).
 
 ### 2. User-space kernel 사용 방식 {#2-user-space-kernels}
 
 [gVisor](https://gvisor.dev/docs/architecture_guide/intro/)의 [user-space kernel](glossary/user-space-kernel.md)처럼, 이 방식에서는 Linux 인터페이스를 자체 구현하여 테스트 실행기의 요청을 처리합니다. 기반 자원은 여전히 host kernel이 제공하며, user-space kernel은 host kernel에 자체 요청을 보낼 수 있습니다. 이 방식이 host에서 노출하기로 한 프로젝트 데이터에 대한 접근까지 막지는 않습니다.
 
-**적합한 경우:** Linux [container](glossary/container.md)를 실행하되 host kernel에 직접 접근하는 범위를 줄이고 싶을 때입니다. Linux와 호환성 및 성능이 다를 수 있으므로 실제로 실행해야 하는 코드, 즉 [workload](glossary/workload.md)로 테스트하세요. [User-space kernel 자세히 보기 (영어)](../isolation/native-programs/user-space-kernels.md).
+**적합한 경우:** Linux [container](glossary/container.md)를 실행하되 host kernel에 직접 접근하는 범위를 줄이고 싶을 때입니다. Linux와 호환성 및 성능이 다를 수 있으므로 실제로 실행해야 하는 코드, 즉 [workload](glossary/workload.md)로 테스트하세요. [User-space kernel 자세히 보기](isolation/native-programs/user-space-kernels.md).
 
 ### 3. 운영체제 Process Sandbox {#3-operating-system-process-sandboxes}
 
 [operating-system process sandbox](glossary/operating-system-process-sandbox.md)에서는 테스트 실행기가 같은 머신의 다른 프로그램과 여전히 host kernel을 공유합니다. Kernel은 process에 보이는 파일 범위를 제한하거나 특정 system call을 필터링할 수 있습니다. 파일을 숨겨도 프로그램이 이미 받은 내용의 사본은 없어지지 않습니다.
 
-**적합한 경우:** 로컬 agent에 개발자가 평소 쓰는 명령이 필요하지만, host에 대한 무제한 접근 권한까지 물려주면 안 될 때입니다. 그 명령이 시작하는 process에도 제한이 적용되는지 확인하세요. [운영체제 Process Sandbox 자세히 보기 (영어)](../isolation/native-programs/operating-system-process-sandboxes.md).
+**적합한 경우:** 로컬 agent에 개발자가 평소 쓰는 명령이 필요하지만, host에 대한 무제한 접근 권한까지 물려주면 안 될 때입니다. 그 명령이 시작하는 process에도 제한이 적용되는지 확인하세요. [운영체제 Process Sandbox 자세히 보기](isolation/native-programs/operating-system-process-sandboxes.md).
 
 ### VM, Container, microVM 비교 {#compare-a-vm-a-container-and-a-microvm}
 
@@ -136,7 +136,7 @@ flowchart TB
 | 추가 메모리 사용량 | Guest OS와 앱에 필요한 메모리 외에 host의 VMM에도 메모리가 필요합니다. | Container마다 별도의 guest나 VMM이 필요하지 않습니다. 앱마다 메모리가 필요한 것은 같습니다. | Guest와 VMM 모두에 메모리가 필요합니다. 더 작은 장치 모델과 최소 구성의 guest로 추가 사용량을 줄일 수 있습니다. |
 | 적합한 경우 | 별도의 kernel이 필요하고, 검토 중인 microVM이 지원하지 않는 guest OS나 장치가 필요한 작업입니다. | 패키지로 묶인 Linux 도구 모음이 필요하고 host kernel을 공유해도 되는 작업입니다. | 실행 시간이 짧고 별도의 kernel이 필요하며, 지원되는 guest OS와 장치만으로 충분한 작업입니다. |
 
-속도를 비교하기 전에 경계를 선택하세요. 가상 장치가 적으면 guest가 장치를 통해 접근할 수 있는 코드의 범위를 줄일 수 있지만, 격리가 더 강해지거나 시작 시간이 일정해진다는 보장은 없습니다. VM은 별도의 guest kernel을 쓰더라도 물리 하드웨어를 공유할 수 있습니다. 두 VM 방식에서는 작업마다 별도의 guest를 받는지 확인하고, 세 방식 모두에서 어떤 파일과 네트워크 서비스가 노출되는지 확인하세요. 그런 다음 [동일한 workload를 측정하되 (영어)](../practice/verification/measuring-a-sandbox.md) 새로 시작하는 경우, [snapshot](glossary/snapshot.md)에서 복원하는 경우, [warm pool](glossary/warm-pool.md)에서 할당받는 경우를 구분하세요.
+속도를 비교하기 전에 경계를 선택하세요. 가상 장치가 적으면 guest가 장치를 통해 접근할 수 있는 코드의 범위를 줄일 수 있지만, 격리가 더 강해지거나 시작 시간이 일정해진다는 보장은 없습니다. VM은 별도의 guest kernel을 쓰더라도 물리 하드웨어를 공유할 수 있습니다. 두 VM 방식에서는 작업마다 별도의 guest를 받는지 확인하고, 세 방식 모두에서 어떤 파일과 네트워크 서비스가 노출되는지 확인하세요. 그런 다음 [동일한 workload를 측정하되](practice/verification/measuring-a-sandbox.md) 새로 시작하는 경우, [snapshot](glossary/snapshot.md)에서 복원하는 경우, [warm pool](glossary/warm-pool.md)에서 할당받는 경우를 구분하세요.
 
 ## 생성된 스크립트를 위한 Sandbox {#sandboxes-for-generated-scripts}
 
@@ -150,19 +150,19 @@ flowchart TB
 
 [WebAssembly (Wasm)](glossary/webassembly.md)는 여러 환경에서 쓸 수 있는 실행 모듈 형식입니다. Wasm runtime은 메모리 접근을 확인하고, 모듈 밖으로 보내는 호출을 이슈 조회용 [host function](glossary/host-function.md)처럼 host가 제공하는 동작으로 제한합니다. 모듈끼리 host process를 공유할 수 있지만, 기본적으로 서로의 메모리를 공유하지는 않습니다. 생성된 코드 자체가 Wasm 모듈일 수도 있고, Wasm으로 컴파일한 언어 엔진에서 실행되는 코드일 수도 있습니다.
 
-**적합한 경우:** Workload나 해당 언어 엔진을 Wasm에서 실행할 수 있고 일반 Linux binary가 필요 없을 때입니다. 메모리 접근을 확인한다고 해서 이슈 조회 tool 자체가 읽을 수 있는 범위까지 제한되는 것은 아닙니다. [WebAssembly 자세히 보기 (영어)](../isolation/generated-scripts/webassembly.md).
+**적합한 경우:** Workload나 해당 언어 엔진을 Wasm에서 실행할 수 있고 일반 Linux binary가 필요 없을 때입니다. 메모리 접근을 확인한다고 해서 이슈 조회 tool 자체가 읽을 수 있는 범위까지 제한되는 것은 아닙니다. [WebAssembly 자세히 보기](isolation/generated-scripts/webassembly.md).
 
 ### 5. Engine isolate 사용 방식 {#5-engine-isolates}
 
 [engine isolate](glossary/engine-isolate.md)는 언어 엔진 내부의 별도 실행 환경입니다. 각 isolate에는 고유한 객체와 관리 상태가 있지만, 여러 isolate가 host process를 공유할 수 있습니다. 플랫폼은 스크립트에 일반적인 운영체제 접근 권한을 주지 않고도 이슈 서비스를 노출할 수 있습니다.
 
-**적합한 경우:** 스크립트에 엔진의 언어 기능과 일부 플랫폼 동작은 필요하지만 셸이나 native package manager는 필요 없을 때입니다. 서비스가 요청마다 권한을 확인하지 않으면 서비스에 연결하는 것만으로도 넓은 접근 권한이 생길 수 있습니다. [Engine isolate 자세히 보기 (영어)](../isolation/generated-scripts/engine-isolates.md).
+**적합한 경우:** 스크립트에 엔진의 언어 기능과 일부 플랫폼 동작은 필요하지만 셸이나 native package manager는 필요 없을 때입니다. 서비스가 요청마다 권한을 확인하지 않으면 서비스에 연결하는 것만으로도 넓은 접근 권한이 생길 수 있습니다. [Engine isolate 자세히 보기](isolation/generated-scripts/engine-isolates.md).
 
 ### 6. Restricted interpreter 사용 방식 {#6-restricted-interpreters}
 
 [restricted interpreter](glossary/restricted-interpreter.md)는 자체 구현한 언어 기능만 실행하고 자체 제공하는 내장 기능과 tool만 노출합니다. 정렬은 interpreter 안에서 수행하고, 이슈 조회는 host의 tool에 맡깁니다. 이 interpreter는 host 애플리케이션의 process 안에서 실행될 수 있습니다. 언어를 제한하는 것만으로 별도의 운영체제가 생기거나 host의 tool이 미치는 영향이 제한되지는 않습니다.
 
-**적합한 경우:** 언어의 일부 기능만으로 tool 호출을 조합하고 결과를 처리하기에 충분할 때입니다. Interpreter가 어떤 기능과 라이브러리를 지원하는지 확인하세요. [Restricted interpreter 자세히 보기 (영어)](../isolation/generated-scripts/restricted-interpreters.md).
+**적합한 경우:** 언어의 일부 기능만으로 tool 호출을 조합하고 결과를 처리하기에 충분할 때입니다. Interpreter가 어떤 기능과 라이브러리를 지원하는지 확인하세요. [Restricted interpreter 자세히 보기](isolation/generated-scripts/restricted-interpreters.md).
 
 ## 패키징, 관리, 격리를 구분하기 {#keep-packaging-management-and-isolation-separate}
 
@@ -182,4 +182,4 @@ Agent 하나가 둘 이상의 경계를 사용할 수 있습니다. 제한된 �
 2. 스크립트가 이슈 조회 tool을 호출할 수 있다면, `LAMP-17`의 제목을 반환할지는 누가 결정하나요? [생성된 스크립트를 위한 Sandbox](#sandboxes-for-generated-scripts)를 확인하세요.
 3. 테스트 실행기에 자체 kernel이 있더라도 어떤 host 디렉터리가 노출되는지 확인해야 하는 이유는 무엇인가요? [하드웨어 지원을 받는 Virtual machine](#1-hardware-backed-virtual-machines)을 확인하세요.
 
-스크립트와 VM의 경계를 함께 사용하는 단계별 예제는 [이슈에서 패치까지 (영어)](../practice/design/from-issue-to-patch.md)를, 실제 구현 사례는 [Agent sandbox 아키텍처 (영어)](../agent-sandbox-architectures.md)를 참고하세요.
+스크립트와 VM의 경계를 함께 사용하는 단계별 예제는 [이슈에서 패치까지](practice/design/from-issue-to-patch.md)를, 실제 구현 사례는 [Agent sandbox 아키텍처](agent-sandbox-architectures.md)를 참고하세요.

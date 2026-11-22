@@ -35,6 +35,6 @@ flowchart TB
 
 開機和還原都可能是 cold start 的一部分。從 warm pool 取得運作中的 VM，能把開機或還原移到收到請求前，但 VM 仍可能需要設定，例如接上專案的 workspace。
 
-比較需要設定的請求和取得已準備妥當的 sandbox 的請求。說明哪些檔案或映像檔已經快取，讓讀者知道量測涵蓋哪些步驟。不同環境準備方式的範例請參閱 [Agent sandbox 架構（英文）](../../agent-sandbox-architectures.md#what-is-changing-in-2026)。
+比較需要設定的請求和取得已準備妥當的 sandbox 的請求。說明哪些檔案或映像檔已經快取，讓讀者知道量測涵蓋哪些步驟。不同環境準備方式的範例請參閱 [Agent sandbox 架構](../agent-sandbox-architectures.md#what-is-changing-in-2026)。
 
 [返回詞彙表](../glossary.md)

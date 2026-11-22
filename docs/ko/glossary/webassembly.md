@@ -18,6 +18,6 @@ workload 자체가 Wasm module일 수도 있고, workload를 실행하는 언어
 
 ## 언제 사용하는가?
 
-운영 체제 전체 대신 일부 host 작업만으로 실행할 수 있는 코드라면 Wasm을 고려한다. 일반 Linux [native binary](native-binary.md)는 Wasm module로 직접 실행할 수 없다. 도구 조회 예시는 [Foundations의 WebAssembly (영어)](../../isolation/generated-scripts/webassembly.md)를 참조한다.
+운영 체제 전체 대신 일부 host 작업만으로 실행할 수 있는 코드라면 Wasm을 고려한다. 일반 Linux [native binary](native-binary.md)는 Wasm module로 직접 실행할 수 없다. 도구 조회 예시는 [Foundations의 WebAssembly](../isolation/generated-scripts/webassembly.md)를 참조한다.
 
 [용어집으로 돌아가기](../glossary.md)

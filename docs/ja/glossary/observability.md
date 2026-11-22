@@ -4,4 +4,4 @@ Observability とは、システムが何をしたかを、そのシステムが
 
 たとえば、準備完了イベントがなく workspace がタイムアウトしたなら、環境の準備に問題があったと考えられます。Worker の準備が完了した後にコンパイラーの診断メッセージが出たなら、問題はビルドにあると考えられます。Policy による拒否とコマンドエラーを混同しないように、それぞれの記録を区別してください。
 
-[Observability とデバッグ（英語）](../../practice/operations/observability-and-debugging.md) を参照してください。
+[Observability とデバッグ](../practice/operations/observability-and-debugging.md) を参照してください。
