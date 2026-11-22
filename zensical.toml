@@ -47,6 +47,7 @@ nav = [
     { "Verifying access rules" = "practice/verification/verifying-access-rules.md" },
     { "Measuring a sandbox" = "practice/verification/measuring-a-sandbox.md" },
   ] },
+  { "Grow a sandbox service" = "practice/operations/scaling-a-sandbox.md" },
   { "Reference" = [
     { "Agent sandbox architectures" = "agent-sandbox-architectures.md" },
     { "Glossary" = "glossary.md" },
@@ -95,6 +96,7 @@ unlisted_pages = [
   "glossary/operating-system-process-sandbox.md",
   "glossary/pod.md",
   "glossary/policy.md",
+  "glossary/process.md",
   "glossary/resident-set-size.md",
   "glossary/resource-limit.md",
   "glossary/restricted-interpreter.md",

@@ -1,12 +1,10 @@
 # Sandbox lifecycle
 
-Starting a worker and attaching a project's files are separate steps. Whether the worker boots, comes from a pool, or resumes saved state, it must receive the right workspace and restrictions before it can run. Destroying the worker does not delete outputs already sent for review.
-
-Follow the Linux worker from the [Lamp example](../design/from-issue-to-patch.md) to see what stays with the worker and what survives in review storage.
+Starting a worker and attaching a project's files are separate steps. In the [Lamp walkthrough](../design/from-issue-to-patch.md), each attempt starts a fresh [virtual machine (VM)](../../glossary/virtual-machine.md) with a disposable [workspace](../../glossary/workspace.md). The service reuses only the clean, read-only compiler image. It does not reuse the worker, disk, or running processes, even for the same [tenant](../../glossary/tenant.md).
 
 ## From create to destroy
 
-All three startup paths lead to the same readiness check. Pausing keeps the current session; restoring here starts a new session from a clean template.
+Lamp uses a [cold boot](../../glossary/cold-boot.md): start Linux from the beginning, with no running state restored. The diagram also shows alternatives, not permissions of the Lamp run. All startup paths lead to the same readiness check. Pausing keeps the current [session](../../glossary/sandbox-session.md); restoring here starts a new session from a clean template.
 
 ```mermaid
 stateDiagram-v2
@@ -31,19 +29,21 @@ stateDiagram-v2
     Destroying --> [*]
 ```
 
-The [control plane](control-planes.md) also requests cleanup if startup fails or a ready worker is cancelled before running. The diagram omits these paths for clarity. Not every backend supports cold boot, pooling, restore, or pause.
+The [control plane](../../glossary/control-plane.md) also requests cleanup if startup fails or a ready worker is cancelled before running. The diagram omits these paths for clarity.
 
-Cold boot does the boot work after the request. A pool does it in advance and holds resources while workers wait. Restoring a snapshot with memory skips boot but still loads saved state. A disk-only snapshot restores files and still needs a boot. A pool can contain workers prepared by either boot or restore.
+A [warm pool](../../glossary/warm-pool.md) starts workers in advance and holds resources while they wait. A [snapshot](../../glossary/snapshot.md) with memory can skip boot but still loads saved state; a disk-only snapshot restores files and still needs a boot. If adopting either approach, use a template prepared before adding private data. Do not return a used worker to the clean pool.
 
-| State or action | Workspace and cache | Worker disk and memory | Access |
-| --- | --- | --- | --- |
-| Create | Select the Lamp revision; no project files attached yet. | Choose a startup path. | Authorize the request outside the worker. |
-| [Cold boot](../../glossary/cold-boot.md) | No Lamp files; the base image can include compiler files. | Start with a clean disk layer and boot Linux with fresh memory. | No worker credentials. |
-| [Warm claim](../../glossary/warm-pool.md) | Claim an unassigned worker with no project files or build cache. | Use the prepared worker's disk and live memory. | No worker credentials. |
-| [Snapshot restore](../../glossary/snapshot.md) | Use a clean template without project files or build cache. | Resume from matching saved disk, memory, and machine state. | No credentials in the template; reset per-instance identity before use. |
-| Ready | Confirm the disposable Lamp copy is attached and the build cache is empty. | The worker can accept the first command. | Check Lamp-only workspace access; no lookup or publish credentials in the worker. |
-| Running | Write changes to the copy and cache. | Build writes stay on session storage; processes use live memory. | Enforce the same access rules for all worker commands. |
-| Paused (optional) | Keep the copy and cache for this session only. | Keep the disk and hold suspended execution state in memory. | Recheck session authorization before resuming. |
-| Destroying | Remove the copy and per-session cache. | Release worker memory and remove its disposable disk layer; keep clean base templates separate. | Close session access; the review store still checks its own access. |
+## What gets deleted and when
 
-The artifact collector exports only the patch and test output to a restricted review store. That store deletes those copies when retention expires, independently of worker cleanup. See [Workspaces and artifacts](../data-and-access/workspaces-and-artifacts.md).
+| Data or resource | Owner and rule in the Lamp run |
+| --- | --- |
+| Lookup sandbox and task summary | The host discards the lookup instance after it returns a summary or fails. The control plane discards its staged run inputs at teardown. |
+| Worker and memory | The runtime stops the VM and releases its resources. It saves no job disk or memory snapshot. |
+| Disposable `/work` disk | The workspace service removes it after a successful export, a failed export, or an attempt with no export. That deletes the source copy, task summary, edits, binaries, and temporary files. |
+| Clean compiler image | The platform team keeps it read-only for later VMs. No tenant data returns to it. |
+| Accepted patch and test log | The [review store](../data-and-access/workspaces-and-artifacts.md#decide-what-leaves-work) deletes them seven days after acceptance. Destroying a worker does not delete them. |
+| Restricted diagnostic records | The service operator can inspect status and reason codes under the [diagnostic retention rule](observability-and-debugging.md#keep-diagnostic-records-safe). They do not include the scratch files. |
+
+On success, failure, cancellation, or timeout, the [control plane tracks cleanup](control-planes.md#who-owns-what) until the runtime and workspace service confirm removal, including any resources left by partial setup. It records `cleanup_pending` and alerts the operator if it cannot confirm removal. Unconfirmed resources stay out of use and count against capacity until cleanup is confirmed. A new attempt gets a new VM and disk, not the old state.
+
+Next: [Resource limits](resource-limits.md) explains what causes an attempt to stop and how the service handles each limit.

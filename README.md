@@ -4,6 +4,24 @@ A book about software sandboxes: how they isolate programs and control what thos
 
 Use the [book home page](docs/index.md) to choose a starting point. Begin with [Sandbox isolation boundaries](docs/sandbox-isolation-boundaries.md) if you are new to sandboxes, or follow the worked example in [From issue to patch](docs/practice/design/from-issue-to-patch.md) if you already know the basics.
 
+## Read a local copy with a coding agent
+
+1. If you have [Git](https://git-scm.com/), clone the book and open the repository root:
+
+   ```sh
+   git clone https://github.com/narumiruna/sandbox-architectures-book.git
+   cd sandbox-architectures-book
+   ```
+
+2. Start any coding agent that can read local files, with this directory as its workspace. Use read-only access if your agent supports it. Do not grant permission to run commands or write files for this exercise. You do not need to build the site, enable integrations, or run the examples.
+3. Paste this prompt into the agent:
+
+   > I am new to sandboxes. Read `docs/sandbox-isolation-boundaries.md` and explain how an isolation boundary differs from a policy in the file-open example. Cite the book file paths and section headings, and show me the two glossary entry paths. Label anything the book does not cover as extra context or unknown. Ask me one question that applies the distinction to file access, then wait for my answer. After I reply, check my answer against the book. Only read local files; do not modify files or run commands.
+
+4. Open the cited sections and glossary entries, then answer the question. If you want a Git check, run `git status --short --untracked-files=all` yourself before and after reading. A clean checkout should show no changes in either check; Git status does not report ignored files. Keep any agent logs outside the checkout.
+
+Use [`docs/index.md`](docs/index.md) as the chapter map and [`docs/glossary.md`](docs/glossary.md) to look up terms and abbreviations. For a separate hands-on session, find the [Lamp lab files](examples/lamp/) and follow the instructions for [checking access rules](docs/practice/verification/verifying-access-rules.md) or [measuring a sandbox](docs/practice/verification/measuring-a-sandbox.md). Before running an example, ask the agent to explain its prerequisites, what each command does, and what result to expect. Decide yourself whether to run it.
+
 ## Preview locally
 
 Install [uv](https://docs.astral.sh/uv/getting-started/installation/), then run `just serve` from the repository root if you have [Just](https://just.systems/) installed. Without Just, run the same command directly:

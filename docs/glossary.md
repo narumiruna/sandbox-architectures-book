@@ -1,6 +1,6 @@
 # Glossary
 
-Use this glossary alongside [Sandbox isolation boundaries](sandbox-isolation-boundaries.md) and [Agent sandbox architectures](agent-sandbox-architectures.md). Terms are in alphabetical order. Select a term for an example and a closer look at how it works.
+Use this glossary alongside [Sandbox isolation boundaries](sandbox-isolation-boundaries.md) and [Agent sandbox architectures](agent-sandbox-architectures.md). Terms are in alphabetical order by full name. To look up a term, search this page for its full name or abbreviation. For example, `WebAssembly` and `Wasm` appear in the same entry and link to the same page. Each entry explains the term and gives an example.
 
 - **[Agent](glossary/agent.md)** — A system that uses a model to decide what to do next and can call tools to act. A sandbox may contain the entire agent or only the code it generates.
 - **[Allowlist](glossary/allowlist.md)** — A list of resources or actions that a policy permits. For example, an egress allowlist can limit outbound connections to specified services.
@@ -39,6 +39,7 @@ Use this glossary alongside [Sandbox isolation boundaries](sandbox-isolation-bou
 - **[Operating-system process sandbox](glossary/operating-system-process-sandbox.md)** — A sandbox that runs native processes on the host kernel and uses operating-system controls to restrict their access. It does not boot a separate guest kernel.
 - **[Pod](glossary/pod.md)** — The Kubernetes unit of deployment for one or more containers that share a network environment and can share storage. Some runtimes give each pod its own VM.
 - **[Policy](glossary/policy.md)** — The rules that define which actions and resources a workload may use. A policy has an effect only if a trusted component enforces it.
+- **[Process](glossary/process.md)** — A running instance of a program, with its own state and access to resources.
 - **[Resident set size (RSS)](glossary/resident-set-size.md)** — The amount of a process's memory currently in physical memory.
 - **[Resource limit](glossary/resource-limit.md)** — A cap on how much of a resource a job may use, such as memory, CPU time, or disk space.
 - **[Restricted interpreter](glossary/restricted-interpreter.md)** — A program that executes only supported language features and built-ins. Code reaches outside the interpreter through operations that the host supplies, such as tool calls.

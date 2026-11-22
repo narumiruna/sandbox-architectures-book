@@ -6,18 +6,20 @@ In the [Lamp example](../design/from-issue-to-patch.md), the worker's budget mus
 
 ## Set a budget and decide what happens at the limit
 
-These example limits are not defaults or measured requirements. The [control plane](control-planes.md) selects them and tracks how many sessions are active. The [runtime](../../glossary/runtime.md) and the storage service enforce the limits that apply to running commands and to scratch storage. Charge usage to the whole session, including compiler and test processes that it starts, not just the first command.
+These example limits are not defaults or measured requirements. Charge usage to the whole worker, including compiler and test processes, not just the first command. The [control plane](../../glossary/control-plane.md) selects budgets, admits work, and enforces deadlines. The [runtime](../../glossary/runtime.md) caps execution resources, and the workspace service limits scratch storage.
 
 | Limit | Example budget | What happens at the limit |
 | --- | --- | --- |
-| CPU | Up to one CPU's worth of execution time over each accounting interval. | The runtime slows the job rather than stopping it. The job can still hit the time limit. The cap does not reserve a CPU for Lamp. |
-| Memory | 256 MiB for the worker's processes. | In this design, the runtime reports a limit hit and stops the job. The control plane does not retry it unchanged. |
-| Disk | 64 MiB for the writable workspace, temporary build files, and session cache combined. | Further writes that would exceed the limit fail. The runner fails the job and discards partial build files during cleanup. |
-| Time | 30 seconds elapsed from the first command, including waiting or pauses. | The control plane stops the worker and marks the attempt timed out. It tracks startup with a separate deadline. |
-| Concurrent sessions | One allocated worker per project, including provisioning and cleanup. | A second Lamp request waits in a bounded queue or is rejected; it does not start a second worker. |
+| CPU | At most one CPU's worth of execution time over each accounting interval. | The runtime slows the worker instead of stopping it. The cap does not reserve a CPU for Lamp. |
+| Memory | 256 MiB of VM memory, shared by Linux and all worker processes. | If the runtime reports a memory limit failure, stop the run. Do not retry unchanged. |
+| Disk | 64 MiB for the entire writable `/work` disk, including staged inputs and temporary build files. | Writes beyond the budget fail. If the disk limit causes a build failure, return a safe reason code and discard partial files. |
+| Time | 30 seconds each for queue wait, worker startup, and command execution, tracked separately. | Expire a queued request or stop a started attempt at its deadline. Record which phase timed out. |
+| Capacity | One allocated worker per [tenant](../../glossary/tenant.md), including provisioning and cleanup; at most two more waiting per tenant. | Queue a request only if space remains. Reject excess requests; never start a second Lamp worker while the first still holds its slot. |
 
 ## Do not mistake partial output for success
 
-If Lamp hits its disk limit while linking, a partial binary may exist, and tests may never start. Record the failing limit if the enforcing layer reported it. Return a short, redacted diagnostic, but do not mark the patch and test output as a completed result. A reviewer can request a fresh run after correcting the cause; an automatic retry with the same budget may just repeat the failure. Limit retained output separately so exporting logs cannot exhaust the review store.
+If Lamp hits its disk limit while linking, a partial binary may exist and tests may never start. For a failed, cancelled, or timed-out attempt, return status and a safe reason code, not the partial patch, raw log, or binary. Record the failing limit only if the enforcing layer reports it. The control plane stops the worker and follows the same [cleanup rules](sandbox-lifecycle.md#what-gets-deleted-and-when) as on success. An authorized requester may start a fresh attempt after fixing the cause; an automatic retry with the same budget may repeat the failure.
 
-See [Observability and debugging](observability-and-debugging.md) for how to distinguish a limit event from a denial or a failed build.
+The collector separately enforces [output size limits](../data-and-access/workspaces-and-artifacts.md#decide-what-leaves-work). A build and tests can pass but export still fail. Do not publish a partial pair in that case either.
+
+Next: [Observability and debugging](observability-and-debugging.md) explains how to distinguish a limit event from an access denial or failed build.
