@@ -1,4 +1,4 @@
-"""Check Markdown registrations and translation counterparts."""
+"""Check Markdown registrations and complete translation coverage."""
 
 import sys
 import tomllib
@@ -32,17 +32,22 @@ def main() -> int:
         for path in docs.rglob("*.md")
         if path.is_file()
     }
-    orphaned = []
-    for path in pages:
-        prefix, _, original = path.partition("/")
-        if prefix in extra.get("editions", {}) and original not in pages:
-            orphaned.append(path)
+    editions = extra.get("editions", {})
+    originals = {path for path in pages if path.partition("/")[0] not in editions}
+    orphaned = {
+        path for path in pages - originals if path.partition("/")[2] not in originals
+    }
+    missing_translations = {
+        f"{edition}/{path}" for path in originals for edition in editions
+    } - pages
+    stale_registrations = registered - pages - missing_translations
 
     failed = False
     for message, paths in (
         ("Register these Markdown pages in zensical.toml:", pages - registered),
-        ("Remove these missing pages from zensical.toml:", registered - pages),
+        ("Remove these missing pages from zensical.toml:", stale_registrations),
         ("Restore the English originals of these translations:", orphaned),
+        ("Add these missing translations under docs/:", missing_translations),
     ):
         if paths:
             failed = True
