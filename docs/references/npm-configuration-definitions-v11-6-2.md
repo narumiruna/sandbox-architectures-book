@@ -12,4 +12,4 @@ updated: "2026-11-22"
 
 ## Content
 
-Defines `--offline` to prevent network requests during installation and `--ignore-scripts` to skip package scripts except those explicitly requested.
+`--offline` prevents npm from fetching packages over the network. It does not block network access for lifecycle scripts. `--ignore-scripts` skips package scripts; commands such as `npm test` still run the requested script, but not its pre- or post-scripts.

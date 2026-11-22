@@ -12,4 +12,4 @@ updated: "2026-11-22"
 
 ## Content
 
-Describes how OpenCode uses Psychoscript to run JavaScript-like code that reaches files, networks, or APIs only through host-provided tools.
+Describes how OpenCode uses Psychoscript to run JavaScript-like code. The host can grant access through tools and extension functions exposed as globals, such as `fetch`. Calls to extension functions do not count toward `maxToolCalls`.
