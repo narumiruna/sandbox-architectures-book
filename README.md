@@ -16,7 +16,7 @@ Open [http://localhost:8000](http://localhost:8000). uv uses the dependencies in
 
 ## Edit and build
 
-Write pages in [`docs/`](docs/). To show a new page in the site menu, add it to `nav` in [`zensical.toml`](zensical.toml).
+Register every Markdown page in [`docs/`](docs/) in [`zensical.toml`](zensical.toml). Use paths relative to `docs/`: add pages shown in the site menu to `project.nav`, and add pages outside the menu (such as individual glossary terms) to `project.extra.unlisted_pages`.
 
 ```sh
 uv run --locked zensical build --strict
@@ -28,7 +28,7 @@ The build writes the site to `site/` and stops if it finds warnings.
 
 Install [prek](https://prek.j178.dev/), then run `prek install` to enable the checks in [`prek.toml`](prek.toml) before each commit. The checks clean up whitespace and line endings, flag large new files and private keys, and scan GitHub Actions workflows with zizmor.
 
-Run `prek run --all-files` to check tracked files on demand.
+Run `prek run --all-files` to run all hooks on demand. To check just the Markdown page registrations, run `prek run check-docs-coverage --all-files`. This hook uses uv and scans all Markdown files in `docs/`, including untracked files.
 
 ## Pi tools
 

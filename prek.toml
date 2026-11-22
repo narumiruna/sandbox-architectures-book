@@ -21,3 +21,14 @@ hooks = [
 repo = "https://github.com/zizmorcore/zizmor-pre-commit"
 rev = "v1.32.0"
 hooks = [{ id = "zizmor" }]
+
+[[repos]]
+repo = "local"
+
+[[repos.hooks]]
+id = "check-docs-coverage"
+name = "Check Markdown page coverage in zensical.toml"
+entry = "uv run --locked python scripts/check_docs_coverage.py"
+language = "system"
+always_run = true
+pass_filenames = false
