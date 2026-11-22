@@ -120,7 +120,7 @@ Docker と Kata の例では、A と B は guest kernel を共有します。App
 
 ## Agent Substrate：Kubernetes 上で Actor ごとに sandbox を分ける {#agent-substrate}
 
-[Agent Substrate](agent-substrate.md) は、あらかじめ起動した Kubernetes worker pods の pool で Actor を実行します。1 つの pod で複数の Actor が同時に動いても、それぞれ専用の gVisor sandbox または Cloud Hypervisor 上の Kata Containers microVM を使います。休止した Actor を snapshot に保存し、リクエストに応じて復元するので、Actor ごとに pod を動かし続ける必要はありません。
+[Agent Substrate](agent-substrate.md) は、あらかじめ起動した Kubernetes worker pods の pool で Actor を実行します。1 つの pod で複数の Actor が同時に動いても、それぞれ専用の gVisor sandbox または Cloud Hypervisor 上の Kata Containers microVM を使います。休止した Actor を [snapshot](glossary/snapshot.md) に保存し、リクエストに応じて復元するので、Actor ごとに pod を動かし続ける必要はありません。
 
 ## Code Mode：シェルではなく tool スクリプトを隔離する {#code-mode-isolating-tool-scripts-instead-of-shells}
 
@@ -167,7 +167,7 @@ host 側の tool ハンドラーは、呼び出し元に issue の読み取り�
 
 ## 2026年に進んでいる変化 {#what-is-changing-in-2026}
 
-1. **環境の準備は、起動から復元へ移りつつあります。** [E2B Runtime](https://github.com/e2b-dev/infra) は、起動済みの Firecracker テンプレートから復元し、sandbox の一時停止と再開に対応します。[Vercel Sandbox](https://vercel.com/docs/sandbox) も Firecracker を使い、[snapshot](glossary/snapshot.md) を利用できるようにしています。[Amazon Bedrock AgentCore Runtime V2](https://aws.amazon.com/about-aws/whats-new/2026/11/new-agentcore-runtime-default/) は、2026年11月12日に新規 runtime のデフォルトになり、準備済みの snapshot から microVM のセッションを復元します。[cold boot](glossary/cold-boot.md) と snapshot からの復元は区別してください。起動方式ごとに、最初のコマンドを実行できるようになるまでの待ち時間を計測します。snapshot にディスクの状態とメモリのどちらが含まれるか、または両方が含まれるか、さらに credential が含まれ得るかを確認してください。
+1. **環境の準備は、起動から復元へ移りつつあります。** [E2B Runtime](https://github.com/e2b-dev/infra) は、起動済みの Firecracker テンプレートから復元し、sandbox の一時停止と再開に対応します。[Vercel Sandbox](https://vercel.com/docs/sandbox) も Firecracker を使い、snapshot を利用できるようにしています。[Amazon Bedrock AgentCore Runtime V2](https://aws.amazon.com/about-aws/whats-new/2026/11/new-agentcore-runtime-default/) は、2026年11月12日に新規 runtime のデフォルトになり、準備済みの snapshot から microVM のセッションを復元します。[cold boot](glossary/cold-boot.md) と snapshot からの復元は区別してください。起動方式ごとに、最初のコマンドを実行できるようになるまでの待ち時間を計測します。snapshot にディスクの状態とメモリのどちらが含まれるか、または両方が含まれるか、さらに credential が含まれ得るかを確認してください。
 2. **Control plane と実行バックエンドの分離が進んでいます。** [Kubernetes Agent Sandbox](https://agent-sandbox.sigs.k8s.io/docs/) は、ライフサイクルを宣言的に管理する API、テンプレート、claim、[warm pool](glossary/warm-pool.md) を追加します。gVisor や Kata を使えますが、境界を決めるのは選択した runtime です。[NVIDIA OpenShell](https://github.com/NVIDIA/OpenShell) は policy レイヤーの一例です。ゲートウェイが sandbox へのアクセスを管理し、承認済みの外部接続先にだけ credential を渡すことができます。これらの機能は、実行境界とは分けて比較してください。
 3. **ハードウェアによる隔離は、host の KVM に限りません。** 2026年11月9日、[AWS は EKS、ECS、EC2 向けの Nitro Sandboxes を発表しました](https://aws.amazon.com/about-aws/whats-new/2026/11/nitro-sandboxes-eks-ecs-ec2/)。Nitro Sandboxes を使うように設定した EKS の pod や ECS のタスクには、それぞれ Nitro が管理する専用の VM が割り当てられます。EC2 では、Firecracker は親インスタンス内の KVM を使わずに guest を管理できます。
 4. **一つの agent が複数の境界を使えます。** Cloudflare は、少数のメソッドを呼ぶコード向けの isolate と、完全な環境を必要とするコード向けの Linux microVM を文書で説明しています。同じ使い分けは、ローカル環境や自前で運用する環境でも可能です。tool スクリプトは Wasm または restricted interpreter で実行し、ビルドやテストは必要な場合にだけ Linux sandbox に送ります。
