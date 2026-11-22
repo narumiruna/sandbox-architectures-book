@@ -20,4 +20,4 @@ Choose this boundary when an agent needs a full Linux [workspace](../../glossary
 
 The guest can use files the host chooses to expose. A writable shared project directory lets the guest change the host files in that directory. Check what the guest can access through storage and through the network. If you reuse a [snapshot](../../glossary/snapshot.md), check whether it contains disk data, memory, or both before sharing it.
 
-See the [architecture survey](../../agent-sandbox-architectures.md#hardware-backed-linux-environments) for VMMs and sandbox products that use them.
+See [MicroVM](microvm.md) for the smaller virtual device set and what to check before reusing VM state. See the [architecture survey](../../agent-sandbox-architectures.md#hardware-backed-linux-environments) for VMMs and sandbox products that use them.

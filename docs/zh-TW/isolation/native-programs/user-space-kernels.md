@@ -17,3 +17,5 @@
 ## 這個邊界不涵蓋什麼？ {#what-the-boundary-does-not-cover}
 
 Sentry 依照接收到的檔案系統檢視提供存取。它不負責決定 agent 應該能讀取哪些 Lamp 資料。請確認 [runtime](../../glossary/runtime.md) 只開放預期的 [workspace](../../glossary/workspace.md) 和網路存取。
+
+延伸閱讀：[gVisor](gvisor.md) 說明 Sentry 如何處理檔案請求，以及選用前要確認哪些相容性和存取要求。

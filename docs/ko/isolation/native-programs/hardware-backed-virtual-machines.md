@@ -21,3 +21,5 @@ Agent에 완전한 Linux [workspace](../../glossary/workspace.md)가 필요하�
 Guest는 host가 노출하기로 한 파일을 사용할 수 있습니다. 쓰기 가능한 공유 프로젝트 디렉터리가 있으면 guest는 그 디렉터리의 host 파일을 변경할 수 있습니다. Guest가 저장소와 네트워크를 통해 각각 무엇에 접근할 수 있는지 확인하세요. [snapshot](../../glossary/snapshot.md)을 재사용한다면 공유하기 전에 디스크 데이터와 메모리 중 무엇이 들어 있는지, 둘 다 들어 있는지 확인하세요.
 
 VMM과 이를 사용하는 sandbox 제품은 [아키텍처 조사](../../agent-sandbox-architectures.md#hardware-backed-linux-environments)를 참고하세요.
+
+가상 장치와 guest kernel을 공유하는 범위는 [MicroVM](microvm.md)에서 더 자세히 설명합니다.

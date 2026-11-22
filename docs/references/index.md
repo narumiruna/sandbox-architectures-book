@@ -57,6 +57,8 @@ This index lists the source records shared by all editions. The book and reposit
 - [Gondolin Agent Sandbox](gondolin-repository.md)
 - [Gondolin VM Backends: QEMU vs libkrun (main branch)](gondolin-vm-backends.md)
 - [gVisor Applications](gvisor-application-compatibility.md)
+- [gVisor Filesystem](gvisor-filesystem.md)
+- [gVisor Platforms](gvisor-platforms.md)
 - [Hyper-V APIs](microsoft-hyper-v-apis.md)
 - [Hypervisor Top Level Functional Specification](microsoft-hypervisor-tlfs.md)
 - [Install Docker Sandboxes](docker-sandboxes-installation.md)

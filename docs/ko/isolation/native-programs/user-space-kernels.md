@@ -17,3 +17,5 @@ Linux [container](../../glossary/container.md)를 실행해야 하지만 workloa
 ## 이 경계가 보호하지 않는 범위 {#what-the-boundary-does-not-cover}
 
 Sentry는 자신에게 주어진 범위의 파일 시스템을 보여 줍니다. Agent에 어떤 Lamp 데이터를 읽을 권한을 줄지는 Sentry가 결정하지 않습니다. [runtime](../../glossary/runtime.md)이 의도한 [workspace](../../glossary/workspace.md)와 네트워크 접근만 제공하는지 확인하세요.
+
+플랫폼별 차이와 선택 전에 확인할 사항은 [gVisor](gvisor.md)를 참고하세요.

@@ -17,3 +17,5 @@ Choose this boundary when you need to run Linux [containers](../../glossary/cont
 ## What the boundary does not cover
 
 The Sentry serves the filesystem view it is given. It does not decide which Lamp data the agent should be allowed to read. Verify that the [runtime](../../glossary/runtime.md) exposes only the intended [workspace](../../glossary/workspace.md) and network access.
+
+See [gVisor](gvisor.md) for how its runtime exposes files and what changes when it uses KVM.

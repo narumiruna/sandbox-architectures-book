@@ -18,6 +18,9 @@ nav = [
       { "Hardware-backed virtual machines" = "isolation/native-programs/hardware-backed-virtual-machines.md" },
       { "User-space kernels" = "isolation/native-programs/user-space-kernels.md" },
       { "Operating-system process sandboxes" = "isolation/native-programs/operating-system-process-sandboxes.md" },
+      { "MicroVM" = "isolation/native-programs/microvm.md" },
+      { "gVisor" = "isolation/native-programs/gvisor.md" },
+      { "MicroVM vs gVisor" = "isolation/native-programs/microvm-vs-gvisor.md" },
     ] },
     { "Language and module runtimes" = [
       { "WebAssembly" = "isolation/generated-scripts/webassembly.md" },
@@ -62,6 +65,9 @@ nav = [
         { "使用硬體輔助虛擬化的 VM" = "zh-TW/isolation/native-programs/hardware-backed-virtual-machines.md" },
         { "User-space kernel" = "zh-TW/isolation/native-programs/user-space-kernels.md" },
         { "作業系統層級的 process sandbox" = "zh-TW/isolation/native-programs/operating-system-process-sandboxes.md" },
+        { "MicroVM" = "zh-TW/isolation/native-programs/microvm.md" },
+        { "gVisor" = "zh-TW/isolation/native-programs/gvisor.md" },
+        { "MicroVM vs gVisor" = "zh-TW/isolation/native-programs/microvm-vs-gvisor.md" },
       ] },
       { "語言與模組 runtime" = [
         { "WebAssembly" = "zh-TW/isolation/generated-scripts/webassembly.md" },
@@ -107,6 +113,9 @@ nav = [
         { "ハードウェア支援型の VM" = "ja/isolation/native-programs/hardware-backed-virtual-machines.md" },
         { "User-space kernel" = "ja/isolation/native-programs/user-space-kernels.md" },
         { "OS の process sandbox" = "ja/isolation/native-programs/operating-system-process-sandboxes.md" },
+        { "MicroVM" = "ja/isolation/native-programs/microvm.md" },
+        { "gVisor" = "ja/isolation/native-programs/gvisor.md" },
+        { "MicroVM vs gVisor" = "ja/isolation/native-programs/microvm-vs-gvisor.md" },
       ] },
       { "言語と module の runtime" = [
         { "WebAssembly" = "ja/isolation/generated-scripts/webassembly.md" },
@@ -152,6 +161,9 @@ nav = [
         { "하드웨어 지원을 받는 Virtual machine" = "ko/isolation/native-programs/hardware-backed-virtual-machines.md" },
         { "User-space kernel 사용 방식" = "ko/isolation/native-programs/user-space-kernels.md" },
         { "운영체제 Process Sandbox" = "ko/isolation/native-programs/operating-system-process-sandboxes.md" },
+        { "MicroVM" = "ko/isolation/native-programs/microvm.md" },
+        { "gVisor" = "ko/isolation/native-programs/gvisor.md" },
+        { "MicroVM vs gVisor" = "ko/isolation/native-programs/microvm-vs-gvisor.md" },
       ] },
       { "언어 및 module runtime" = [
         { "WebAssembly" = "ko/isolation/generated-scripts/webassembly.md" },
@@ -323,6 +335,8 @@ unlisted_pages = [
   "references/google-cloud-run-execution-environments.md",
   "references/google-cloud-storage-introduction.md",
   "references/gvisor-application-compatibility.md",
+  "references/gvisor-filesystem.md",
+  "references/gvisor-platforms.md",
   "references/gvisor-security-introduction.md",
   "references/intel-64-ia-32-developer-manuals.md",
   "references/intel-sdm-volume-3c-326019-093us.md",

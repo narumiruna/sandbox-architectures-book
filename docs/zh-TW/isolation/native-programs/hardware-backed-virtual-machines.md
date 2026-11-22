@@ -21,3 +21,5 @@
 Guest 可以使用 host 選擇開放的檔案。如果共用專案目錄可寫入，guest 就能修改其中的 host 檔案。請確認 guest 能透過儲存空間和網路存取哪些資源。如果要重複使用 [snapshot](../../glossary/snapshot.md)，請在分享前確認它包含磁碟資料、記憶體內容，還是兩者都有。
 
 如需了解有哪些 VMM，以及哪些 sandbox 產品使用這些 VMM，請參閱[架構概覽](../../agent-sandbox-architectures.md#hardware-backed-linux-environments)。
+
+延伸閱讀：[MicroVM](microvm.md) 說明虛擬裝置、guest kernel 和 snapshot 如何影響工作環境。

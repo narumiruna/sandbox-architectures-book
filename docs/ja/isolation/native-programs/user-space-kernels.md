@@ -17,3 +17,5 @@ Linux [containers](../../glossary/container.md) を実行する必要があり�
 ## この境界では制限できないこと {#what-the-boundary-does-not-cover}
 
 Sentry は、与えられた範囲のファイルシステムを提供します。Lamp のどのデータを agent が読み取ってよいかを決めるのは Sentry ではありません。[runtime](../../glossary/runtime.md) が、意図した [workspace](../../glossary/workspace.md) とネットワークアクセスだけを提供していることを確認してください。
+
+Sentry の仕組みと導入前の確認事項については、[gVisor](gvisor.md) を参照してください。

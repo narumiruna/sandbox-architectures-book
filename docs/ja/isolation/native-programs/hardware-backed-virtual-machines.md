@@ -21,3 +21,5 @@ agent に完全な Linux [workspace](../../glossary/workspace.md) が必要で�
 guest は、host が公開することを選んだファイルを利用できます。プロジェクトの共有ディレクトリが書き込み可能なら、guest はその中にある host のファイルを変更できます。guest がストレージやネットワーク経由で何にアクセスできるか確認してください。[snapshot](../../glossary/snapshot.md) を再利用する場合は、共有する前に、ディスクのデータとメモリの内容のどちらが含まれるか、あるいは両方が含まれるかを確認してください。
 
 VMM と、それを利用する sandbox 製品については、[アーキテクチャの概説](../../agent-sandbox-architectures.md#hardware-backed-linux-environments)を参照してください。
+
+仮想デバイスを絞った VM の仕組みと選び方については、[MicroVM](microvm.md) を参照してください。
