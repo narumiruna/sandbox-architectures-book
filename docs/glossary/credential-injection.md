@@ -22,14 +22,14 @@ config:
 sequenceDiagram
     accTitle: A proxy adds a credential only to approved requests
     accDescr: The proxy checks a request from the sandboxed build. It adds a token only to an approved request sent to the package registry. It returns the package without the token, or denies the request without contacting the registry.
-    participant Build as Build sandbox
+    participant Build as Sandbox
     participant Proxy as Proxy
     participant Registry as Registry
 
     Build->>Proxy: Request package
     Note over Proxy: Check policy
     alt Approved
-        Proxy->>Registry: Request with token
+        Proxy->>Registry: Get with token
         Registry-->>Proxy: Package
         Proxy-->>Build: Package only
     else Rejected

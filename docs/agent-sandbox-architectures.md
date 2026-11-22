@@ -22,20 +22,35 @@ Start with [Sandbox isolation boundaries](sandbox-isolation-boundaries.md) for t
 
 ### Which workloads share a guest kernel?
 
-The [isolation unit](glossary/isolation-unit.md) is the set of workloads that share one instance of a boundary. Each box below is a separate VM with its own guest kernel.
+The [isolation unit](glossary/isolation-unit.md) is the set of workloads that share one instance of a boundary. Compare where two example containers, A and B, run in each implementation.
 
 ```mermaid
+---
+config:
+  flowchart:
+    rankSpacing: 24
+    nodeSpacing: 16
+    wrappingWidth: 106
+---
 flowchart TB
     accTitle: Virtual machine boundaries in three container environments
     accDescr: Docker Sandboxes can run several containers in one sandbox VM, Apple container starts a VM for each container, and Kata can run several containers in one Kubernetes pod VM.
-    Docker["Docker Sandboxes: one sandbox VM<br/>Docker daemon and containers A and B"]
-    AppleA["Apple container: one VM<br/>Container A"]
-    AppleB["Apple container: another VM<br/>Container B"]
-    Kata["Kata: one VM for a Kubernetes pod<br/>Containers A and B"]
-    Docker ~~~ AppleA ~~~ AppleB ~~~ Kata
+    subgraph Docker["Docker Sandboxes: one VM"]
+        direction LR
+        DA["Container A"] ~~~ DB["Container B"]
+    end
+    subgraph Apple["Apple container: two VMs"]
+        direction LR
+        AA["VM for A"] ~~~ AB["VM for B"]
+    end
+    subgraph Kata["Kata: one VM per pod"]
+        direction LR
+        KA["Container A"] ~~~ KB["Container B"]
+    end
+    Docker ~~~ Apple ~~~ Kata
 ```
 
-The letters identify example containers within each implementation. If two workloads must be isolated from each other at the VM boundary, check whether the runtime places them in the same guest.
+A and B share a guest kernel in the Docker and Kata examples. In the Apple example they run in separate VMs. If two workloads must be isolated from each other at the VM boundary, check whether the runtime places them in the same guest.
 
 ## Containers and processes without a guest Linux kernel
 
