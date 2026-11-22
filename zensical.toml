@@ -12,7 +12,19 @@ repo_name = "narumiruna/sandbox-architectures-book"
 
 nav = [
   { "Home" = "index.md" },
-  { "Sandbox isolation boundaries" = "sandbox-isolation-boundaries.md" },
+  { "Sandbox isolation boundaries" = [
+    { "Overview" = "sandbox-isolation-boundaries.md" },
+    { "Native program sandboxes" = [
+      { "Hardware-backed virtual machines" = "isolation/native-programs/hardware-backed-virtual-machines.md" },
+      { "User-space kernels" = "isolation/native-programs/user-space-kernels.md" },
+      { "Operating-system process sandboxes" = "isolation/native-programs/operating-system-process-sandboxes.md" },
+    ] },
+    { "Generated script sandboxes" = [
+      { "WebAssembly" = "isolation/generated-scripts/webassembly.md" },
+      { "Engine isolates" = "isolation/generated-scripts/engine-isolates.md" },
+      { "Restricted interpreters" = "isolation/generated-scripts/restricted-interpreters.md" },
+    ] },
+  ] },
   { "Agent sandbox architectures" = "agent-sandbox-architectures.md" },
   { "Glossary" = "glossary.md" },
 ]
