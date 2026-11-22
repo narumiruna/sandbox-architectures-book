@@ -14,13 +14,67 @@
 
 | 프로젝트 | 제공하는 기능 | 경계와 범위 |
 | --- | --- | --- |
-| [Docker Sandboxes (`sbx`)](https://docs.docker.com/ai/sandboxes/architecture/) | 바로 사용할 수 있는 코딩 agent 환경 | 각 로컬 sandbox는 자체 Docker 데몬을 갖춘 [microVM](glossary/microvm.md)에서 실행됩니다. Agent는 [container](glossary/container.md)를 빌드하고 실행할 수 있으며, 이때 [host](glossary/host.md)의 Docker 소켓에 접근할 필요가 없습니다. Host [workspace](glossary/workspace.md)의 [mount](glossary/mount.md)와 아웃바운드 프록시를 신뢰할지는 별도로 판단해야 합니다. [로컬 설치](https://docs.docker.com/ai/sandboxes/install/) 문서에서 macOS, Windows, Linux의 요구 사항을 확인할 수 있습니다. |
+| [Docker Sandboxes (`sbx`)](https://docs.docker.com/ai/sandboxes/architecture/) | 바로 사용할 수 있는 코딩 agent 환경 | 각 로컬 sandbox는 자체 [Docker Engine](https://docs.docker.com/engine/)을 갖춘 [microVM](glossary/microvm.md)에서 실행됩니다. VM이 무엇을 격리하고 무엇을 격리하지 않는지는 [Docker Sandboxes 사례](#docker-sandboxes)를 참조합니다. [로컬 설치](https://docs.docker.com/ai/sandboxes/install/) 문서에서 macOS, Windows, Linux의 요구 사항을 확인할 수 있습니다. |
 | [libkrun](https://github.com/containers/libkrun) | Rust와 C API를 제공하는 내장형 VMM 라이브러리 | Linux에서는 [KVM](glossary/kernel-based-virtual-machine.md), Apple silicon에서는 [Hypervisor Framework](https://developer.apple.com/documentation/hypervisor)를 사용합니다. 호출자가 노출할 host 파일과 장치를 정합니다. [Gondolin](https://github.com/earendil-works/gondolin/blob/main/docs/backends.md)은 libkrun이나 QEMU를 VMM으로 사용할 수 있는 sandbox 계층입니다. |
 | [Cloud Hypervisor](https://github.com/cloud-hypervisor/cloud-hypervisor) | 범용 클라우드 VMM | KVM이나 [MSHV](glossary/microsoft-hypervisor.md)에서 실행되며 Linux와 Windows [guest](glossary/guest.md)를 지원합니다. 이는 백엔드이며, workspace와 [credential](glossary/credential.md) policy까지 갖춘 완전한 agent sandbox는 아닙니다. |
 | [Firecracker](https://github.com/firecracker-microvm/firecracker) | MicroVM용 최소 기능 VMM | 일반적인 배포에서는 Linux에서 KVM을 사용합니다. 원본 프로젝트에는 host KVM 대신 AWS Nitro를 사용하는 [AWS Nitro Sandboxes 백엔드](https://github.com/firecracker-microvm/firecracker/tree/main/docs/nitro-sandboxes)도 문서화되어 있습니다. |
 | [Kata Containers](https://github.com/kata-containers/kata-containers/blob/main/docs/design/architecture/README.md) | VM을 기반으로 하는 [container runtime](glossary/container-runtime.md) | [Kubernetes](https://kubernetes.io/docs/concepts/overview/)에서 [pod](glossary/pod.md)는 guest VM에서 실행되며, 해당 pod의 container는 guest [kernel](glossary/kernel.md)을 공유할 수 있습니다. Kata는 QEMU, Cloud Hypervisor, Firecracker를 포함한 [여러 VMM을 지원합니다](https://github.com/kata-containers/kata-containers/blob/main/docs/hypervisors.md). Kata와 Firecracker는 서로 다른 계층이며, 서로를 직접 대체하지 않습니다. |
 | [Microsoft NVX](https://github.com/microsoft/nvx/blob/42f413d226290e31ea288686d6f3dbfd20c45733/README.md) | OpenVMM 기반 microVM 스택과 guest runtime | KVM이나 MSHV를 사용하는 Linux host와 [Windows Hypervisor Platform](glossary/windows-hypervisor-platform.md)을 사용하는 Windows host를 문서에서 다룹니다. Guest runtime은 [Linux microVM당 하나의 workload sandbox](https://github.com/microsoft/nvx/blob/42f413d226290e31ea288686d6f3dbfd20c45733/doc/design/4-guest-runtime-architecture.md)를 목표로 합니다. |
 | [Apple `container`](https://github.com/apple/container/blob/main/docs/technical-overview.md) | Apple silicon용 로컬 [OCI](glossary/open-container-initiative.md) container 도구 | Apple의 [Virtualization framework](https://developer.apple.com/documentation/virtualization)를 통해 **container마다** 경량 Linux VM을 실행합니다. [container image](glossary/container-image.md)를 입력으로 받지만 isolation boundary는 user-space kernel이 아니라 VM입니다. |
+
+### Docker Sandboxes: sandbox마다 VM 하나 {#docker-sandboxes}
+
+Docker Sandboxes의 로컬 sandbox마다 별도의 Linux [guest kernel](glossary/guest.md)이 있습니다. 하지만 쓰기 권한을 주고 공유한 [host](glossary/host.md) [workspace](glossary/workspace.md)는 agent가 수정할 수 있습니다. Kaan Yagci의 [*Wait, Docker Sandboxes Aren’t Containers?*](https://x.com/i/article/2119903254867775488)에서 짚는 차이가 바로 이것입니다. Sandbox는 실행 환경을 분리하지만 agent가 접근할 수 있는 모든 자원까지 격리하지는 않습니다.
+
+macOS와 Windows에서 [Docker Desktop은 Linux container를 Linux VM에서 실행합니다](https://docs.docker.com/desktop/features/vmm/). 이 [container](glossary/container.md)들은 해당 VM의 [kernel](glossary/kernel.md)을 공유합니다. [Docker Sandboxes](https://docs.docker.com/ai/sandboxes/security/isolation/#hypervisor-isolation)에서 VM 경계는 sandbox가 시작하는 각 container가 아니라 sandbox 하나를 둘러쌉니다.
+
+```mermaid
+---
+config:
+  flowchart:
+    rankSpacing: 16
+    nodeSpacing: 12
+---
+flowchart TB
+    accTitle: Shared versus separate Linux kernels
+    accDescr: Two Docker Desktop containers share one Linux VM kernel. Two local Docker Sandboxes run in separate microVMs, each with its own kernel.
+    subgraph Desktop["Docker Desktop VM"]
+        Containers["Containers A and B"] --> Shared["Shared Linux kernel"]
+    end
+    subgraph First["Sandbox A microVM"]
+        KA["Linux kernel A"]
+    end
+    subgraph Second["Sandbox B microVM"]
+        KB["Linux kernel B"]
+    end
+    Desktop ~~~ First ~~~ Second
+```
+
+Agent의 Docker 명령은 [sandbox 내부의 Docker Engine](https://docs.docker.com/ai/sandboxes/security/isolation/#docker-engine-isolation)으로 전달됩니다. 이 엔진은 host의 Docker 소켓에 접근하지 않고도 image를 빌드하고 container를 실행할 수 있습니다. 파일 쓰기는 다른 경로를 따릅니다. 쓰기 가능한 [mount](glossary/mount.md)가 있으면 변경 사항이 host의 프로젝트 폴더에 바로 반영됩니다.
+
+```mermaid
+---
+config:
+  flowchart:
+    rankSpacing: 16
+    nodeSpacing: 14
+    wrappingWidth: 128
+---
+flowchart TB
+    accTitle: Docker commands and workspace writes take different paths
+    accDescr: The agent sends Docker commands to the engine inside the microVM. It can still write to a mounted host project. The usual Docker Engine is outside the sandbox and not on either path.
+    subgraph VM["Sandbox microVM"]
+        Agent["Agent"] -->|Docker commands| Engine["Private Docker Engine"]
+    end
+    Agent -->|Writes through mount| Project["Host project folder"]
+    Project ~~~ Usual["Host Docker Engine"]
+```
+
+Sandbox 전용 엔진은 [네트워크 policy](practice/data-and-access/network-policy.md)를 대신하지 않습니다. 예를 들어 [Docker context](https://docs.docker.com/engine/manage-resources/contexts/)가 운영 환경의 Docker Engine을 가리키고, 네트워크가 연결을 허용하며, agent가 인증할 수 있다면 그 엔진에 접근할 수 있습니다. Sandbox 안팎에서 `docker context ls`의 출력을 비교하면 클라이언트 설정은 확인할 수 있지만, 운영 환경으로의 접근이 차단되는지는 확인할 수 없습니다.
+
+[로컬 workspace](https://docs.docker.com/ai/sandboxes/security/isolation/#workspace-isolation)의 경우 `sbx run`에 경로를 지정하지 않으면 현재 디렉터리를 쓰기 가능한 workspace로 사용합니다. Sandbox를 삭제해도 해당 디렉터리의 변경 사항은 되돌아가지 않습니다. 비공개 Git 복제본에서 변경 사항을 검토한 뒤 원본에 반영합니다. 프로젝트 파일이 필요 없다면 host workspace 없이 sandbox를 만듭니다. 비공개 복제본을 사용해도 VM 안에서 원본 저장소를 읽을 수 있습니다.
+
+[클라우드 sandbox](https://docs.docker.com/ai/sandboxes/cloud/local-vs-cloud/)는 노트북의 폴더를 mount하지 않고 Docker가 관리하는 인프라에서 실행됩니다. 작업을 실행한 채 자리를 비우기 전에 제한 시간과 그 시간이 지나면 sandbox가 어떻게 처리되는지 확인합니다.
 
 ### 어떤 workload가 guest kernel을 공유합니까? {#which-workloads-share-a-guest-kernel}
 

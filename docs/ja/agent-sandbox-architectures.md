@@ -14,13 +14,67 @@
 
 | プロジェクト | 提供するもの | 境界と適用範囲 |
 | --- | --- | --- |
-| [Docker Sandboxes (`sbx`)](https://docs.docker.com/ai/sandboxes/architecture/) | すぐに使えるコーディング agent 環境 | ローカルの各 sandbox は、専用の Docker デーモンを持つ [microVM](glossary/microvm.md) 内で動きます。agent は [container](glossary/container.md) をビルドして実行できます。その際、[host](glossary/host.md) の Docker ソケットにアクセスする必要はありません。host の [workspace](glossary/workspace.md) の [mount](glossary/mount.md) と外向き通信のプロキシをどこまで信頼するかは、それぞれ別に判断します。[ローカルへのインストール](https://docs.docker.com/ai/sandboxes/install/)には、macOS、Windows、Linux の要件が記載されています。 |
+| [Docker Sandboxes (`sbx`)](https://docs.docker.com/ai/sandboxes/architecture/) | すぐに使えるコーディング agent 環境 | ローカルの各 sandbox は、専用の [Docker Engine](https://docs.docker.com/engine/) を持つ [microVM](glossary/microvm.md) 内で動きます。VM が何を隔離し、何を隔離しないかは、[Docker Sandboxes の事例](#docker-sandboxes)を参照してください。[ローカルへのインストール](https://docs.docker.com/ai/sandboxes/install/)には、macOS、Windows、Linux の要件が記載されています。 |
 | [libkrun](https://github.com/containers/libkrun) | Rust と C の API を持つ組み込み用 VMM ライブラリ | Linux では [KVM](glossary/kernel-based-virtual-machine.md)、Apple silicon では [Hypervisor Framework](https://developer.apple.com/documentation/hypervisor) を使います。どの host ファイルやデバイスを公開するかは、呼び出し元が決めます。[Gondolin](https://github.com/earendil-works/gondolin/blob/main/docs/backends.md) は、libkrun または QEMU を VMM として使える sandbox レイヤーです。 |
 | [Cloud Hypervisor](https://github.com/cloud-hypervisor/cloud-hypervisor) | クラウド向けの汎用 VMM | KVM または [MSHV](glossary/microsoft-hypervisor.md) 上で動作し、Linux と Windows の [guest](glossary/guest.md) をサポートします。これはバックエンドであり、workspace と [credential](glossary/credential.md) の policy を備えた完全な agent sandbox ではありません。 |
 | [Firecracker](https://github.com/firecracker-microvm/firecracker) | microVM 向けの最小構成の VMM | 通常の構成では Linux 上で KVM を使います。開発元の文書には、host の KVM の代わりに AWS Nitro を使う [AWS Nitro Sandboxes バックエンド](https://github.com/firecracker-microvm/firecracker/tree/main/docs/nitro-sandboxes)も記載されています。 |
 | [Kata Containers](https://github.com/kata-containers/kata-containers/blob/main/docs/design/architecture/README.md) | VM を使う [container runtime](glossary/container-runtime.md) | [Kubernetes](https://kubernetes.io/docs/concepts/overview/) では、[pod](glossary/pod.md) が guest VM 内で動き、その pod 内の container は guest の [kernel](glossary/kernel.md) を共有できます。Kata は QEMU、Cloud Hypervisor、Firecracker など、[複数の VMM をサポートしています](https://github.com/kata-containers/kata-containers/blob/main/docs/hypervisors.md)。Kata と Firecracker は異なるレイヤーを担うため、互いに直接置き換えられるものではありません。 |
 | [Microsoft NVX](https://github.com/microsoft/nvx/blob/42f413d226290e31ea288686d6f3dbfd20c45733/README.md) | OpenVMM ベースの microVM スタックと guest runtime | KVM または MSHV を使う Linux host と、[Windows Hypervisor Platform](glossary/windows-hypervisor-platform.md) を使う Windows host が文書に記載されています。guest runtime は、[Linux microVM ごとに一つの workload sandbox](https://github.com/microsoft/nvx/blob/42f413d226290e31ea288686d6f3dbfd20c45733/doc/design/4-guest-runtime-architecture.md) を動かす構成を想定しています。 |
 | [Apple `container`](https://github.com/apple/container/blob/main/docs/technical-overview.md) | Apple silicon 向けのローカル [OCI](glossary/open-container-initiative.md) container ツール | Apple の [Virtualization framework](https://developer.apple.com/documentation/virtualization) を使い、**container ごとに**軽量な Linux VM を動かします。入力は [container image](glossary/container-image.md) ですが、isolation boundary は user-space kernel ではなく VM です。 |
+
+### Docker Sandboxes：sandbox ごとに一つの VM {#docker-sandboxes}
+
+ローカルの Docker Sandboxes では、sandbox ごとに独自の Linux [guest kernel](glossary/guest.md) が動きます。ただし、書き込みを許可して共有した [host](glossary/host.md) の [workspace](glossary/workspace.md) は、agent から編集できます。Kaan Yagci の [*Wait, Docker Sandboxes Aren’t Containers?*](https://x.com/i/article/2119903254867775488) が取り上げるのもこの違いです。sandbox は実行環境を隔離しますが、agent がアクセスできるリソースをすべて隔離するわけではありません。
+
+macOS と Windows では、[Docker Desktop は Linux container を Linux VM 内で実行します](https://docs.docker.com/desktop/features/vmm/)。それらの [container](glossary/container.md) は、その VM の [kernel](glossary/kernel.md) を共有します。[Docker Sandboxes](https://docs.docker.com/ai/sandboxes/security/isolation/#hypervisor-isolation) では、起動する container ごとではなく、sandbox ごとに VM の境界が設けられます。
+
+```mermaid
+---
+config:
+  flowchart:
+    rankSpacing: 16
+    nodeSpacing: 12
+---
+flowchart TB
+    accTitle: Shared versus separate Linux kernels
+    accDescr: Two Docker Desktop containers share one Linux VM kernel. Two local Docker Sandboxes run in separate microVMs, each with its own kernel.
+    subgraph Desktop["Docker Desktop VM"]
+        Containers["Containers A and B"] --> Shared["Shared Linux kernel"]
+    end
+    subgraph First["Sandbox A microVM"]
+        KA["Linux kernel A"]
+    end
+    subgraph Second["Sandbox B microVM"]
+        KB["Linux kernel B"]
+    end
+    Desktop ~~~ First ~~~ Second
+```
+
+agent の Docker コマンドは、[sandbox 内の Docker Engine](https://docs.docker.com/ai/sandboxes/security/isolation/#docker-engine-isolation) に送られます。この Engine は、host の Docker ソケットにアクセスせずに image をビルドし、container を実行できます。ファイルの書き込みは別の経路を通ります。書き込み可能な [mount](glossary/mount.md) がある場合、変更は host のプロジェクトフォルダーに直接反映されます。
+
+```mermaid
+---
+config:
+  flowchart:
+    rankSpacing: 16
+    nodeSpacing: 14
+    wrappingWidth: 128
+---
+flowchart TB
+    accTitle: Docker commands and workspace writes take different paths
+    accDescr: The agent sends Docker commands to the engine inside the microVM. It can still write to a mounted host project. The usual Docker Engine is outside the sandbox and not on either path.
+    subgraph VM["Sandbox microVM"]
+        Agent["Agent"] -->|Docker commands| Engine["Private Docker Engine"]
+    end
+    Agent -->|Writes through mount| Project["Host project folder"]
+    Project ~~~ Usual["Host Docker Engine"]
+```
+
+専用の Docker Engine は、[ネットワークの policy](practice/data-and-access/network-policy.md) の代わりにはなりません。たとえば、agent の [Docker context](https://docs.docker.com/engine/manage-resources/contexts/) が本番環境の Docker Engine を指し、ネットワークが接続を許可し、認証も通るなら、agent はその Engine に接続できます。sandbox の内外で `docker context ls` の出力を比較して確認できるのは、クライアントの設定です。本番環境へのアクセスが遮断されているかどうかは確認できません。
+
+[ローカルの workspace](https://docs.docker.com/ai/sandboxes/security/isolation/#workspace-isolation) では、`sbx run` にパスを指定しないと、カレントディレクトリが書き込み可能な workspace になります。sandbox を削除しても、そのディレクトリへの変更は元に戻りません。専用の Git クローンを使い、変更を確認してから元のリポジトリに取り込んでください。プロジェクトのファイルが不要なら、host の workspace を使わずに sandbox を作成してください。専用のクローンを使っても、元のリポジトリの内容は VM 内から読み取れます。
+
+[クラウドの sandbox](https://docs.docker.com/ai/sandboxes/cloud/local-vs-cloud/) は、手元のノートパソコンのフォルダーを mount せず、Docker が管理するインフラストラクチャ上で動きます。ジョブを無人で実行する前に、タイムアウトまでの時間と、期限に達したときに sandbox がどうなるかを確認してください。
 
 ### どの workload が guest kernel を共有するか {#which-workloads-share-a-guest-kernel}
 
