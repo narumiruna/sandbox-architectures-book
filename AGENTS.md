@@ -3,6 +3,7 @@
 ## Communication
 
 - Write book content in English and use the [glossary](docs/glossary.md) for shared terminology.
+  - [UNREVIEWED] For translated copies of the English original, follow the [translation edition rules](README.md#translation-editions).
 - Layer explanations so beginners can grasp the main idea without prior knowledge and experienced readers can find technical details quickly.
   - State the main point in plain language near the start; lead with one compact visual if it makes the point clearer.
   - Define essential terms at first use and use one concrete example or analogy when it helps, noting any limit of the analogy that could mislead.
