@@ -12,45 +12,45 @@ repo_name = "narumiruna/sandbox-architectures-book"
 
 nav = [
   { "Home" = "index.md" },
-  { "Sandbox isolation boundaries" = [
-    { "Overview" = "sandbox-isolation-boundaries.md" },
-    { "Native program sandboxes" = [
+  { "Foundations" = [
+    { "Sandbox isolation boundaries" = "sandbox-isolation-boundaries.md" },
+    { "Operating-system workloads" = [
       { "Hardware-backed virtual machines" = "isolation/native-programs/hardware-backed-virtual-machines.md" },
       { "User-space kernels" = "isolation/native-programs/user-space-kernels.md" },
       { "Operating-system process sandboxes" = "isolation/native-programs/operating-system-process-sandboxes.md" },
     ] },
-    { "Generated script sandboxes" = [
+    { "Language and module runtimes" = [
       { "WebAssembly" = "isolation/generated-scripts/webassembly.md" },
       { "Engine isolates" = "isolation/generated-scripts/engine-isolates.md" },
       { "Restricted interpreters" = "isolation/generated-scripts/restricted-interpreters.md" },
     ] },
   ] },
-  { "Agent sandbox architectures" = "agent-sandbox-architectures.md" },
-  { "Sandboxes in practice" = [
-    { "Design" = [
-      { "From issue to patch" = "practice/design/from-issue-to-patch.md" },
-      { "Choosing a sandbox" = "practice/design/choosing-a-sandbox.md" },
-      { "Tool authorization" = "practice/design/tool-authorization.md" },
-      { "Deployment patterns" = "practice/design/deployment-patterns.md" },
-    ] },
-    { "Data and access" = [
-      { "Workspaces and artifacts" = "practice/data-and-access/workspaces-and-artifacts.md" },
-      { "Network policy" = "practice/data-and-access/network-policy.md" },
-      { "Credentials and identity" = "practice/data-and-access/credentials-and-identity.md" },
-      { "Multi-tenant isolation" = "practice/data-and-access/multi-tenant-isolation.md" },
-    ] },
-    { "Operations" = [
-      { "Control planes" = "practice/operations/control-planes.md" },
-      { "Sandbox lifecycle" = "practice/operations/sandbox-lifecycle.md" },
-      { "Resource limits" = "practice/operations/resource-limits.md" },
-      { "Observability and debugging" = "practice/operations/observability-and-debugging.md" },
-    ] },
-    { "Verification" = [
-      { "Measuring a sandbox" = "practice/verification/measuring-a-sandbox.md" },
-      { "Verifying access rules" = "practice/verification/verifying-access-rules.md" },
-    ] },
+  { "Design a sandbox" = [
+    { "From issue to patch" = "practice/design/from-issue-to-patch.md" },
+    { "Choosing a sandbox" = "practice/design/choosing-a-sandbox.md" },
+    { "Deployment patterns" = "practice/design/deployment-patterns.md" },
   ] },
-  { "Glossary" = "glossary.md" },
+  { "Set access rules" = [
+    { "Tool authorization" = "practice/design/tool-authorization.md" },
+    { "Workspaces and artifacts" = "practice/data-and-access/workspaces-and-artifacts.md" },
+    { "Network policy" = "practice/data-and-access/network-policy.md" },
+    { "Credentials and identity" = "practice/data-and-access/credentials-and-identity.md" },
+    { "Multi-tenant isolation" = "practice/data-and-access/multi-tenant-isolation.md" },
+  ] },
+  { "Operate a sandbox" = [
+    { "Control planes" = "practice/operations/control-planes.md" },
+    { "Sandbox lifecycle" = "practice/operations/sandbox-lifecycle.md" },
+    { "Resource limits" = "practice/operations/resource-limits.md" },
+    { "Observability and debugging" = "practice/operations/observability-and-debugging.md" },
+  ] },
+  { "Verify a sandbox" = [
+    { "Verifying access rules" = "practice/verification/verifying-access-rules.md" },
+    { "Measuring a sandbox" = "practice/verification/measuring-a-sandbox.md" },
+  ] },
+  { "Reference" = [
+    { "Agent sandbox architectures" = "agent-sandbox-architectures.md" },
+    { "Glossary" = "glossary.md" },
+  ] },
 ]
 
 # extra_css = ["stylesheets/extra.css"]

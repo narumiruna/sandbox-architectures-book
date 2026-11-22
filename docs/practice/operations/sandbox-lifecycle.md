@@ -2,7 +2,7 @@
 
 Starting a worker and attaching a project's files are separate steps. Whether the worker boots, comes from a pool, or resumes saved state, it must receive the right workspace and restrictions before it can run. Destroying the worker does not delete outputs already sent for review.
 
-**Illustrative example:** A read-only tool retrieves LAMP-17, a report that adding two item counts in Lamp gives the wrong total. A separate Linux worker compiles a tiny C program, runs tests, and returns a text patch and test output. It cannot publish.
+Follow the Linux worker from the [Lamp example](../design/from-issue-to-patch.md) to see what stays with the worker and what survives in review storage.
 
 ## From create to destroy
 

@@ -2,7 +2,7 @@
 
 The [control plane](../../glossary/control-plane.md) decides where a sandbox runs, what it receives, and when to remove it. The [runtime](../../glossary/runtime.md) runs the code inside an [isolation boundary](../../glossary/isolation-boundary.md). Even a strong boundary cannot protect a project if the control plane attaches that project's files to the wrong session.
 
-**Illustrative example:** A read-only tool retrieves issue LAMP-17 in project Lamp: adding two item counts gives the wrong total. A separate Linux worker compiles a tiny C program, runs tests, and returns a text patch and test output for review. It cannot publish.
+In the [Lamp example](../design/from-issue-to-patch.md), the control plane prepares a separate Linux worker to build and test a copy of the source, then removes the worker and its copy.
 
 ## From request to cleanup
 

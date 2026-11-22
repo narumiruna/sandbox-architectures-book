@@ -23,3 +23,5 @@ A CI system can test proposed changes automatically. Outside contributors can mo
 Unrelated customers can submit programs. Protect other customers' source, job state, and access to shared capacity. Use a fresh VM per run assigned to one [tenant](../../glossary/tenant.md), with no shared writable workspace and with resource limits. The separate guest kernel limits direct interaction between workloads. It cannot correct a host tool or artifact store that grants Lamp access to Cedar data. Check tenant access at those interfaces too.
 
 Validate the choice with both kinds of checks: the compiler and tests must work on the copy, and a harmless file left outside the worker must stay out of reach. These checks cover the tested paths, not every way to cross the boundary. For runtime comparisons, see [How to evaluate a candidate](../../agent-sandbox-architectures.md#how-to-evaluate-a-candidate).
+
+Next: [Deployment patterns](deployment-patterns.md) compares who runs the worker and who is responsible for its data in four common setups.

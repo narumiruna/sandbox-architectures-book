@@ -27,3 +27,5 @@ The customer runs the script runtime and owns the issue tool and any read creden
 ## Check the boundary separately
 
 A local worker can run in a virtual machine (VM), and a remote worker can share a host kernel. Ask which runtime enforces the [isolation boundary](../../sandbox-isolation-boundaries.md), what crosses it, and who removes each copy afterward. See the [architecture survey](../../agent-sandbox-architectures.md) for example implementations.
+
+Next: Start setting access rules with [Tool authorization](tool-authorization.md), which explains what the issue lookup tool must check even when the script runs inside a sandbox.

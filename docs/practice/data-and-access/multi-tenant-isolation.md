@@ -21,3 +21,5 @@ Keep workspace copies and any snapshots with job data separate. The issue tool a
 ## Check with dummy data
 
 Give Lamp and Cedar dummy workspaces and artifacts with the same filenames but different marker text. Check that each tenant can read its own marker but cannot attach the other workspace or fetch the other artifact. Check that only the permitted Lamp caller can read `LAMP-17`. If private caches exist, put a different marker at the same entry name for each tenant and check that each gets its own value. Start a fresh Cedar job on infrastructure that ran a Lamp job and check that the Lamp marker is absent. See [Verifying access rules](../verification/verifying-access-rules.md) for a local example; these checks do not cover every effect of sharing a host.
+
+Next: In [Control planes](../operations/control-planes.md), see how the service starts a worker, attaches the right tenant's workspace, and verifies cleanup.

@@ -2,7 +2,7 @@
 
 A book about software sandboxes: how they isolate programs and control what those programs can access. The book is written primarily in English.
 
-Start with [Sandbox isolation boundaries](docs/sandbox-isolation-boundaries.md) for an introduction, then read [Agent sandbox architectures](docs/agent-sandbox-architectures.md) for a survey of implementations.
+Use the [book home page](docs/index.md) to choose a starting point. Begin with [Sandbox isolation boundaries](docs/sandbox-isolation-boundaries.md) if you are new to sandboxes, or follow the worked example in [From issue to patch](docs/practice/design/from-issue-to-patch.md) if you already know the basics.
 
 ## Preview locally
 

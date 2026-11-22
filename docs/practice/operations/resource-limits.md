@@ -2,7 +2,7 @@
 
 [Resource limits](../../glossary/resource-limit.md) control how much a worker can use. Access rules control what it can reach. A disk limit can stop a build from filling storage, but only an access rule keeps the worker away from another project's files.
 
-**Illustrative example:** A read-only tool retrieves LAMP-17: adding two item counts in project Lamp gives the wrong total. A separate Linux worker with an installed compiler builds a tiny C program, runs tests, and returns a text patch and test output for review. It has no access to project Cedar and cannot publish.
+In the [Lamp example](../design/from-issue-to-patch.md), the worker's budget must cover compiling and testing the C program as well as writing its build files.
 
 ## Set a budget and decide what happens at the limit
 

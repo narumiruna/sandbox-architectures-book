@@ -2,7 +2,7 @@
 
 Start with the last step that succeeded. A worker that never became ready, an action blocked by an access rule, and a compiler that ran but returned an error need different fixes. [Observability](../../glossary/observability.md) means having enough evidence to tell those cases apart. A single status such as `failed` is not enough.
 
-**Illustrative example:** A read-only tool retrieves LAMP-17, a report that adding two item counts in project Lamp gives the wrong total. A separate Linux worker compiles a tiny C program, runs tests, and returns a text patch and test output for review. It cannot publish.
+Use the [Lamp example](../design/from-issue-to-patch.md) to trace a run across the issue lookup, worker setup, build, and cleanup.
 
 ## Match the evidence to the layer
 
@@ -21,3 +21,5 @@ A denied action is an event, not necessarily the final session result. Check whi
 ## Keep diagnostic records safe
 
 Record only necessary fields, such as status, stage, safe reason code, and a bounded, redacted excerpt. Do not log environment dumps, raw arguments, credential values, or workspace contents. Keep diagnostic records and review outputs access-controlled and expire them under their own retention rules. A `cleaned_up` event confirms worker cleanup, not deletion of retained records.
+
+Next: [Verifying access rules](../verification/verifying-access-rules.md) shows how to test that the right actions succeed and forbidden actions fail for the expected reason.
