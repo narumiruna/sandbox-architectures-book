@@ -29,11 +29,11 @@
 ## Documentation
 
 - Put published Markdown pages in `docs/` and add new chapters and reference indexes to `nav` in `zensical.toml`.
-- On each book page, link technical terms and proper names on their first use in the body when a relevant reference exists.
-  - Prefer the individual glossary entry for a technical term; otherwise, link to a relevant book page or a primary source, such as official documentation.
-- Add technical terms used in the book to `docs/glossary.md`.
-  - Give each glossary entry a short definition and link it to its own Markdown page under `docs/glossary/` that explains the term in detail.
-  - Link individual term pages from the glossary rather than adding them to the main navigation.
+- Keep one glossary page per technical concept and link technical terms and proper names on first use in each book page's body when a relevant reference exists.
+  1. Search `docs/glossary.md` for the term, its abbreviations, and its alternate names before creating a page; reuse the existing page for the same concept.
+  2. For a newly introduced technical concept with no entry, explain it in `docs/glossary/<term>.md` and add a short definition and a link to that page in `docs/glossary.md`.
+  3. Register each new term page in `project.extra.unlisted_pages` in `zensical.toml` with a path relative to `docs/`; do not add it to `project.nav`.
+  4. Link the first use to the glossary page if one applies; otherwise, link to a relevant book page or a primary source such as official documentation.
 - Use the isolation-boundaries chapter for concepts and the architecture survey for implementation details, and distinguish the execution boundary from the control plane.
 - Use compact Mermaid diagrams in repository documentation when they explain a concept, relationship, or process more clearly than prose alone.
   - Put each diagram near the explanation it supports and state its main takeaway in prose.
