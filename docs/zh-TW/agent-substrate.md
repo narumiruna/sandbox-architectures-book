@@ -4,34 +4,34 @@
 
 ## Agent Substrate 是什麼？ {#what-is-agent-substrate}
 
-Agent Substrate 是 Kubernetes 上的 [sandbox](glossary/sandbox.md) 平台；它不是 agent framework，也不是單一 sandbox runtime。*Actor* 是一個有名稱的 workload 實例，例如 coding [agent](glossary/agent.md) 或 HTTP 服務。Kubernetes 預先準備 worker pods，Substrate 則為每個要執行的 Actor 分配 worker 容量及獨立的 sandbox。同一個 worker 可以同時執行多個 Actor，但它們不共用 sandbox。
+Agent Substrate 是 Kubernetes 上的 [sandbox](glossary/sandbox.md) 平台；它不是 agent framework，也不是單一 sandbox [runtime](glossary/runtime.md)。*Actor* 是一個有名稱的 workload 實例，例如 coding [agent](glossary/agent.md) 或 HTTP 服務。Kubernetes 預先準備 worker pods，Substrate 則為每個要執行的 Actor 分配 worker 容量及獨立的 sandbox。同一個 worker 可以同時執行多個 Actor，但它們不共用 sandbox。
 
 Worker pool 決定隔離方式：**[gVisor](https://gvisor.dev/docs/architecture_guide/intro/)**，或由 [Cloud Hypervisor](https://github.com/cloud-hypervisor/cloud-hypervisor) 提供虛擬機的 **[Kata Containers](https://github.com/kata-containers/kata-containers/blob/main/docs/design/architecture/README.md) [microVM](glossary/microvm.md)**。應用程式讓 Actor 休眠時，Substrate 會擷取 [snapshot](glossary/snapshot.md) 並釋放 Actor 占用的容量。下次收到請求時，Substrate 可以讓同一個 Actor 在相容的 worker 上恢復，不必回到原本的 worker。能接續多少狀態，取決於 snapshot 保存了什麼。本文以版本 `f5428049` 為準。
 
 ## 和其他專案的架構有什麼關鍵差異？ {#agent-substrate-comparison}
 
-關鍵是**平台持續保留的是什麼**。Substrate 把 Actor 的身分與已保存的狀態，從 worker pod 的生命週期拆開。有 warm pool 不代表能還原原本的工作；能從 snapshot 還原 microVM，也不是 Substrate 獨有的功能。
+關鍵是**平台持續保留的是什麼**。Substrate 把 Actor 的身分與已保存的狀態，從 worker pod 的生命週期拆開。有 [warm pool](glossary/warm-pool.md) 不代表能還原原本的工作；能從 snapshot 還原 microVM，也不是 Substrate 獨有的功能。
 
 | 問題 | Agent Substrate | [Kubernetes Agent Sandbox：Warm Pool（v1.0.12）](https://github.com/kubernetes-sigs/agent-sandbox/blob/v1.0.12/examples/warmpool-quickstart/README.md) | [E2B Runtime（47c9255）](https://github.com/e2b-dev/runtime/blob/47c92550945704a8b2ac4ab5f20f1c3096141d08/README.md) | [本機 Docker Sandboxes](https://docs.docker.com/ai/sandboxes/architecture/) |
 | --- | --- | --- | --- | --- |
-| 呼叫端操作什麼？ | 把有名稱的 Actor 排到現有的 Kubernetes worker。 | 透過 `SandboxClaim` 領用已備妥的 Sandbox。 | 每個 sandbox 是一台 Firecracker microVM。 | 每個本機 sandbox 有自己的 VM 和 Docker daemon。 |
+| 呼叫端操作什麼？ | 把有名稱的 Actor 排到現有的 Kubernetes worker。 | 透過 `SandboxClaim` 領用已備妥的 Sandbox。 | 每個 sandbox 是一台 [Firecracker](https://github.com/firecracker-microvm/firecracker) microVM。 | 每個本機 sandbox 有自己的 [VM](glossary/virtual-machine.md) 和 [Docker daemon](https://docs.docker.com/engine/)。 |
 | 預先準備或還原什麼？ | 預備 worker 容量，將 Actor 狀態還原到獨立的 gVisor 或 microVM sandbox。 | Pool 依範本預先建立 Sandbox 實例。 | 建立 sandbox 時從已啟動的 VM 範本還原；暫停的 sandbox 可從自己的 snapshot 接續。 | 每個 sandbox 有自己的本機 VM、Docker daemon 狀態和映像快取。 |
 
 如果你在比較 warm pool，最接近的是 Kubernetes Agent Sandbox；如果你在比較暫停和還原，最接近的是 E2B，它也可在收到流量時喚醒 sandbox。Substrate 把兩個做法結合：將長期存在的 Actor 排到可重用的 Kubernetes worker，並提供兩種 runtime class。
 
 ## 什麼情況最適合用 Agent Substrate？ {#agent-substrate-when-to-choose}
 
-**你已經在維運 Kubernetes，需要保留大量 agent session 或 [workspace](glossary/workspace.md)，但同一時間通常只有一部分在工作。** 例如，coding agent 做出修補檔後，可能要等幾個小時才有人審查。等待期間，harness 可以讓 Actor 休眠。等審查結果回來，新的請求可以還原檔案；如果有相容的記憶體 snapshot，還能接續原本的 processes。
+**你已經在維運 Kubernetes，需要保留大量 agent session 或 [workspace](glossary/workspace.md)，但同一時間通常只有一部分在工作。** 例如，coding agent 做出修補檔後，可能要等幾個小時才有人審查。等待期間，harness 可以讓 Actor 休眠。等審查結果回來，新的請求可以還原檔案；如果有相容的記憶體 snapshot，還能接續原本的 [processes](glossary/process.md)。
 
 如果你只需要一台開發機上的本機 sandbox、任務結束就能丟掉狀態，或 workloads 幾乎一直在忙，這套架構就沒有那麼合適。你得多維護一層排程和 snapshot，卻未必能省下多少運算容量。
 
-省下閒置運算的代價是必須儲存、傳輸及還原 snapshot。評估時，應用實際 workload 測量從請求進入到收到第一個可用回應的時間，分別比較 Actor 已在執行、從 node 本機還原，以及從遠端還原。也要用突發流量塞滿 pool，觀察延遲和 `503` 比例。不要把 control plane 的測量數字當成端到端延遲：[官方 ResumePaused benchmark](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/guides/benchmarking.md#resumepaused-benchmark) 刻意排除了 router 和真正的 sandbox 還原。
+省下閒置運算的代價是必須儲存、傳輸及還原 snapshot。評估時，應用實際 workload 測量從請求進入到收到第一個可用回應的時間，分別比較 Actor 已在執行、從 node 本機還原，以及從遠端還原。也要用突發流量塞滿 pool，觀察延遲和 `503` 比例。不要把 [control plane](glossary/control-plane.md) 的測量數字當成端到端延遲：[官方 ResumePaused benchmark](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/guides/benchmarking.md#resumepaused-benchmark) 刻意排除了 router 和真正的 sandbox 還原。
 
 ## 實作細節 {#agent-substrate-implementation}
 
 ### Worker pod 提供容量，Actor 才是隔離單位 {#agent-substrate-isolation}
 
-[Warm pool](glossary/warm-pool.md) 是一組事先啟動、等候分配工作的 worker pods。一個 worker 可**同時**承載多個 Actor，但每個 Actor 都有自己的 sandbox。一個 Actor 可以包含多個 container；不要把互不信任的 workload 放進同一個 Actor 的不同 container。[官方安全模型](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/security/security.md#defensible-multi-tenancy) 以 Actor 為隔離邊界，不以其中的個別 container 為邊界。
+Warm pool 是一組事先啟動、等候分配工作的 worker pods。一個 worker 可**同時**承載多個 Actor，但每個 Actor 都有自己的 sandbox。一個 Actor 可以包含多個 [container](glossary/container.md)；不要把互不信任的 workload 放進同一個 Actor 的不同 container。[官方安全模型](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/security/security.md#defensible-multi-tenancy) 以 Actor 為隔離邊界，不以其中的個別 container 為邊界。
 
 ```mermaid
 ---
@@ -56,12 +56,12 @@ flowchart TB
 
 | Class | 如何隔離 Actor | 選擇前要確認什麼 |
 | --- | --- | --- |
-| `gvisor` | 每個 Actor 都有自己的 gVisor `runsc` sandbox。Sentry 是負責實作 Linux [system calls](glossary/system-call.md) 的 [user-space kernel](glossary/user-space-kernel.md)，不會啟動獨立的 Linux [guest kernel](glossary/guest.md)。 | 可在一般 Linux node 上執行。要測試 workload 需要的 Linux 介面；資源限制套用在 Actor 層級，runtime 不會執行個別 container 的資源限制。 |
+| `gvisor` | 每個 Actor 都有自己的 gVisor `runsc` sandbox。Sentry 是負責實作 Linux [system calls](glossary/system-call.md) 的 [user-space kernel](glossary/user-space-kernel.md)，不會啟動獨立的 Linux [guest kernel](glossary/guest.md)。 | 可在一般 Linux node 上執行。要測試 workload 需要的 Linux 介面；[資源限制](glossary/resource-limit.md)套用在 Actor 層級，runtime 不會執行個別 container 的資源限制。 |
 | `microvm` | 每個 Actor 各有一個 Linux guest；Cloud Hypervisor 提供 VM，Kata Containers 的 guest 元件在其中執行 workload。 | Node 必須提供 `/dev/kvm`，也要為 guest RAM 和 VM 本身的開銷預留容量。可以在 guest 內限制個別 container 的資源，但不會給每個 container 一台 VM。 |
 
 ### 誰負責排程、還原與轉送請求？ {#agent-substrate-request-path}
 
-Kubernetes 和 Substrate 的排程分工不同。`atecontroller` 把 Kubernetes 的 `WorkerPool` 資源轉成 [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)，由 Kubernetes 把這些 pods 排到 nodes；Substrate 的 [control plane](glossary/control-plane.md) `ate-api-server` 則把 **Actor 排到已經存在的 worker**。它把 `ActorTemplate`、Actor 和 Worker 的記錄放在 [PostgreSQL](https://www.postgresql.org/about/)，而不是把它們建成 Kubernetes objects。`ActorTemplate` 定義映像、資源和 snapshot 設定，Kubernetes 的 `SandboxConfig` 則提供該 class 可用的 runtime 版本。見[官方資源模型](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/concepts/architecture.md#api-resource-models)。
+Kubernetes 和 Substrate 的排程分工不同。`atecontroller` 把 Kubernetes 的 `WorkerPool` 資源轉成 [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)，由 Kubernetes 把這些 pods 排到 nodes；Substrate 的 control plane `ate-api-server` 則把 **Actor 排到已經存在的 worker**。它把 `ActorTemplate`、Actor 和 Worker 的記錄放在 [PostgreSQL](https://www.postgresql.org/about/)，而不是把它們建成 Kubernetes objects。`ActorTemplate` 定義映像、資源和 snapshot 設定，Kubernetes 的 `SandboxConfig` 則提供該 class 可用的 runtime 版本。見[官方資源模型](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/concepts/architecture.md#api-resource-models)。
 
 1. **建立 Actor。** Substrate 先登記 Actor，不會先替它保留一個運作中的 sandbox。若建立時已有範本的 *golden snapshot*，通常會用它當起始狀態；沒有起始 snapshot，就從 `ActorTemplate` 的映像啟動。見 [golden snapshot 流程](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/reference/api-guide.md#the-golden-snapshot)。
 2. **喚醒並轉送。** 收到 HTTP 請求時，`atenet-router` 請 control plane 依 atespace 和名稱找出 Actor。*Atespace* 是 Substrate 用來分組資源和管理存取的範圍，不是 Kubernetes namespace。若 Actor 已休眠，control plane 會分配相容的 worker 容量，讓 node 上的 `atelet` 指示 pod 內的 `ateworker` 還原或啟動 sandbox。就緒後，router 透過 worker 上經驗證的 `atunnel` 連線轉送原請求。見[請求路徑與生命週期](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/concepts/architecture.md#actor-lifecycle)。
