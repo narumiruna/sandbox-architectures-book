@@ -23,7 +23,8 @@
   - Use reputable secondary sources when primary evidence is insufficient, but cite primary sources for product-specific claims in the book.
   - Judge sources by accuracy, authority, relevance, and recency, not search rank; investigate conflicts before drawing a conclusion.
 - Link directly to evidence for important claims and decisions, naming the release or revision when behavior varies by version.
-- Use the [reference template](templates/reference.template.md) when saving a citation source as a Markdown record.
+  - For every external source cited in the book, create or reuse a Markdown source record in `docs/references/`; create new records from [the reference template](templates/reference.template.md).
+  - List each source record in the [reference index](docs/references/index.md), and keep the direct link to the original source in the chapter.
 - Separate verified facts from inferences and state what remains unknown or could not be verified.
 - Never invent facts, citations, URLs, or evidence.
 

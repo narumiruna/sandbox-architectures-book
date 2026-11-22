@@ -24,9 +24,9 @@ A [virtual machine monitor (VMM)](glossary/virtual-machine-monitor.md) manages a
 
 ### Docker Sandboxes: one VM per sandbox {#docker-sandboxes}
 
-Each local Docker Sandbox gets its own Linux [guest kernel](glossary/guest.md), but the agent can still edit any [host](glossary/host.md) [workspace](glossary/workspace.md) that you share with write access. That's the distinction behind Kaan Yagci's [*Wait, Docker Sandboxes Aren’t Containers?*](https://x.com/i/article/2119903254867775488): a sandbox separates the execution environment, not every resource the agent can reach.
+Each local Docker Sandbox gets its own Linux [guest kernel](glossary/guest.md), but the agent can still edit any [host](glossary/host.md) [workspace](glossary/workspace.md) that you share with write access. That's the distinction behind Kaan Yagci's [*Wait, Docker Sandboxes Aren’t Containers?*](https://x.com/yagcidev/article/2120166357060768143): a sandbox separates the execution environment, not every resource the agent can reach.
 
-On macOS and Windows, [Docker Desktop runs Linux containers in a Linux VM](https://docs.docker.com/desktop/features/vmm/). Those [containers](glossary/container.md) still share that VM's [kernel](glossary/kernel.md). With [Docker Sandboxes](https://docs.docker.com/ai/sandboxes/security/isolation/#hypervisor-isolation), the VM boundary is around each sandbox, not each container it starts.
+Docker Sandboxes does not require [Docker Desktop or Docker Engine on the host](https://docs.docker.com/ai/sandboxes/install/). On macOS and Windows, [Docker Desktop runs Linux containers in a Linux VM](https://docs.docker.com/desktop/features/vmm/). Those [containers](glossary/container.md) still share that VM's [kernel](glossary/kernel.md). With [Docker Sandboxes](https://docs.docker.com/ai/sandboxes/security/isolation/#hypervisor-isolation), the VM boundary is around each sandbox, not each container it starts.
 
 ```mermaid
 ---
@@ -72,9 +72,14 @@ flowchart TB
 
 The private engine is not a [network policy](practice/data-and-access/network-policy.md). For example, the agent could still reach a production Docker Engine if its [Docker context](https://docs.docker.com/engine/manage-resources/contexts/) points there, the network allows the connection, and it can authenticate. Comparing the output of `docker context ls` inside and outside the sandbox checks client configuration, not whether production access is blocked.
 
-For [local workspaces](https://docs.docker.com/ai/sandboxes/security/isolation/#workspace-isolation), `sbx run` uses the current directory as a writable workspace if you don't provide a path. Removing the sandbox does not undo edits to that directory. Use a private Git clone to review edits before bringing them back, or create a sandbox without a host workspace if it doesn't need project files. A private clone leaves the source repository readable in the VM.
+For [local workspaces](https://docs.docker.com/ai/sandboxes/security/isolation/#workspace-isolation), `sbx run` uses the current directory as a writable workspace if you don't provide a path. Removing the sandbox does not undo edits to that directory. Use [`--clone`](https://docs.docker.com/ai/sandboxes/security/isolation/#clone-mode) to let the agent edit a private copy for review. The VM can still read the original checkout, including untracked files such as `.env`. If the agent doesn't need any project files, create a sandbox without a host workspace.
 
-[Cloud sandboxes](https://docs.docker.com/ai/sandboxes/cloud/local-vs-cloud/) run on Docker-managed infrastructure without mounting your laptop's folders. Check their timeout and what happens to the sandbox when it expires before leaving a job unattended.
+#### When to choose Docker Sandboxes {#when-to-choose-docker-sandboxes}
+
+Choose local Docker Sandboxes when an agent needs both a local project and its own Docker Engine. For example, let the agent fix a backend bug, build an image, start a database with [Docker Compose](https://docs.docker.com/compose/), and run integration tests. The containers run inside the sandbox VM, not in your usual Docker environment.
+
+- **Embed a sandbox in your own application:** [Gondolin](https://github.com/earendil-works/gondolin#feature-highlights) also gives the workload a Linux microVM. Choose it when you want to define file access and outbound HTTP policy in JavaScript rather than run a coding agent through `sbx`.
+- **Start sandboxes on demand from a service:** Compare [E2B Runtime](https://github.com/e2b-dev/infra) with the [Docker Sandboxes cloud API and SDK](https://docs.docker.com/ai/sandboxes-api/). Both provide programmatic provisioning. [Docker cloud sandboxes](https://docs.docker.com/ai/sandboxes/cloud/local-vs-cloud/) don't mount folders from the computer that starts them. Check the timeout and what happens at expiry before leaving a job unattended.
 
 ### Which workloads share a guest kernel?
 

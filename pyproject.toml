@@ -13,8 +13,11 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "markdown>=3.11.3",
+    "pymdown-extensions>=13.1.2",
     "pytest>=9.2.0",
     "pytest-cov>=7.1.0",
+    "pyyaml>=6.0.4",
     "ruff>=0.17.6",
     "ty>=0.0.107",
     "zizmor>=1.32.0",

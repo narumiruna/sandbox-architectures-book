@@ -24,9 +24,9 @@
 
 ### Docker Sandboxes：每個 sandbox 一台 VM {#docker-sandboxes}
 
-每個本機 Docker Sandbox 都有自己的 Linux [guest kernel](glossary/guest.md)，但 agent 仍能修改你開放寫入的 [host](glossary/host.md) [workspace](glossary/workspace.md)。這是 Kaan Yagci 在 [〈Wait, Docker Sandboxes Aren’t Containers?〉](https://x.com/i/article/2119903254867775488) 指出的差別：sandbox 隔離了執行環境，但不會隔離 agent 能存取的所有資源。
+每個本機 Docker Sandbox 都有自己的 Linux [guest kernel](glossary/guest.md)，但 agent 仍能修改你開放寫入的 [host](glossary/host.md) [workspace](glossary/workspace.md)。這是 Kaan Yagci 在 [〈Wait, Docker Sandboxes Aren’t Containers?〉](https://x.com/yagcidev/article/2120166357060768143) 指出的差別：sandbox 隔離了執行環境，但不會隔離 agent 能存取的所有資源。
 
-在 macOS 和 Windows 上，[Docker Desktop 把 Linux containers 放在 Linux VM 裡執行](https://docs.docker.com/desktop/features/vmm/)。這些 [containers](glossary/container.md) 仍共用這台 VM 的 [kernel](glossary/kernel.md)。[Docker Sandboxes](https://docs.docker.com/ai/sandboxes/security/isolation/#hypervisor-isolation) 則是每個 sandbox 一台 VM，不是每個 container 一台。
+Docker Sandboxes 不需要在 [host 安裝 Docker Desktop 或 Docker Engine](https://docs.docker.com/ai/sandboxes/install/)。在 macOS 和 Windows 上，[Docker Desktop 把 Linux containers 放在 Linux VM 裡執行](https://docs.docker.com/desktop/features/vmm/)。這些 [containers](glossary/container.md) 仍共用這台 VM 的 [kernel](glossary/kernel.md)。[Docker Sandboxes](https://docs.docker.com/ai/sandboxes/security/isolation/#hypervisor-isolation) 則是每個 sandbox 一台 VM，不是每個 container 一台。
 
 ```mermaid
 ---
@@ -72,9 +72,14 @@ flowchart TB
 
 獨立的 Docker Engine 無法取代[網路 policy](practice/data-and-access/network-policy.md)。例如，如果 agent 的 [Docker context](https://docs.docker.com/engine/manage-resources/contexts/) 指向正式環境的 Docker Engine、網路允許連線，而且 agent 能通過身分驗證，它就仍然能連到正式環境。比對 sandbox 內外的 `docker context ls` 輸出只能檢查用戶端設定，不能證明正式環境的存取已被封鎖。
 
-使用[本機 workspace](https://docs.docker.com/ai/sandboxes/security/isolation/#workspace-isolation) 時，如果沒有指定路徑，`sbx run` 會將目前目錄當成可寫的 workspace。移除 sandbox 不會復原對該目錄的變更。如果想先審查再帶回變更，可讓 agent 編輯獨立的 Git clone；如果不需要專案檔案，則可建立不掛載 host workspace 的 sandbox。使用獨立的 clone 時，VM 仍然能讀取原始 repository。
+使用[本機 workspace](https://docs.docker.com/ai/sandboxes/security/isolation/#workspace-isolation) 時，如果沒有指定路徑，`sbx run` 會將目前目錄當成可寫的 workspace。移除 sandbox 不會復原對該目錄的變更。用 [`--clone`](https://docs.docker.com/ai/sandboxes/security/isolation/#clone-mode) 讓 agent 編輯獨立的副本，方便先審查再帶回變更。VM 仍能讀取原始 repository 中的檔案，包括 `.env` 等未被 Git 追蹤的檔案。如果 agent 不需要任何專案檔案，可建立不掛載 host workspace 的 sandbox。
 
-[Cloud sandboxes](https://docs.docker.com/ai/sandboxes/cloud/local-vs-cloud/) 在 Docker 管理的基礎設施上執行，不會掛載你筆電上的資料夾。如果要讓工作在無人操作時繼續執行，先確認逾時設定以及到期後 sandbox 會如何處理。
+#### 何時選用 Docker Sandboxes？ {#when-to-choose-docker-sandboxes}
+
+當 agent 需要存取本機專案，又需要自己的 Docker Engine 時，適合選用本機 Docker Sandboxes。例如，讓 agent 修正後端 bug、建置 image、用 [Docker Compose](https://docs.docker.com/compose/) 啟動資料庫，再跑整合測試。這些 containers 在 sandbox VM 裡執行，不會使用你平常的 Docker 環境。
+
+- **把 sandbox 嵌入自己的應用程式：** [Gondolin](https://github.com/earendil-works/gondolin#feature-highlights) 也提供 Linux microVM。若你想用 JavaScript 定義檔案存取和對外 HTTP 連線的 policy，而不是透過 `sbx` 啟動 coding agent，可考慮 Gondolin。
+- **由服務按需啟動 sandboxes：** 比較 [E2B Runtime](https://github.com/e2b-dev/infra) 和 [Docker Sandboxes 雲端 API 與 SDK](https://docs.docker.com/ai/sandboxes-api/)。兩者都能由程式建立 sandbox。[Docker 雲端 sandboxes](https://docs.docker.com/ai/sandboxes/cloud/local-vs-cloud/) 不會掛載發出啟動指令的電腦上的資料夾。要讓工作在無人操作時執行，先確認逾時設定和到期後的處理方式。
 
 ### 哪些 workload 共用 guest kernel？ {#which-workloads-share-a-guest-kernel}
 

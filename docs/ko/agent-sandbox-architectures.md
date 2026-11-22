@@ -24,9 +24,9 @@
 
 ### Docker Sandboxes: sandbox마다 VM 하나 {#docker-sandboxes}
 
-Docker Sandboxes의 로컬 sandbox마다 별도의 Linux [guest kernel](glossary/guest.md)이 있습니다. 하지만 쓰기 권한을 주고 공유한 [host](glossary/host.md) [workspace](glossary/workspace.md)는 agent가 수정할 수 있습니다. Kaan Yagci의 [*Wait, Docker Sandboxes Aren’t Containers?*](https://x.com/i/article/2119903254867775488)에서 짚는 차이가 바로 이것입니다. Sandbox는 실행 환경을 분리하지만 agent가 접근할 수 있는 모든 자원까지 격리하지는 않습니다.
+Docker Sandboxes의 로컬 sandbox마다 별도의 Linux [guest kernel](glossary/guest.md)이 있습니다. 하지만 쓰기 권한을 주고 공유한 [host](glossary/host.md) [workspace](glossary/workspace.md)는 agent가 수정할 수 있습니다. Kaan Yagci의 [*Wait, Docker Sandboxes Aren’t Containers?*](https://x.com/yagcidev/article/2120166357060768143)에서 짚는 차이가 바로 이것입니다. Sandbox는 실행 환경을 분리하지만 agent가 접근할 수 있는 모든 자원까지 격리하지는 않습니다.
 
-macOS와 Windows에서 [Docker Desktop은 Linux container를 Linux VM에서 실행합니다](https://docs.docker.com/desktop/features/vmm/). 이 [container](glossary/container.md)들은 해당 VM의 [kernel](glossary/kernel.md)을 공유합니다. [Docker Sandboxes](https://docs.docker.com/ai/sandboxes/security/isolation/#hypervisor-isolation)에서 VM 경계는 sandbox가 시작하는 각 container가 아니라 sandbox 하나를 둘러쌉니다.
+Docker Sandboxes를 사용하기 위해 [host에 Docker Desktop이나 Docker Engine을 설치할 필요는 없습니다](https://docs.docker.com/ai/sandboxes/install/). macOS와 Windows에서 [Docker Desktop은 Linux container를 Linux VM에서 실행합니다](https://docs.docker.com/desktop/features/vmm/). 이 [container](glossary/container.md)들은 해당 VM의 [kernel](glossary/kernel.md)을 공유합니다. [Docker Sandboxes](https://docs.docker.com/ai/sandboxes/security/isolation/#hypervisor-isolation)에서 VM 경계는 sandbox가 시작하는 각 container가 아니라 sandbox 하나를 둘러쌉니다.
 
 ```mermaid
 ---
@@ -72,9 +72,14 @@ flowchart TB
 
 Sandbox 전용 엔진은 [네트워크 policy](practice/data-and-access/network-policy.md)를 대신하지 않습니다. 예를 들어 [Docker context](https://docs.docker.com/engine/manage-resources/contexts/)가 운영 환경의 Docker Engine을 가리키고, 네트워크가 연결을 허용하며, agent가 인증할 수 있다면 그 엔진에 접근할 수 있습니다. Sandbox 안팎에서 `docker context ls`의 출력을 비교하면 클라이언트 설정은 확인할 수 있지만, 운영 환경으로의 접근이 차단되는지는 확인할 수 없습니다.
 
-[로컬 workspace](https://docs.docker.com/ai/sandboxes/security/isolation/#workspace-isolation)의 경우 `sbx run`에 경로를 지정하지 않으면 현재 디렉터리를 쓰기 가능한 workspace로 사용합니다. Sandbox를 삭제해도 해당 디렉터리의 변경 사항은 되돌아가지 않습니다. 비공개 Git 복제본에서 변경 사항을 검토한 뒤 원본에 반영합니다. 프로젝트 파일이 필요 없다면 host workspace 없이 sandbox를 만듭니다. 비공개 복제본을 사용해도 VM 안에서 원본 저장소를 읽을 수 있습니다.
+[로컬 workspace](https://docs.docker.com/ai/sandboxes/security/isolation/#workspace-isolation)의 경우 `sbx run`에 경로를 지정하지 않으면 현재 디렉터리를 쓰기 가능한 workspace로 사용합니다. Sandbox를 삭제해도 해당 디렉터리의 변경 사항은 되돌아가지 않습니다. [`--clone`](https://docs.docker.com/ai/sandboxes/security/isolation/#clone-mode)을 사용하면 agent가 별도 복제본을 수정하므로 변경 사항을 검토한 뒤 원본에 반영할 수 있습니다. VM에서는 `.env`처럼 Git이 추적하지 않는 파일을 포함해 원본 작업 디렉터리의 파일을 여전히 읽을 수 있습니다. 프로젝트 파일이 필요 없다면 host workspace 없이 sandbox를 만듭니다.
 
-[클라우드 sandbox](https://docs.docker.com/ai/sandboxes/cloud/local-vs-cloud/)는 노트북의 폴더를 mount하지 않고 Docker가 관리하는 인프라에서 실행됩니다. 작업을 실행한 채 자리를 비우기 전에 제한 시간과 그 시간이 지나면 sandbox가 어떻게 처리되는지 확인합니다.
+#### Docker Sandboxes를 선택할 때 {#when-to-choose-docker-sandboxes}
+
+agent에 로컬 프로젝트와 전용 Docker Engine이 모두 필요할 때 로컬 Docker Sandboxes가 적합합니다. 예를 들어 agent가 백엔드 버그를 수정한 뒤 이미지를 빌드하고, [Docker Compose](https://docs.docker.com/compose/)로 데이터베이스를 시작한 다음 통합 테스트를 실행하게 할 수 있습니다. 이때 container는 평소 사용하는 Docker 환경이 아니라 sandbox VM 안에서 실행됩니다.
+
+- **자체 애플리케이션에 sandbox를 내장하는 경우:** [Gondolin](https://github.com/earendil-works/gondolin#feature-highlights)도 Linux microVM을 제공합니다. `sbx`로 coding agent를 시작하는 대신 파일 접근과 외부로 나가는 HTTP 요청의 policy를 JavaScript로 정의하려는 경우 Gondolin을 고려합니다.
+- **서비스에서 필요할 때 sandbox를 시작하는 경우:** [E2B Runtime](https://github.com/e2b-dev/infra)과 [Docker Sandboxes 클라우드 API 및 SDK](https://docs.docker.com/ai/sandboxes-api/)를 비교합니다. 둘 다 프로그램에서 sandbox를 만들 수 있습니다. [Docker 클라우드 sandbox](https://docs.docker.com/ai/sandboxes/cloud/local-vs-cloud/)는 이를 시작한 컴퓨터의 폴더를 mount하지 않습니다. 작업을 실행한 채 자리를 비우기 전에 제한 시간과 만료 시의 동작을 확인합니다.
 
 ### 어떤 workload가 guest kernel을 공유합니까? {#which-workloads-share-a-guest-kernel}
 

@@ -24,9 +24,9 @@
 
 ### Docker Sandboxes：sandbox ごとに一つの VM {#docker-sandboxes}
 
-ローカルの Docker Sandboxes では、sandbox ごとに独自の Linux [guest kernel](glossary/guest.md) が動きます。ただし、書き込みを許可して共有した [host](glossary/host.md) の [workspace](glossary/workspace.md) は、agent から編集できます。Kaan Yagci の [*Wait, Docker Sandboxes Aren’t Containers?*](https://x.com/i/article/2119903254867775488) が取り上げるのもこの違いです。sandbox は実行環境を隔離しますが、agent がアクセスできるリソースをすべて隔離するわけではありません。
+ローカルの Docker Sandboxes では、sandbox ごとに独自の Linux [guest kernel](glossary/guest.md) が動きます。ただし、書き込みを許可して共有した [host](glossary/host.md) の [workspace](glossary/workspace.md) は、agent から編集できます。Kaan Yagci の [*Wait, Docker Sandboxes Aren’t Containers?*](https://x.com/yagcidev/article/2120166357060768143) が取り上げるのもこの違いです。sandbox は実行環境を隔離しますが、agent がアクセスできるリソースをすべて隔離するわけではありません。
 
-macOS と Windows では、[Docker Desktop は Linux container を Linux VM 内で実行します](https://docs.docker.com/desktop/features/vmm/)。それらの [container](glossary/container.md) は、その VM の [kernel](glossary/kernel.md) を共有します。[Docker Sandboxes](https://docs.docker.com/ai/sandboxes/security/isolation/#hypervisor-isolation) では、起動する container ごとではなく、sandbox ごとに VM の境界が設けられます。
+Docker Sandboxes を使うために、[host に Docker Desktop や Docker Engine をインストールする必要はありません](https://docs.docker.com/ai/sandboxes/install/)。macOS と Windows では、[Docker Desktop は Linux container を Linux VM 内で実行します](https://docs.docker.com/desktop/features/vmm/)。それらの [container](glossary/container.md) は、その VM の [kernel](glossary/kernel.md) を共有します。[Docker Sandboxes](https://docs.docker.com/ai/sandboxes/security/isolation/#hypervisor-isolation) では、起動する container ごとではなく、sandbox ごとに VM の境界が設けられます。
 
 ```mermaid
 ---
@@ -72,9 +72,14 @@ flowchart TB
 
 専用の Docker Engine は、[ネットワークの policy](practice/data-and-access/network-policy.md) の代わりにはなりません。たとえば、agent の [Docker context](https://docs.docker.com/engine/manage-resources/contexts/) が本番環境の Docker Engine を指し、ネットワークが接続を許可し、認証も通るなら、agent はその Engine に接続できます。sandbox の内外で `docker context ls` の出力を比較して確認できるのは、クライアントの設定です。本番環境へのアクセスが遮断されているかどうかは確認できません。
 
-[ローカルの workspace](https://docs.docker.com/ai/sandboxes/security/isolation/#workspace-isolation) では、`sbx run` にパスを指定しないと、カレントディレクトリが書き込み可能な workspace になります。sandbox を削除しても、そのディレクトリへの変更は元に戻りません。専用の Git クローンを使い、変更を確認してから元のリポジトリに取り込んでください。プロジェクトのファイルが不要なら、host の workspace を使わずに sandbox を作成してください。専用のクローンを使っても、元のリポジトリの内容は VM 内から読み取れます。
+[ローカルの workspace](https://docs.docker.com/ai/sandboxes/security/isolation/#workspace-isolation) では、`sbx run` にパスを指定しないと、カレントディレクトリが書き込み可能な workspace になります。sandbox を削除しても、そのディレクトリへの変更は元に戻りません。[`--clone`](https://docs.docker.com/ai/sandboxes/security/isolation/#clone-mode) を使うと、agent は専用のコピーを編集するので、変更を確認してから元のリポジトリに取り込めます。VM からは、`.env` など Git が追跡していないファイルも含め、元の作業ツリーを引き続き読み取れます。プロジェクトのファイルが不要なら、host の workspace を使わずに sandbox を作成してください。
 
-[クラウドの sandbox](https://docs.docker.com/ai/sandboxes/cloud/local-vs-cloud/) は、手元のノートパソコンのフォルダーを mount せず、Docker が管理するインフラストラクチャ上で動きます。ジョブを無人で実行する前に、タイムアウトまでの時間と、期限に達したときに sandbox がどうなるかを確認してください。
+#### Docker Sandboxes を選ぶ場面 {#when-to-choose-docker-sandboxes}
+
+agent にローカルのプロジェクトと専用の Docker Engine の両方が必要なら、ローカルの Docker Sandboxes が適しています。たとえば、agent にバックエンドのバグを修正させ、イメージをビルドし、[Docker Compose](https://docs.docker.com/compose/) でデータベースを起動して統合テストを実行させます。これらの container は普段使う Docker 環境ではなく、sandbox の VM 内で動きます。
+
+- **自分のアプリケーションに sandbox を組み込む：** [Gondolin](https://github.com/earendil-works/gondolin#feature-highlights) も Linux microVM を提供します。`sbx` で coding agent を起動する代わりに、ファイルアクセスと外向き HTTP 通信の policy を JavaScript で定義したい場合に検討してください。
+- **サービスから必要に応じて sandbox を起動する：** [E2B Runtime](https://github.com/e2b-dev/infra) と [Docker Sandboxes のクラウド API と SDK](https://docs.docker.com/ai/sandboxes-api/) を比較してください。どちらもプログラムから sandbox を作成できます。[Docker のクラウド sandbox](https://docs.docker.com/ai/sandboxes/cloud/local-vs-cloud/) は起動元のコンピューターにあるフォルダーを mount しません。ジョブを無人で実行する前に、タイムアウトまでの時間と期限に達したときの動作を確認してください。
 
 ### どの workload が guest kernel を共有するか {#which-workloads-share-a-guest-kernel}
 
