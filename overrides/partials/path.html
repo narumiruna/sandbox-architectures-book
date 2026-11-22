@@ -1,0 +1,22 @@
+{% from "partials/edition.html" import edition_for with context %}
+{% import "partials/path-item.html" as item with context %}
+{% set edition = edition_for(page.url | d(none)) %}
+{% set home = nav.homepage %}
+{% set ancestors = page.ancestors %}
+{% if edition != "en" %}
+  {% set name = config.extra.editions[edition].name %}
+  {% set group = nav.items | selectattr("title", "equalto", name) | first %}
+  {% set home = group.children | first %}
+  {% set ancestors = ancestors | rejectattr("title", "equalto", name) | list %}
+{% endif %}
+{% if ancestors %}
+  {% set hidden = "hidden" if page.meta and page.meta.hide and "path" in page.meta.hide %}
+  <nav class="md-path" aria-label="{{ lang.t('nav') }}" {{ hidden }}>
+    <ol class="md-path__list">
+      {{ item.render(home) }}
+      {% for nav_item in ancestors | reverse %}
+        {{ item.render(nav_item) }}
+      {% endfor %}
+    </ol>
+  </nav>
+{% endif %}

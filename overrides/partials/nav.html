@@ -1,0 +1,32 @@
+{% from "partials/edition.html" import edition_for with context %}
+{% import "partials/nav-item.html" as item with context %}
+{% set edition = edition_for(page.url | d(none)) %}
+{% set home = nav.homepage.url if edition == "en" else edition ~ "/" %}
+{% set edition_names = namespace(values=[]) %}
+{% for code in config.extra.editions %}
+  {% set edition_names.values = edition_names.values + [config.extra.editions[code].name] %}
+{% endfor %}
+{% if edition == "en" %}
+  {% set items = nav.items | rejectattr("title", "in", edition_names.values) | list %}
+{% else %}
+  {% set group = nav.items | selectattr("title", "equalto", config.extra.editions[edition].name) | first %}
+  {% set items = group.children %}
+{% endif %}
+<nav class="md-nav md-nav--primary" aria-label="{{ lang.t('nav') }}" data-md-level="0">
+  <label class="md-nav__title" for="__drawer" lang="en">
+    <a href="{{ home | url }}" class="md-nav__button md-logo" aria-label="{{ config.site_name }}" data-md-component="logo">
+      {% include "partials/logo.html" %}
+    </a>
+    {{ config.site_name }}
+  </label>
+  {% if config.repo_url %}
+    <div class="md-nav__source" lang="en">
+      {% include "partials/source.html" %}
+    </div>
+  {% endif %}
+  <ul class="md-nav__list" data-md-scrollfix>
+    {% for nav_item in items %}
+      {{ item.render(nav_item, "__nav_" ~ loop.index, 1) }}
+    {% endfor %}
+  </ul>
+</nav>

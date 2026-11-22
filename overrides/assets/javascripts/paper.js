@@ -24,9 +24,11 @@
   document.addEventListener("DOMContentLoaded", () => {
     const palette = document.querySelector('[data-md-component="palette"]');
     if (!palette) return;
+    palette.lang = "en";
 
     const picker = document.createElement("div");
     picker.className = "paper-picker";
+    picker.lang = "en";
     const label = document.createElement("label");
     label.className = "md-visually-hidden";
     label.htmlFor = "daytime-paper";

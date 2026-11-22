@@ -1,0 +1,10 @@
+{% macro edition_for(route) -%}
+  {%- set match = namespace(code="en") -%}
+  {%- for code in config.extra.editions -%}
+    {%- set prefix = code ~ "/" -%}
+    {%- if route and route[:prefix | length] == prefix -%}
+      {%- set match.code = code -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {{- match.code -}}
+{%- endmacro %}
