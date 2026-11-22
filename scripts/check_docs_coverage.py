@@ -37,8 +37,15 @@ def main() -> int:
     orphaned = {
         path for path in pages - originals if path.partition("/")[2] not in originals
     }
+    shared_records = {
+        path
+        for path in originals
+        if path.startswith("references/") and path != "references/index.md"
+    }
     missing_translations = {
-        f"{edition}/{path}" for path in originals for edition in editions
+        f"{edition}/{path}"
+        for path in originals - shared_records
+        for edition in editions
     } - pages
     stale_registrations = registered - pages - missing_translations
 

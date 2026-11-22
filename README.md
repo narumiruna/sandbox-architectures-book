@@ -30,7 +30,7 @@ Install [uv](https://docs.astral.sh/uv/getting-started/installation/), then run 
 uv run --locked zensical serve
 ```
 
-Open [http://localhost:8000](http://localhost:8000). uv uses the dependencies in [`uv.lock`](uv.lock).
+Open `http://localhost:8000` in your browser. uv uses the dependencies in [`uv.lock`](uv.lock).
 
 ## Edit and build
 
@@ -61,6 +61,8 @@ To add or maintain a translation:
 3. Link to chapters and glossary entries in the same edition.
 4. Register the English page and its translations in `zensical.toml`. Run the strict build and check that the language links open the same page in each edition.
 
+Source records in [`docs/references/`](docs/references/index.md) are shared by all editions; do not translate them. Register each record once in `project.extra.unlisted_pages`. Translate the index page, and link it to the shared index.
+
 ### Math in Markdown
 
 Use `$E = mc^2$` for inline math. For a display equation, put `$$` on separate lines with a blank line before and after the block:
@@ -79,7 +81,7 @@ Install [prek](https://prek.j178.dev/), then run `prek install` to enable the ch
 
 Run `prek run --all-files` to run all hooks on demand. These documentation hooks use uv:
 
-- `prek run check-docs-coverage --all-files` checks that all Markdown pages are registered, each English page has a translation in every configured edition, and each translation has an English original.
+- `prek run check-docs-coverage --all-files` checks that all Markdown pages are registered, each English page except shared source records has a translation in every configured edition, and each translation has an English original.
 - `prek run check-docs-no-web-assets --all-files` rejects standalone CSS, HTML, and JavaScript files under `docs/`. Put styles and scripts in `overrides/assets/` and HTML templates in `overrides/`.
 - `prek run check-docs-references --all-files` scans all tracked and non-ignored untracked Markdown files, including translations and reference records. It requires every HTTP(S) hyperlink and remote image to match the `url` in the YAML front matter of a source record under [`docs/references/`](docs/references/index.md). Use [`templates/reference.template.md`](templates/reference.template.md) to add a record. A single record covers all `#section` links to the same page, but different paths or queries need their own records. Code and comments are not links. The hook reports the Markdown file and URL for each missing record; it does not fetch URLs.
 
