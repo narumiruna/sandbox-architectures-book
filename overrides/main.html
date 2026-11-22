@@ -1,5 +1,17 @@
 {% extends "base.html" %}
 
+{% set editions = config.extra.editions %}
+{% set route = page.url | d(none) %}
+{% set version = namespace(locale="en", original=route) %}
+{% for code in editions %}
+  {% set prefix = code ~ "/" %}
+  {% set prefix_length = prefix | length %}
+  {% if route and route[:prefix_length] == prefix %}
+    {% set version.locale = code %}
+    {% set version.original = route[prefix_length:] %}
+  {% endif %}
+{% endfor %}
+
 {% block extrahead %}
   {{ super() }}
   <link rel="stylesheet"
@@ -7,6 +19,35 @@
         integrity="sha384-WwGtaC6ywCHxA5cstpj/3+xIZvTez8dq2IcBQaXRkenHZ7FVVq1ZROtURwfbtTlG"
         crossorigin="anonymous" referrerpolicy="no-referrer">
   <script src="{{ 'assets/javascripts/paper.js' | url }}"></script>
+{% endblock %}
+
+{% block content %}
+  {% if route is not none and route != "404.html" %}
+    {% set navigable = nav.pages | map(attribute="url") | list %}
+    {% set unlisted = config.extra.unlisted_pages %}
+    <nav aria-label="Language versions">
+      <p>
+        <a href="{{ version.original | url }}" hreflang="en"{% if version.locale == "en" %} aria-current="page"{% endif %}>English (original)</a>
+        {% for code in editions %}
+          {% set edition = editions[code] %}
+          {% set translation = code ~ "/" ~ version.original %}
+          ·
+          {% if translation in navigable or (translation | trim("/") ~ ".md") in unlisted or (translation ~ "index.md") in unlisted %}
+            <a href="{{ translation | url }}" lang="{{ code }}" hreflang="{{ code }}"{% if code == version.locale %} aria-current="page"{% endif %}>{{ edition.name }}</a>
+          {% else %}
+            <span lang="{{ code }}">{{ edition.unavailable }}</span>
+          {% endif %}
+        {% endfor %}
+      </p>
+    </nav>
+  {% endif %}
+  {% if version.locale == "en" %}
+    {{ super() }}
+  {% else %}
+    <div lang="{{ version.locale }}">
+      {{ super() }}
+    </div>
+  {% endif %}
 {% endblock %}
 
 {% block scripts %}

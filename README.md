@@ -1,6 +1,6 @@
 # Sandbox Architectures Book
 
-A book about software sandboxes: how they isolate programs and control what those programs can access. The book is written primarily in English.
+A book about software sandboxes: how they isolate programs and control what those programs can access. English is the source edition. The home page, introductory chapter, and glossary are also available in [台灣正體中文](docs/zh-TW/index.md), [日本語](docs/ja/index.md), and [한국어](docs/ko/index.md).
 
 Use the [book home page](docs/index.md) to choose a starting point. Begin with [Sandbox isolation boundaries](docs/sandbox-isolation-boundaries.md) if you are new to sandboxes, or follow the worked example in [From issue to patch](docs/practice/design/from-issue-to-patch.md) if you already know the basics.
 
@@ -46,6 +46,17 @@ In light mode, the **Daytime paper** menu in the header offers Oat, Sage, Tea, L
 
 Theme CSS and JavaScript live in [`overrides/assets/`](overrides/assets/). Edit the paper colors in [`parchment.css`](overrides/assets/stylesheets/parchment.css) and the menu in [`paper.js`](overrides/assets/javascripts/paper.js).
 
+### Translation editions
+
+Use the language links above a chapter or term to open the same page in another edition. A language marked as unavailable has no version of that page; **English (original)** opens the source. In translated chapters, links to untranslated book pages mark the destination as English. Site controls and the shared technical figures remain in English.
+
+To add or maintain a translation:
+
+1. Give the translation the same path under `docs/zh-TW/`, `docs/ja/`, or `docs/ko/` as its source under `docs/`. For example, translate `docs/glossary/policy.md` as `docs/ja/glossary/policy.md`.
+2. Preserve English technical terms, product names, abbreviations, glossary term headings, code, and citations. For cross-page references, keep the source heading IDs with explicit anchors such as `{#follow-a-request-to-open-a-file}`.
+3. Link to translated glossary entries and chapters when they exist. For an untranslated target, link to the English page and mark it in the link text: `（英文）`, `（英語）`, or `(영어)`.
+4. Register the page in `zensical.toml`. The language links use these registrations; do not register missing pages as translations. Run the strict build and check the same-page language links and the English fallback in the preview.
+
 ### Math in Markdown
 
 Use `$E = mc^2$` for inline math. For a display equation, put `$$` on separate lines with a blank line before and after the block:
@@ -64,7 +75,7 @@ Install [prek](https://prek.j178.dev/), then run `prek install` to enable the ch
 
 Run `prek run --all-files` to run all hooks on demand. These two hooks use uv and scan `docs/`, including untracked files:
 
-- `prek run check-docs-coverage --all-files` checks Markdown page registrations.
+- `prek run check-docs-coverage --all-files` checks Markdown page registrations and that each translation has an English original.
 - `prek run check-docs-no-web-assets --all-files` rejects standalone CSS, HTML, and JavaScript files under `docs/`. Put styles and scripts in `overrides/assets/` and HTML templates in `overrides/`.
 
 ## Pi tools

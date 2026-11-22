@@ -27,7 +27,7 @@ repo = "local"
 
 [[repos.hooks]]
 id = "check-docs-coverage"
-name = "Check Markdown page coverage in zensical.toml"
+name = "Check Markdown page registrations and translation counterparts"
 entry = "uv run --locked python scripts/check_docs_coverage.py"
 language = "system"
 always_run = true

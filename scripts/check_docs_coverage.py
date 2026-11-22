@@ -1,4 +1,4 @@
-"""Check that every Markdown page in docs/ is listed in zensical.toml."""
+"""Check Markdown registrations and translation counterparts."""
 
 import sys
 import tomllib
@@ -23,24 +23,33 @@ def main() -> int:
     with (ROOT / "zensical.toml").open("rb") as config:
         project = tomllib.load(config)["project"]
 
+    extra = project.get("extra", {})
     registered = set(nav_paths(project.get("nav", [])))
-    registered.update(project.get("extra", {}).get("unlisted_pages", []))
+    registered.update(extra.get("unlisted_pages", []))
     docs = ROOT / "docs"
     pages = {
         path.relative_to(docs).as_posix()
         for path in docs.rglob("*.md")
         if path.is_file()
     }
-    missing = sorted(pages - registered)
-    if missing:
-        print(
-            "Add these paths to project.nav or project.extra.unlisted_pages in zensical.toml:",
-            file=sys.stderr,
-        )
-        for path in missing:
-            print(f"  {path}", file=sys.stderr)
-        return 1
-    return 0
+    orphaned = []
+    for path in pages:
+        prefix, _, original = path.partition("/")
+        if prefix in extra.get("editions", {}) and original not in pages:
+            orphaned.append(path)
+
+    failed = False
+    for message, paths in (
+        ("Register these Markdown pages in zensical.toml:", pages - registered),
+        ("Remove these missing pages from zensical.toml:", registered - pages),
+        ("Restore the English originals of these translations:", orphaned),
+    ):
+        if paths:
+            failed = True
+            print(message, file=sys.stderr)
+            for path in sorted(paths):
+                print(f"  {path}", file=sys.stderr)
+    return int(failed)
 
 
 if __name__ == "__main__":
