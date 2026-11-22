@@ -92,6 +92,8 @@ Run `/reload` in an open Pi session, then use `/mcp` to check the servers or sig
 
 Run `/skill:link-book-terms docs/sandbox-isolation-boundaries.md` to scan that page and add missing links on first use of technical terms and proper names. Omit the path to scan the whole book.
 
+Run `/skill:audit-markdown-citations docs/sandbox-isolation-boundaries.md` to check whether sources support that page's definitions and factual claims. The audit adds reliable citations, corrects inaccurate claims, and removes claims that remain unsupported after a source search. It summarizes what changed in each file and reports unresolved claims when evidence is inaccessible or conflicts. Pass a Markdown file or directory to limit the scope; omit the path to scan all tracked and non-ignored Markdown in the repository, including translations. Add `report only` after the path to review findings without editing the articles.
+
 ## License
 
 [MIT](LICENSE).
