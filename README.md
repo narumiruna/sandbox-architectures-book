@@ -55,6 +55,8 @@ Run `prek run --all-files` to run all hooks on demand. These two hooks use uv an
 
 Run `/reload` in an open Pi session, then use `/mcp` to check the servers or sign in to alphaXiv if prompted.
 
+Run `/skill:link-book-terms docs/sandbox-isolation-boundaries.md` to scan that page and add missing links on first use of technical terms and proper names. Omit the path to scan the whole book.
+
 ## License
 
 [MIT](LICENSE).

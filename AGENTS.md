@@ -17,6 +17,8 @@
 ## Documentation
 
 - Put published Markdown pages in `docs/` and add new chapters and reference indexes to `nav` in `zensical.toml`.
+- On each book page, link technical terms and proper names on their first use in the body when a relevant reference exists.
+  - Prefer the individual glossary entry for a technical term; otherwise, link to a relevant book page or a primary source, such as official documentation.
 - Add technical terms used in the book to `docs/glossary.md`.
   - Give each glossary entry a short definition and link it to its own Markdown page under `docs/glossary/` that explains the term in detail.
   - Link individual term pages from the glossary rather than adding them to the main navigation.

@@ -1,6 +1,6 @@
 # Sandbox isolation boundaries
 
-A sandbox changes what a program can reach. For example, a coding agent may need to read and edit a project, but it does not need to read your SSH keys. The **isolation boundary** is the mechanism that puts those keys out of reach. The **policy** specifies which files, network destinations, and tools the program is allowed to use.
+A [sandbox](glossary/sandbox.md) changes what a program can reach. For example, a coding agent may need to read and edit a project, but it does not need to read your SSH keys. The **isolation boundary** is the mechanism that puts those keys out of reach. The **policy** specifies which files, network destinations, and tools the program is allowed to use.
 
 ```mermaid
 ---

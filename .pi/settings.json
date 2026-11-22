@@ -1,5 +1,7 @@
 {
   "packages": [
-    "https://github.com/cathrynlavery/diagram-design"
+    "https://github.com/cathrynlavery/diagram-design",
+    "npm:@narumitw/pi-subagents",
+    "npm:@narumitw/pi-goal"
   ]
 }

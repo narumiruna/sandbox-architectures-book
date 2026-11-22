@@ -1,6 +1,6 @@
 # Sandbox Architectures Book
 
-A sandbox lets a program run while limiting what it can access. This book explains how sandboxes enforce those limits and how to choose a boundary for the code you need to run.
+A [sandbox](glossary/sandbox.md) lets a program run while limiting what it can access. This book explains how sandboxes enforce those limits and how to choose a boundary for the code you need to run.
 
 An AI agent that calls a few APIs needs a different environment from an agent that installs packages, builds software, and runs tests. The right choice starts with the work the agent must do, not with a product name.
 
