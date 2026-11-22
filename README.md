@@ -24,6 +24,8 @@ uv run --locked zensical build --strict
 
 The build writes the site to `site/` and stops if it finds warnings.
 
+The light palette is defined in [`docs/stylesheets/parchment.css`](docs/stylesheets/parchment.css). The stylesheet does not change the dark palette or the system preference option.
+
 ## Git checks
 
 Install [prek](https://prek.j178.dev/), then run `prek install` to enable the checks in [`prek.toml`](prek.toml) before each commit. The checks clean up whitespace and line endings, flag large new files and private keys, and scan GitHub Actions workflows with zizmor.

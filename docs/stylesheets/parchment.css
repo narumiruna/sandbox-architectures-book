@@ -1,0 +1,32 @@
+[data-md-color-scheme="default"] {
+  --md-default-bg-color: #f5eddf;
+  --md-default-bg-color--light: #f5eddfeb;
+  --md-default-bg-color--lighter: #f5eddf4d;
+  --md-default-bg-color--lightest: #f5eddf1f;
+  --md-default-fg-color: #30251d;
+  --md-default-fg-color--light: #665241;
+  --md-default-fg-color--lighter: #755f4d;
+  --md-default-fg-color--lightest: #30251d20;
+
+  --md-primary-fg-color: #713d1e;
+  --md-primary-fg-color--light: #85502a;
+  --md-primary-fg-color--dark: #573018;
+  --md-accent-fg-color: #8a481d;
+  --md-accent-fg-color--transparent: #8a481d17;
+
+  --md-code-bg-color: #eee2d0;
+  --md-code-bg-color--light: #eee2d0b3;
+  --md-code-bg-color--lighter: #eee2d04d;
+  --md-code-fg-color: #3c2c21;
+  --md-code-hl-number-color: #b02020;
+  --md-code-hl-special-color: #a41545;
+  --md-code-hl-function-color: #79368a;
+  --md-code-hl-constant-color: #5342ae;
+  --md-code-hl-keyword-color: #2c539b;
+  --md-code-hl-string-color: #16613c;
+
+  --color-foreground: 48 37 29;
+  --color-background: 245 237 223;
+  --color-background-subtle: 238 226 208;
+  --color-backdrop: 245 237 223;
+}
