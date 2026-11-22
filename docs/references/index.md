@@ -4,6 +4,7 @@ This index lists the source records shared by all editions. The book and reposit
 
 - [About cloud sandboxes for GitHub Copilot](github-copilot-cloud-sandboxes.md)
 - [About GitHub Copilot session data](github-copilot-session-data.md)
+- [About PostgreSQL](postgresql-about.md)
 - [Agent Sandbox Warm Pool Quickstart (v1.0.12)](kubernetes-agent-sandbox-warm-pool-quickstart-v1-0-12.md)
 - [Agent Substrate: API Guide (f5428049)](agent-substrate-api-guide-f5428049.md)
 - [Agent Substrate: Architecture (f5428049)](agent-substrate-architecture-f5428049.md)
@@ -70,6 +71,7 @@ This index lists the source records shared by all editions. The book and reposit
 - [Kubernetes Agent Sandbox documentation](kubernetes-agent-sandbox-documentation.md)
 - [Kubernetes Agent Sandbox README (v1.0.12)](kubernetes-agent-sandbox-readme-v1-0-12.md)
 - [Kubernetes Network Policies (03c191bc)](kubernetes-network-policies-03c191bc.md)
+- [Kubernetes Deployments](kubernetes-deployments.md)
 - [Kubernetes Overview](kubernetes-overview.md)
 - [Kubernetes Pods](kubernetes-pods.md)
 - [Landlock: unprivileged access control (Linux 6.12)](linux-6-12-landlock.md)
