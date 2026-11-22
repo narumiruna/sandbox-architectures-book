@@ -4,6 +4,8 @@ Use this glossary alongside [Sandbox isolation boundaries](sandbox-isolation-bou
 
 - **[Agent](glossary/agent.md)** — A system that uses a model to decide what to do next and can call tools to act. A sandbox may contain the entire agent or only the code it generates.
 - **[Allowlist](glossary/allowlist.md)** — A list of resources or actions that a policy permits. For example, an egress allowlist can limit outbound connections to specified services.
+- **[Artifact](glossary/artifact.md)** — A selected output kept after a job, such as a patch or test report.
+- **[Authorization](glossary/authorization.md)** — The decision about whether a known caller may perform an action on a specific resource.
 - **[Capability](glossary/capability.md)** — In this book, a resource or operation that code can use because the host granted it. For example, a tool that reads issues can grant that operation without providing a general network connection.
 - **[Code Mode](glossary/code-mode.md)** — A pattern in which a model writes a program that calls tools and combines their results. The term describes how the model uses tools, not how the program is isolated.
 - **[Cold boot](glossary/cold-boot.md)** — Starting a new VM by booting its guest operating system instead of restoring a running VM's saved state.
@@ -32,13 +34,17 @@ Use this glossary alongside [Sandbox isolation boundaries](sandbox-isolation-bou
 - **[Mount](glossary/mount.md)** — Making a filesystem or directory accessible at a path. A bind mount exposes an existing host directory without copying it. If the mount is writable, changes can immediately affect the host files.
 - **[Namespace](glossary/namespace.md)** — A Linux mechanism that gives processes a separate view of a resource, such as process IDs, filesystem mounts, or network interfaces. The processes still share a kernel.
 - **[Native binary](glossary/native-binary.md)** — A program compiled to machine code for a CPU and an operating system interface. A Linux native binary can run in a compatible Linux environment; it cannot run directly as a Wasm module.
+- **[Observability](glossary/observability.md)** — The ability to learn what a system did from recorded evidence such as status, timestamps, and logs.
 - **[Open Container Initiative (OCI)](glossary/open-container-initiative.md)** — The group that maintains open specifications for container images, distribution, and runtimes. OCI compatibility does not tell you which isolation boundary a runtime uses.
 - **[Operating-system process sandbox](glossary/operating-system-process-sandbox.md)** — A sandbox that runs native processes on the host kernel and uses operating-system controls to restrict their access. It does not boot a separate guest kernel.
 - **[Pod](glossary/pod.md)** — The Kubernetes unit of deployment for one or more containers that share a network environment and can share storage. Some runtimes give each pod its own VM.
 - **[Policy](glossary/policy.md)** — The rules that define which actions and resources a workload may use. A policy has an effect only if a trusted component enforces it.
+- **[Resident set size (RSS)](glossary/resident-set-size.md)** — The amount of a process's memory currently in physical memory.
+- **[Resource limit](glossary/resource-limit.md)** — A cap on how much of a resource a job may use, such as memory, CPU time, or disk space.
 - **[Restricted interpreter](glossary/restricted-interpreter.md)** — A program that executes only supported language features and built-ins. Code reaches outside the interpreter through operations that the host supplies, such as tool calls.
 - **[Runtime](glossary/runtime.md)** — Software that executes a workload or sets up the environment that runs it. A container runtime and a Wasm runtime operate at different layers; the word alone does not name a boundary.
 - **[Sandbox](glossary/sandbox.md)** — An execution environment that limits what code can access or affect. Its boundary, policy, and exposed resources determine what it isolates.
+- **[Sandbox session](glossary/sandbox-session.md)** — A run or period of use tracked as one unit by a sandbox service. It can keep a workspace and worker state across requests.
 - **[Seccomp](glossary/seccomp.md)** — A Linux feature that can filter the system calls a process makes. It does not by itself provide filesystem path rules.
 - **[Snapshot](glossary/snapshot.md)** — Saved state that a system can restore later. Depending on the implementation, it may include disk contents, memory and device state, or both. Snapshots that contain memory can also contain credentials or other secrets.
 - **[System call (syscall)](glossary/system-call.md)** — A request a program makes to a kernel, for example to open a file or create a process. A user-space kernel can implement this interface without forwarding each call directly to the host kernel.
@@ -53,3 +59,4 @@ Use this glossary alongside [Sandbox isolation boundaries](sandbox-isolation-bou
 - **[WebAssembly System Interface (WASI)](glossary/webassembly-system-interface.md)** — A family of interfaces that a Wasm host can offer for operations such as accessing clocks or files. WASI does not mean every host resource is available by default.
 - **[Windows Hypervisor Platform (WHP)](glossary/windows-hypervisor-platform.md)** — A Windows API that VMMs can use to run hardware-backed guests.
 - **[Workload](glossary/workload.md)** — The code and processes that a sandbox runs. Depending on the task, a workload might be one generated script, a build, or an entire agent session.
+- **[Workspace](glossary/workspace.md)** — The set of files a job can work with, such as a copied checkout or a mounted directory.

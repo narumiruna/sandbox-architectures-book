@@ -9,6 +9,11 @@
   - Use a short numbered list when readers need to follow events in order.
   - Put mechanisms, trade-offs, and limitations under descriptive headings or link to a focused reference, keeping caveats that change the takeaway in the introduction.
 
+## Collaboration
+
+- Spawn subagents freely for tasks that can be done independently, and run those tasks in parallel when possible.
+- The main agent coordinates assignments, helps find relevant sources as needed, and combines and verifies the results.
+
 ## Documentation
 
 - Put published Markdown pages in `docs/` and add new chapters and reference indexes to `nav` in `zensical.toml`.
