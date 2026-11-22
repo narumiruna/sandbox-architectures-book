@@ -51,9 +51,9 @@ Run `prek run --all-files` to run all hooks on demand. These two hooks use uv an
 
 ## Pi tools
 
-With [Just](https://just.systems/) and Pi installed, run `just run` from the repository root to start Pi with `pi -ne`.
+With [Just](https://just.systems/) and Pi installed, run `just` from the repository root. It runs the default recipe, `just pi`. The recipe disables extension discovery and built-in extensions with `-ne`. It uses `-e` to load `diagram-design`, `@narumitw/pi-subagents`, and `@narumitw/pi-goal` for that run without adding them to Pi settings.
 
-[`.pi/mcp.json`](.pi/mcp.json) configures alphaXiv and Firecrawl for this project. Pi loads these servers after you trust the project. Set `FIRECRAWL_API_KEY` in the environment that starts Pi; do not put the key in the config file.
+[`.pi/mcp.json`](.pi/mcp.json) configures alphaXiv and Firecrawl. To use these servers, start Pi with built-in MCP enabled (for example, run `pi -e builtin:mcp` instead of `just pi`) and trust the project. Set `FIRECRAWL_API_KEY` in the environment that starts Pi; do not put the key in the config file.
 
 Run `/reload` in an open Pi session, then use `/mcp` to check the servers or sign in to alphaXiv if prompted.
 
