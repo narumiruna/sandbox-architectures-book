@@ -44,7 +44,10 @@ $$
 
 Install [prek](https://prek.j178.dev/), then run `prek install` to enable the checks in [`prek.toml`](prek.toml) before each commit. The checks clean up whitespace and line endings, flag large new files and private keys, and scan GitHub Actions workflows with zizmor.
 
-Run `prek run --all-files` to run all hooks on demand. To check just the Markdown page registrations, run `prek run check-docs-coverage --all-files`. This hook uses uv and scans all Markdown files in `docs/`, including untracked files.
+Run `prek run --all-files` to run all hooks on demand. These two hooks use uv and scan `docs/`, including untracked files:
+
+- `prek run check-docs-coverage --all-files` checks Markdown page registrations.
+- `prek run check-docs-no-web-assets --all-files` rejects standalone CSS, HTML, and JavaScript files under `docs/`. Put styles and scripts in `overrides/assets/` and HTML templates in `overrides/`.
 
 ## Pi tools
 

@@ -32,3 +32,11 @@ entry = "uv run --locked python scripts/check_docs_coverage.py"
 language = "system"
 always_run = true
 pass_filenames = false
+
+[[repos.hooks]]
+id = "check-docs-no-web-assets"
+name = "Check docs/ for CSS, HTML, and JavaScript files"
+entry = "uv run --locked python scripts/check_docs_no_web_assets.py"
+language = "system"
+always_run = true
+pass_filenames = false
