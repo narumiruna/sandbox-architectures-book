@@ -2,11 +2,53 @@
 
 A sandbox changes what a program can reach. For example, a coding agent may need to read and edit a project, but it does not need to read your SSH keys. The **isolation boundary** is the mechanism that puts those keys out of reach. The **policy** specifies which files, network destinations, and tools the program is allowed to use.
 
+```mermaid
+---
+config:
+  flowchart:
+    rankSpacing: 24
+    nodeSpacing: 20
+---
+flowchart TB
+    accTitle: Project access without SSH key access
+    accDescr: Code inside the sandbox can use the exposed project directory. The host's SSH keys are not exposed.
+    subgraph Sandbox["Sandbox boundary"]
+        Code["Agent code"]
+    end
+    Project["Project directory"]
+    Keys["SSH keys"]
+    Code -->|Allowed| Project
+    Code --x|Denied| Keys
+```
+
+The project is exposed to the sandbox; the SSH keys are not. The crossed arrow marks access the program does not have.
+
 Start with two tasks. An agent that builds a project and runs its tests needs a place to execute native programs. An agent that sorts search results and looks up issue titles may only need a place to run a short script with two tools. The two tasks do not need the same execution environment.
 
 ## Sandboxes for operating-system workloads
 
 These approaches can run native programs. They differ in which kernel handles a program's requests. A **kernel** is the part of the operating system that manages resources such as memory, files, and devices.
+
+```mermaid
+---
+config:
+  flowchart:
+    rankSpacing: 26
+    nodeSpacing: 18
+    wrappingWidth: 76
+    minNodeWidth: 58
+    padding: 9
+---
+flowchart TB
+    accTitle: Who handles a request to open a file?
+    accDescr: The guest kernel handles the request in a VM, the user-space kernel handles it in a user-space kernel sandbox, and the host kernel handles it in a process sandbox.
+    Open["Program asks to open a file"]
+    Open -->|VM| Guest["Guest kernel"]
+    Open -->|gVisor| Sentry["User-space kernel"]
+    Open -->|Process sandbox| Host["Host kernel"]
+```
+
+The figure shows which component implements the program's request, not every operation that follows. A user-space kernel can still make its own requests to the host kernel.
 
 ### 1. Hardware-backed virtual machines
 

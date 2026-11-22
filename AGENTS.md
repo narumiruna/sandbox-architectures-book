@@ -3,6 +3,11 @@
 ## Communication
 
 - Write book content in English and use the [glossary](docs/glossary.md) for shared terminology.
+- Layer explanations so beginners can grasp the main idea without prior knowledge and experienced readers can find technical details quickly.
+  - State the main point in plain language near the start; lead with one compact visual if it makes the point clearer.
+  - Define essential terms at first use and use one concrete example or analogy when it helps, noting any limit of the analogy that could mislead.
+  - Use a short numbered list when readers need to follow events in order.
+  - Put mechanisms, trade-offs, and limitations under descriptive headings or link to a focused reference, keeping caveats that change the takeaway in the introduction.
 
 ## Documentation
 
@@ -11,8 +16,9 @@
   - Give each glossary entry a short definition and link it to its own Markdown page under `docs/glossary/` that explains the term in detail.
   - Link individual term pages from the glossary rather than adding them to the main navigation.
 - Use the isolation-boundaries chapter for concepts and the architecture survey for implementation details, and distinguish the execution boundary from the control plane.
-- Use Mermaid for diagrams that help explain a concept, architecture, or flow.
-  - Prefer the [diagram types styled by Zensical](https://zensical.org/docs/authoring/diagrams/): `flowchart`, `sequenceDiagram`, `stateDiagram-v2`, `classDiagram`, and `erDiagram`.
+- In all repository documentation, use compact Mermaid diagrams when they make a concept, relationship, or process clearer than prose alone; not every concept needs a diagram.
+  - Put each diagram near the explanation it supports and state its main takeaway in prose.
+  - In the published book, prefer the [diagram types styled by Zensical](https://zensical.org/docs/authoring/diagrams/): `flowchart`, `sequenceDiagram`, `stateDiagram-v2`, `classDiagram`, and `erDiagram`.
   - Use `flowchart` for isolation boundaries, `sequenceDiagram` for interactions, and `stateDiagram-v2` for lifecycle changes.
 - Cite primary sources for product-specific technical claims and identify the release or revision when behavior varies by version.
 - Edit source files rather than `site/`, which Zensical generates.
