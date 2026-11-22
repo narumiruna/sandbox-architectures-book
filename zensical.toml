@@ -1,13 +1,13 @@
 [project]
-site_url = "https://www.example.com/"
+site_url = "https://narumiruna.github.io/sandbox-architectures-book/"
 site_name = "Sandbox Architectures Book"
-# site_description = "Your project description"
-# site_author = "Your name"
+site_description = "How software sandboxes isolate untrusted code and how to choose a sandbox for AI agents."
+site_author = "narumi"
 
 # copyright = "Copyright &copy; 2026 Your name"
 
-# repo_url = "https://github.com/user/repo"
-# repo_name = "user/repo"
+repo_url = "https://github.com/narumiruna/sandbox-architectures-book"
+repo_name = "narumiruna/sandbox-architectures-book"
 # edit_uri = "edit/main/docs/"
 
 nav = [
