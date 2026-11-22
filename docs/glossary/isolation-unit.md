@@ -8,7 +8,7 @@ A service gives each Kubernetes [pod](pod.md) its own [virtual machine](virtual-
 
 ## Which layer the unit describes
 
-The [isolation boundary](isolation-boundary.md) tells you *how* work is separated. The unit tells you *which work* is separated by each instance. With a VM per pod the unit is a pod; with a VM per container it is a [container](container.md). See the [architecture survey](../agent-sandbox-architectures.md#hardware-backed-linux-environments) for examples of those layouts.
+The [isolation boundary](isolation-boundary.md) tells you *how* work is separated. The unit tells you *which work* is separated by each instance. With a VM per pod the unit is a pod; with a VM per container it is a [container](container.md). See [which workloads share a guest kernel](../agent-sandbox-architectures.md#which-workloads-share-a-guest-kernel) for a diagram comparing three implementations.
 
 The same system can have smaller units at another layer. Processes in one VM can have separate filesystem views, but that does not give each process a separate guest kernel. If two [tenants](tenant.md) must not share a guest kernel, check how the [control plane](control-plane.md) places their workloads, not just whether the service uses VMs.
 

@@ -20,7 +20,22 @@ Start with [Sandbox isolation boundaries](sandbox-isolation-boundaries.md) for t
 | [Microsoft NVX](https://github.com/microsoft/nvx/blob/42f413d226290e31ea288686d6f3dbfd20c45733/README.md) | OpenVMM-based microVM stack and guest runtime | Documents Linux hosts with KVM or MSHV and Windows hosts with Windows Hypervisor Platform. The guest runtime targets [one workload sandbox per Linux microVM](https://github.com/microsoft/nvx/blob/42f413d226290e31ea288686d6f3dbfd20c45733/doc/design/4-guest-runtime-architecture.md). |
 | [Apple `container`](https://github.com/apple/container/blob/main/docs/technical-overview.md) | Local OCI container tooling for Apple silicon | Runs a lightweight Linux VM **per container** via Apple's Virtualization framework. It takes container images as input, but the isolation boundary is a VM, not a user-space kernel. |
 
-The isolation unit matters. Docker Sandboxes places a Docker daemon and potentially several containers inside one microVM. Apple `container` starts a VM per container. Kata typically starts a VM per Kubernetes pod. If two workloads must be isolated from each other, check whether the runtime places them in the same guest.
+### Which workloads share a guest kernel?
+
+The [isolation unit](glossary/isolation-unit.md) is the set of workloads that share one instance of a boundary. Each box below is a separate VM with its own guest kernel.
+
+```mermaid
+flowchart TB
+    accTitle: Virtual machine boundaries in three container environments
+    accDescr: Docker Sandboxes can run several containers in one sandbox VM, Apple container starts a VM for each container, and Kata can run several containers in one Kubernetes pod VM.
+    Docker["Docker Sandboxes: one sandbox VM<br/>Docker daemon and containers A and B"]
+    AppleA["Apple container: one VM<br/>Container A"]
+    AppleB["Apple container: another VM<br/>Container B"]
+    Kata["Kata: one VM for a Kubernetes pod<br/>Containers A and B"]
+    Docker ~~~ AppleA ~~~ AppleB ~~~ Kata
+```
+
+The letters identify example containers within each implementation. If two workloads must be isolated from each other at the VM boundary, check whether the runtime places them in the same guest.
 
 ## Containers and processes without a guest Linux kernel
 
@@ -30,6 +45,35 @@ The isolation unit matters. Docker Sandboxes places a Docker daemon and potentia
 ## Code Mode: isolating tool scripts instead of shells
 
 In **Code Mode**, the model writes a program that calls tools and combines their results. The outer application decides which tools are available and what those tools may do. The sandbox that runs this program does not automatically confine the host tool handlers or the rest of the agent.
+
+Follow one issue lookup before comparing the implementations:
+
+```mermaid
+---
+config:
+  sequence:
+    actorMargin: 12
+    diagramMarginX: 8
+    width: 78
+    mirrorActors: false
+---
+sequenceDiagram
+    accTitle: An issue lookup in Code Mode
+    accDescr: The outer agent runs a generated script inside a sandbox. The script requests an issue title from a host tool outside the sandbox. The tool checks access and returns only the title.
+    participant Agent as Agent
+    box Script sandbox
+        participant Script as Script
+    end
+    participant Tool as Host tool
+
+    Agent->>Script: Run script
+    Script->>Tool: Look up issue
+    Note over Tool: Check access
+    Tool-->>Script: Return title
+    Script-->>Agent: Return summary
+```
+
+The host tool handler checks whether the caller may read the issue. The sandbox limits which tools the script can call; it does not authorize each tool request.
 
 | Implementation | Execution boundary | What makes it different? |
 | --- | --- | --- |

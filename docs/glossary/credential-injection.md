@@ -10,6 +10,35 @@ A sandboxed build needs to download one private package. The build asks the prox
 
 The proxy applies the [policy](policy.md) before adding the credential to the request it sends onward. For example, it can add a bearer token to the web request's [Authorization header](https://www.rfc-editor.org/rfc/rfc6750.html#section-2.1), a field the destination service reads. Putting the real token into a setting the workload can read is different: the workload gets the token itself.
 
+```mermaid
+---
+config:
+  sequence:
+    actorMargin: 12
+    diagramMarginX: 8
+    width: 78
+    mirrorActors: false
+---
+sequenceDiagram
+    accTitle: A proxy adds a credential only to approved requests
+    accDescr: The proxy checks a request from the sandboxed build. It adds a token only to an approved request sent to the package registry. It returns the package without the token, or denies the request without contacting the registry.
+    participant Build as Build sandbox
+    participant Proxy as Proxy
+    participant Registry as Registry
+
+    Build->>Proxy: Request package
+    Note over Proxy: Check policy
+    alt Approved
+        Proxy->>Registry: Request with token
+        Registry-->>Proxy: Package
+        Proxy-->>Build: Package only
+    else Rejected
+        Proxy-->>Build: Access denied
+    end
+```
+
+The token appears only on the proxy's request to the registry. A rejected request never reaches the registry.
+
 [OpenShell v0.1.9](https://github.com/NVIDIA/OpenShell/blob/v0.1.9/docs/how-it-works/providers/overview.mdx#how-credential-injection-works) documents one approach. Code receives placeholders, and the proxy can replace them on approved HTTP requests. A tunnel that hides the request from the proxy cannot support that rewrite.
 
 ## What the proxy must protect

@@ -8,6 +8,6 @@ A test sandbox runs a web server and a test runner in two containers in the same
 
 ## What sharing a pod means
 
-In the standard model described in the [Kubernetes Pods documentation](https://kubernetes.io/docs/concepts/workloads/pods/), containers in a pod share an IP address and port space. Shared storage must be set up for the containers that need it. A runtime that uses a [virtual machine](virtual-machine.md) can make the pod the [isolation unit](isolation-unit.md). For example, [Kata Containers 4.4.0](https://github.com/kata-containers/kata-containers/blob/4.4.0/docs/design/architecture/README.md#kubernetes-support) puts a Kubernetes pod in a VM. Its containers share the VM's guest kernel; each does not get a separate VM.
+In the standard model described in the [Kubernetes Pods documentation](https://kubernetes.io/docs/concepts/workloads/pods/), containers in a pod share an IP address and port space. Shared storage must be set up for the containers that need it. A runtime that uses a [virtual machine](virtual-machine.md) can make the pod the [isolation unit](isolation-unit.md). For example, [Kata Containers 4.4.0](https://github.com/kata-containers/kata-containers/blob/4.4.0/docs/design/architecture/README.md#kubernetes-support) puts a Kubernetes pod in a VM. Its containers share the VM's guest kernel; each does not get a separate VM. See [which workloads share a guest kernel](../agent-sandbox-architectures.md#which-workloads-share-a-guest-kernel) for how that differs from a VM per container.
 
 [Back to Glossary](../glossary.md)

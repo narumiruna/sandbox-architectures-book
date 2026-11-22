@@ -10,6 +10,22 @@ A test runner gets a request when its [warm pool](warm-pool.md) is empty. It res
 
 Cold-start latency is the wait until the environment can do useful work. For a command sandbox, measure from the request to the point when the sandbox can run the first command. Also record individual steps, such as reading an image, booting or restoring a VM, and preparing request-specific data. A fast boot or restore does not show how long the whole request waits.
 
+```mermaid
+flowchart TB
+    accTitle: Three paths to a usable virtual machine sandbox
+    accDescr: A request can claim a prepared VM, boot a new VM, or restore a snapshot. Each path can require request-specific setup before the first command can run.
+    Request(["Request arrives"])
+    Request --> Claim["Claim warm VM"]
+    Request --> Boot["Boot new VM"]
+    Request --> Restore["Restore snapshot"]
+    Claim --> Setup["Finish setup if needed"]
+    Boot --> Setup
+    Restore --> Setup
+    Setup --> Ready(["First command can run"])
+```
+
+Boot and restore can both be part of a cold start. A warm-pool claim skips the need to boot or restore on the request path, but it can still require setup, such as attaching the project's workspace.
+
 Compare requests that require setup with requests that get a prepared sandbox. State which files or images were already cached so readers can tell what the measurements include. See [Agent sandbox architectures](../agent-sandbox-architectures.md#what-is-changing-in-2026) for examples of different provisioning paths.
 
 [Back to Glossary](../glossary.md)
