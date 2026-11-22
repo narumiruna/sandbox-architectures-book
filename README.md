@@ -6,7 +6,7 @@ Use the [book home page](docs/index.md) to choose a starting point. Begin with [
 
 ## Preview locally
 
-Install [uv](https://docs.astral.sh/uv/getting-started/installation/), then run this command from the repository root:
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/), then run `just serve` from the repository root if you have [Just](https://just.systems/) installed. Without Just, run the same command directly:
 
 ```sh
 uv run --locked zensical serve
@@ -50,6 +50,8 @@ Run `prek run --all-files` to run all hooks on demand. These two hooks use uv an
 - `prek run check-docs-no-web-assets --all-files` rejects standalone CSS, HTML, and JavaScript files under `docs/`. Put styles and scripts in `overrides/assets/` and HTML templates in `overrides/`.
 
 ## Pi tools
+
+With [Just](https://just.systems/) and Pi installed, run `just run` from the repository root to start Pi with `pi -ne`.
 
 [`.pi/mcp.json`](.pi/mcp.json) configures alphaXiv and Firecrawl for this project. Pi loads these servers after you trust the project. Set `FIRECRAWL_API_KEY` in the environment that starts Pi; do not put the key in the config file.
 
