@@ -14,13 +14,67 @@
 
 | 專案 | 提供的功能 | 邊界與範圍 |
 | --- | --- | --- |
-| [Docker Sandboxes (`sbx`)](https://docs.docker.com/ai/sandboxes/architecture/) | 可直接使用的開發 agent 環境 | 每個本機 sandbox 都在一台 [microVM](glossary/microvm.md) 裡執行，並有自己的 Docker daemon。即使無法存取 [host](glossary/host.md) 上的 Docker socket，agent 仍可建置和執行 [containers](glossary/container.md)。Host 的 [workspace](glossary/workspace.md) [mounts](glossary/mount.md) 和對外 proxy 各自涉及不同的信任決策。[本機安裝](https://docs.docker.com/ai/sandboxes/install/)說明 macOS、Windows 和 Linux 的需求。 |
+| [Docker Sandboxes (`sbx`)](https://docs.docker.com/ai/sandboxes/architecture/) | 可直接使用的開發 agent 環境 | 每個本機 sandbox 都在一台 [microVM](glossary/microvm.md) 裡執行，並有自己的 [Docker Engine](https://docs.docker.com/engine/)。哪些資源會被隔離，哪些不會，請參閱 [Docker Sandboxes 案例](#docker-sandboxes)。[本機安裝](https://docs.docker.com/ai/sandboxes/install/)說明 macOS、Windows 和 Linux 的需求。 |
 | [libkrun](https://github.com/containers/libkrun) | 可嵌入的 VMM 函式庫，提供 Rust 和 C API | 在 Linux 上使用 [KVM](glossary/kernel-based-virtual-machine.md)，在 Apple silicon 上使用 [Hypervisor Framework](https://developer.apple.com/documentation/hypervisor)。呼叫端決定開放哪些 host 檔案和裝置。[Gondolin](https://github.com/earendil-works/gondolin/blob/main/docs/backends.md) 是一層 sandbox，可用 libkrun 或 QEMU 作為 VMM。 |
 | [Cloud Hypervisor](https://github.com/cloud-hypervisor/cloud-hypervisor) | 通用的雲端 VMM | 在 KVM 或 [MSHV](glossary/microsoft-hypervisor.md) 上執行，支援 Linux 和 Windows [guests](glossary/guest.md)。它是後端，不是具有 workspace 和 [credential](glossary/credential.md) policy 的完整 agent sandbox。 |
 | [Firecracker](https://github.com/firecracker-microvm/firecracker) | 供 microVM 使用的精簡 VMM | 一般部署是在 Linux 上使用 KVM。上游專案也記載了 [AWS Nitro Sandboxes 後端](https://github.com/firecracker-microvm/firecracker/tree/main/docs/nitro-sandboxes)，這個後端使用 AWS Nitro，而不是 host KVM。 |
 | [Kata Containers](https://github.com/kata-containers/kata-containers/blob/main/docs/design/architecture/README.md) | 以 VM 為基礎的 [container runtime](glossary/container-runtime.md) | 在 [Kubernetes](https://kubernetes.io/docs/concepts/overview/) 中，[pod](glossary/pod.md) 在 guest VM 裡執行；同一個 pod 裡的 container 可以共用 guest [kernel](glossary/kernel.md)。Kata [支援多種 VMM](https://github.com/kata-containers/kata-containers/blob/main/docs/hypervisors.md)，包括 QEMU、Cloud Hypervisor 和 Firecracker。Kata 和 Firecracker 屬於不同層，不能直接互相替代。 |
 | [Microsoft NVX](https://github.com/microsoft/nvx/blob/42f413d226290e31ea288686d6f3dbfd20c45733/README.md) | 以 OpenVMM 為基礎的 microVM 技術堆疊和 guest runtime | 文件涵蓋使用 KVM 或 MSHV 的 Linux host，以及使用 [Windows Hypervisor Platform](glossary/windows-hypervisor-platform.md) 的 Windows host。Guest runtime 的設計目標是[每台 Linux microVM 執行一個 workload sandbox](https://github.com/microsoft/nvx/blob/42f413d226290e31ea288686d6f3dbfd20c45733/doc/design/4-guest-runtime-architecture.md)。 |
 | [Apple `container`](https://github.com/apple/container/blob/main/docs/technical-overview.md) | Apple silicon 上的本機 [OCI](glossary/open-container-initiative.md) container 工具 | 透過 Apple 的 [Virtualization framework](https://developer.apple.com/documentation/virtualization)，**每個 container** 各執行一台輕量的 Linux VM。它以 [container images](glossary/container-image.md) 為輸入，但隔離邊界是 VM，而不是 user-space kernel。 |
+
+### Docker Sandboxes：每個 sandbox 一台 VM {#docker-sandboxes}
+
+每個本機 Docker Sandbox 都有自己的 Linux [guest kernel](glossary/guest.md)，但 agent 仍能修改你開放寫入的 [host](glossary/host.md) [workspace](glossary/workspace.md)。這是 Kaan Yagci 在 [〈Wait, Docker Sandboxes Aren’t Containers?〉](https://x.com/i/article/2119903254867775488) 指出的差別：sandbox 隔離了執行環境，但不會隔離 agent 能存取的所有資源。
+
+在 macOS 和 Windows 上，[Docker Desktop 把 Linux containers 放在 Linux VM 裡執行](https://docs.docker.com/desktop/features/vmm/)。這些 [containers](glossary/container.md) 仍共用這台 VM 的 [kernel](glossary/kernel.md)。[Docker Sandboxes](https://docs.docker.com/ai/sandboxes/security/isolation/#hypervisor-isolation) 則是每個 sandbox 一台 VM，不是每個 container 一台。
+
+```mermaid
+---
+config:
+  flowchart:
+    rankSpacing: 16
+    nodeSpacing: 12
+---
+flowchart TB
+    accTitle: Shared versus separate Linux kernels
+    accDescr: Two Docker Desktop containers share one Linux VM kernel. Two local Docker Sandboxes run in separate microVMs, each with its own kernel.
+    subgraph Desktop["Docker Desktop VM"]
+        Containers["Containers A and B"] --> Shared["Shared Linux kernel"]
+    end
+    subgraph First["Sandbox A microVM"]
+        KA["Linux kernel A"]
+    end
+    subgraph Second["Sandbox B microVM"]
+        KB["Linux kernel B"]
+    end
+    Desktop ~~~ First ~~~ Second
+```
+
+Agent 的 Docker 指令會送到 [sandbox 內的 Docker Engine](https://docs.docker.com/ai/sandboxes/security/isolation/#docker-engine-isolation)。它不必存取 host 的 Docker socket，就能建置映像檔和執行 containers。寫入檔案則走另一條路：如果 [mount](glossary/mount.md) 可寫，變更就會直接寫入 host 的專案資料夾。
+
+```mermaid
+---
+config:
+  flowchart:
+    rankSpacing: 16
+    nodeSpacing: 14
+    wrappingWidth: 128
+---
+flowchart TB
+    accTitle: Docker commands and workspace writes take different paths
+    accDescr: The agent sends Docker commands to the engine inside the microVM. It can still write to a mounted host project. The usual Docker Engine is outside the sandbox and not on either path.
+    subgraph VM["Sandbox microVM"]
+        Agent["Agent"] -->|Docker commands| Engine["Private Docker Engine"]
+    end
+    Agent -->|Writes through mount| Project["Host project folder"]
+    Project ~~~ Usual["Host Docker Engine"]
+```
+
+獨立的 Docker Engine 無法取代[網路 policy](practice/data-and-access/network-policy.md)。例如，如果 agent 的 [Docker context](https://docs.docker.com/engine/manage-resources/contexts/) 指向正式環境的 Docker Engine、網路允許連線，而且 agent 能通過身分驗證，它就仍然能連到正式環境。比對 sandbox 內外的 `docker context ls` 輸出只能檢查用戶端設定，不能證明正式環境的存取已被封鎖。
+
+使用[本機 workspace](https://docs.docker.com/ai/sandboxes/security/isolation/#workspace-isolation) 時，如果沒有指定路徑，`sbx run` 會將目前目錄當成可寫的 workspace。移除 sandbox 不會復原對該目錄的變更。如果想先審查再帶回變更，可讓 agent 編輯獨立的 Git clone；如果不需要專案檔案，則可建立不掛載 host workspace 的 sandbox。使用獨立的 clone 時，VM 仍然能讀取原始 repository。
+
+[Cloud sandboxes](https://docs.docker.com/ai/sandboxes/cloud/local-vs-cloud/) 在 Docker 管理的基礎設施上執行，不會掛載你筆電上的資料夾。如果要讓工作在無人操作時繼續執行，先確認逾時設定以及到期後 sandbox 會如何處理。
 
 ### 哪些 workload 共用 guest kernel？ {#which-workloads-share-a-guest-kernel}
 

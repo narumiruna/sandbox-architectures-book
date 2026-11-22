@@ -14,13 +14,67 @@ A [virtual machine monitor (VMM)](glossary/virtual-machine-monitor.md) manages a
 
 | Project | What it provides | Boundary and scope |
 | --- | --- | --- |
-| [Docker Sandboxes (`sbx`)](https://docs.docker.com/ai/sandboxes/architecture/) | Ready-to-use coding-agent environment | Each local sandbox runs in a [microVM](glossary/microvm.md) with its own Docker daemon. The agent can build and run [containers](glossary/container.md) without access to the [host](glossary/host.md) Docker socket. Host [workspace](glossary/workspace.md) [mounts](glossary/mount.md) and the outbound proxy are separate trust decisions. [Local installation](https://docs.docker.com/ai/sandboxes/install/) documents macOS, Windows, and Linux requirements. |
+| [Docker Sandboxes (`sbx`)](https://docs.docker.com/ai/sandboxes/architecture/) | Ready-to-use coding-agent environment | Each local sandbox runs in a [microVM](glossary/microvm.md) with its own [Docker Engine](https://docs.docker.com/engine/). See the [Docker Sandboxes case study](#docker-sandboxes) for what the VM does and does not isolate. [Local installation](https://docs.docker.com/ai/sandboxes/install/) documents macOS, Windows, and Linux requirements. |
 | [libkrun](https://github.com/containers/libkrun) | Embeddable VMM library with a Rust and C API | Uses [KVM](glossary/kernel-based-virtual-machine.md) on Linux and [Hypervisor Framework](https://developer.apple.com/documentation/hypervisor) on Apple silicon. The caller decides which host files and devices to expose. [Gondolin](https://github.com/earendil-works/gondolin/blob/main/docs/backends.md) is a sandbox layer that can use libkrun or QEMU as its VMM. |
 | [Cloud Hypervisor](https://github.com/cloud-hypervisor/cloud-hypervisor) | General-purpose cloud VMM | Runs on KVM or [MSHV](glossary/microsoft-hypervisor.md) and supports Linux and Windows [guests](glossary/guest.md). It is a backend, not a complete agent sandbox with workspace and [credential](glossary/credential.md) policies. |
 | [Firecracker](https://github.com/firecracker-microvm/firecracker) | Minimal VMM for microVMs | Uses KVM on Linux in the usual deployment. Upstream also documents an [AWS Nitro Sandboxes backend](https://github.com/firecracker-microvm/firecracker/tree/main/docs/nitro-sandboxes) that uses AWS Nitro instead of host KVM. |
 | [Kata Containers](https://github.com/kata-containers/kata-containers/blob/main/docs/design/architecture/README.md) | VM-backed [container runtime](glossary/container-runtime.md) | In [Kubernetes](https://kubernetes.io/docs/concepts/overview/), a [pod](glossary/pod.md) runs in a guest VM; containers in that pod can share the guest [kernel](glossary/kernel.md). Kata [supports multiple VMMs](https://github.com/kata-containers/kata-containers/blob/main/docs/hypervisors.md), including QEMU, Cloud Hypervisor, and Firecracker. Kata and Firecracker are different layers, not direct alternatives. |
 | [Microsoft NVX](https://github.com/microsoft/nvx/blob/42f413d226290e31ea288686d6f3dbfd20c45733/README.md) | OpenVMM-based microVM stack and guest runtime | Documents Linux hosts with KVM or MSHV and Windows hosts with [Windows Hypervisor Platform](glossary/windows-hypervisor-platform.md). The guest runtime targets [one workload sandbox per Linux microVM](https://github.com/microsoft/nvx/blob/42f413d226290e31ea288686d6f3dbfd20c45733/doc/design/4-guest-runtime-architecture.md). |
 | [Apple `container`](https://github.com/apple/container/blob/main/docs/technical-overview.md) | Local [OCI](glossary/open-container-initiative.md) container tooling for Apple silicon | Runs a lightweight Linux VM **per container** via Apple's [Virtualization framework](https://developer.apple.com/documentation/virtualization). It takes [container images](glossary/container-image.md) as input, but the isolation boundary is a VM, not a user-space kernel. |
+
+### Docker Sandboxes: one VM per sandbox {#docker-sandboxes}
+
+Each local Docker Sandbox gets its own Linux [guest kernel](glossary/guest.md), but the agent can still edit any [host](glossary/host.md) [workspace](glossary/workspace.md) that you share with write access. That's the distinction behind Kaan Yagci's [*Wait, Docker Sandboxes Aren’t Containers?*](https://x.com/i/article/2119903254867775488): a sandbox separates the execution environment, not every resource the agent can reach.
+
+On macOS and Windows, [Docker Desktop runs Linux containers in a Linux VM](https://docs.docker.com/desktop/features/vmm/). Those [containers](glossary/container.md) still share that VM's [kernel](glossary/kernel.md). With [Docker Sandboxes](https://docs.docker.com/ai/sandboxes/security/isolation/#hypervisor-isolation), the VM boundary is around each sandbox, not each container it starts.
+
+```mermaid
+---
+config:
+  flowchart:
+    rankSpacing: 16
+    nodeSpacing: 12
+---
+flowchart TB
+    accTitle: Shared versus separate Linux kernels
+    accDescr: Two Docker Desktop containers share one Linux VM kernel. Two local Docker Sandboxes run in separate microVMs, each with its own kernel.
+    subgraph Desktop["Docker Desktop VM"]
+        Containers["Containers A and B"] --> Shared["Shared Linux kernel"]
+    end
+    subgraph First["Sandbox A microVM"]
+        KA["Linux kernel A"]
+    end
+    subgraph Second["Sandbox B microVM"]
+        KB["Linux kernel B"]
+    end
+    Desktop ~~~ First ~~~ Second
+```
+
+The agent's Docker commands go to the [engine inside the sandbox](https://docs.docker.com/ai/sandboxes/security/isolation/#docker-engine-isolation), which can build images and run containers without access to the host Docker socket. File writes follow a different path: with a writable [mount](glossary/mount.md), they go straight to the host project folder.
+
+```mermaid
+---
+config:
+  flowchart:
+    rankSpacing: 16
+    nodeSpacing: 14
+    wrappingWidth: 128
+---
+flowchart TB
+    accTitle: Docker commands and workspace writes take different paths
+    accDescr: The agent sends Docker commands to the engine inside the microVM. It can still write to a mounted host project. The usual Docker Engine is outside the sandbox and not on either path.
+    subgraph VM["Sandbox microVM"]
+        Agent["Agent"] -->|Docker commands| Engine["Private Docker Engine"]
+    end
+    Agent -->|Writes through mount| Project["Host project folder"]
+    Project ~~~ Usual["Host Docker Engine"]
+```
+
+The private engine is not a [network policy](practice/data-and-access/network-policy.md). For example, the agent could still reach a production Docker Engine if its [Docker context](https://docs.docker.com/engine/manage-resources/contexts/) points there, the network allows the connection, and it can authenticate. Comparing the output of `docker context ls` inside and outside the sandbox checks client configuration, not whether production access is blocked.
+
+For [local workspaces](https://docs.docker.com/ai/sandboxes/security/isolation/#workspace-isolation), `sbx run` uses the current directory as a writable workspace if you don't provide a path. Removing the sandbox does not undo edits to that directory. Use a private Git clone to review edits before bringing them back, or create a sandbox without a host workspace if it doesn't need project files. A private clone leaves the source repository readable in the VM.
+
+[Cloud sandboxes](https://docs.docker.com/ai/sandboxes/cloud/local-vs-cloud/) run on Docker-managed infrastructure without mounting your laptop's folders. Check their timeout and what happens to the sandbox when it expires before leaving a job unattended.
 
 ### Which workloads share a guest kernel?
 
