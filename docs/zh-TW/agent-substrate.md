@@ -4,7 +4,7 @@
 
 ## Agent Substrate 是什麼？ {#what-is-agent-substrate}
 
-Agent Substrate 是 Kubernetes 上的 [sandbox](glossary/sandbox.md) 平台；它不是 agent framework，也不是單一 sandbox [runtime](glossary/runtime.md)。*Actor* 是一個有名稱的 workload 實例，例如 coding [agent](glossary/agent.md) 或 HTTP 服務。Kubernetes 預先準備 worker pods，Substrate 則為每個要執行的 Actor 分配 worker 容量及獨立的 sandbox。同一個 worker 可以同時執行多個 Actor，但它們不共用 sandbox。
+Agent Substrate 是 Kubernetes 上的 [sandbox](glossary/sandbox.md) 平台；它不是 agent framework，也不是單一 sandbox [runtime](glossary/runtime.md)。*Actor* 是一個有名稱的 workload 實例，例如 coding [agent](glossary/agent.md) 或 [HTTP](https://www.rfc-editor.org/rfc/rfc9110.html) 服務。Kubernetes 預先準備 worker pods，Substrate 則為每個要執行的 Actor 分配 worker 容量及獨立的 sandbox。同一個 worker 可以同時執行多個 Actor，但它們不共用 sandbox。
 
 Worker pool 決定隔離方式：**[gVisor](https://gvisor.dev/docs/architecture_guide/intro/)**，或由 [Cloud Hypervisor](https://github.com/cloud-hypervisor/cloud-hypervisor) 提供虛擬機的 **[Kata Containers](https://github.com/kata-containers/kata-containers/blob/main/docs/design/architecture/README.md) [microVM](glossary/microvm.md)**。應用程式讓 Actor 休眠時，Substrate 會擷取 [snapshot](glossary/snapshot.md) 並釋放 Actor 占用的容量。下次收到請求時，Substrate 可以讓同一個 Actor 在相容的 worker 上恢復，不必回到原本的 worker。能接續多少狀態，取決於 snapshot 保存了什麼。本文以版本 `f5428049` 為準。
 
@@ -83,9 +83,9 @@ Kubernetes 和 Substrate 的排程分工不同。`atecontroller` 把 Kubernetes 
 
 ### 運算隔離不等於網路授權 {#agent-substrate-access}
 
-依照[官方安全模型](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/security/security.md#security-boundaries)，每個 Actor 有自己的網路環境。傳入請求必須經過驗證呼叫端身分的 router，不能由另一個 Actor 直接送達。對外連線預設拒絕，由 DNS relay 和 `atenet-egress` 執行存取規則。外層應用程式仍要負責決定**哪個使用者可以呼叫哪個 Actor**。
+依照[官方安全模型](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/security/security.md#security-boundaries)，每個 Actor 有自己的網路環境。傳入請求必須經過驗證呼叫端身分的 router，不能由另一個 Actor 直接送達。對外連線預設拒絕，由 [DNS relay](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/guides/egress-traffic.md) 和 `atenet-egress` 執行存取規則。外層應用程式仍要負責決定**哪個使用者可以呼叫哪個 Actor**。
 
-使用 [credential injection](glossary/credential-injection.md) 時（見[官方指南](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/guides/egress-credential-injection.md#how-it-works)），Actor 只在請求標頭放入佔位值。如果規則允許這個請求且指定了該標頭，gateway 才會取得憑證或可辨識 Actor 身分的簽署 token，替換標頭後送往目標服務。若要替換 HTTPS 標頭，gateway 必須終止 TLS 連線，Actor 也必須信任 gateway 的憑證授權單位。Actor 不必持有憑證就能發出請求，所以代填這一步不會把機密寫進 Actor 的記憶體或 snapshot。但這無法保護應用程式自行放進 sandbox 的機密，或目標服務在回應中傳回的機密。規則放得太寬，仍可能允許不當操作。
+使用 [credential injection](glossary/credential-injection.md) 時（見[官方指南](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/guides/egress-credential-injection.md#how-it-works)），Actor 只在請求標頭放入佔位值。如果規則允許這個請求且指定了該標頭，gateway 才會取得[憑證](glossary/credential.md)或可辨識 Actor 身分的簽署 token，替換標頭後送往目標服務。若要替換 [HTTPS](https://www.rfc-editor.org/rfc/rfc9110.html#section-4.2.2) 標頭，gateway 必須終止 [TLS](https://www.rfc-editor.org/rfc/rfc8446.html#section-1) 連線，Actor 也必須信任 gateway 的[憑證授權單位](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/guides/egress-trust-bundle.md#overview)。Actor 不必持有憑證就能發出請求，所以代填這一步不會把機密寫進 Actor 的記憶體或 snapshot。但這無法保護應用程式自行放進 sandbox 的機密，或目標服務在回應中傳回的機密。規則放得太寬，仍可能允許不當操作。
 
 平台仍必須信任 sandbox 之外的基礎設施，包括 worker 管理元件、gateways 和 snapshot 儲存系統。[官方狀態表](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/security/security.md#defensible-multi-tenancy) 把縮減 worker 權限和保證清除資料列為進行中的工作。Atespace 不能取代獨立的 sandbox 或[網路政策](practice/data-and-access/network-policy.md)。
 
