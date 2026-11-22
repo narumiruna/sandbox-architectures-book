@@ -56,8 +56,8 @@ Each `WorkerPool` uses one [sandbox class](https://github.com/agent-substrate/su
 
 | Class | What separates Actors | What to check before choosing |
 | --- | --- | --- |
-| `gvisor` | Each Actor gets a gVisor `runsc` sandbox. Its Sentry implements Linux [system calls](glossary/system-call.md) as a [user-space kernel](glossary/user-space-kernel.md); it does not boot a Linux [guest kernel](glossary/guest.md). | Runs on standard Linux nodes. Test the Linux interfaces your workload needs. [Resource limits](glossary/resource-limit.md) apply at Actor level; the runtime ignores per-container limits. |
-| `microvm` | Each Actor gets its own Linux guest. Cloud Hypervisor provides the VM, and the Kata guest components run the containers inside it. | Needs nodes with `/dev/kvm`. Allow capacity for guest RAM and VM overhead. This class enforces per-container limits inside the guest, but those limits do not give each container its own VM. |
+| `gvisor` | Each Actor gets a gVisor [`runsc`](https://gvisor.dev/docs/architecture_guide/intro/#how-can-i-test-gvisor) sandbox. Its [Sentry](https://gvisor.dev/docs/architecture_guide/intro/#how-does-gvisor-provide-isolation) implements Linux [system calls](glossary/system-call.md) as a [user-space kernel](glossary/user-space-kernel.md); it does not boot a Linux [guest kernel](glossary/guest.md). | Runs on standard Linux nodes. Test the Linux interfaces your workload needs. [Resource limits](glossary/resource-limit.md) apply at Actor level; the runtime ignores per-container limits. |
+| `microvm` | Each Actor gets its own Linux guest. Cloud Hypervisor provides the VM, and the Kata guest components run the containers inside it. | Needs nodes with [`/dev/kvm`](glossary/kernel-based-virtual-machine.md). Allow capacity for guest RAM and VM overhead. This class enforces per-container limits inside the guest, but those limits do not give each container its own VM. |
 
 ### Who schedules, restores, and routes an Actor? {#agent-substrate-request-path}
 

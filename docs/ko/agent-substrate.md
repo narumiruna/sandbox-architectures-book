@@ -56,8 +56,8 @@ flowchart TB
 
 | Class | Actor를 분리하는 방식 | 선택 전에 확인할 사항 |
 | --- | --- | --- |
-| `gvisor` | Actor마다 gVisor `runsc` sandbox를 사용합니다. gVisor의 Sentry는 [user-space kernel](glossary/user-space-kernel.md)로서 Linux [system call](glossary/system-call.md)을 구현하며, Linux [guest kernel](glossary/guest.md)을 부팅하지 않습니다. | 일반 Linux node에서 실행됩니다. Workload에 필요한 Linux 인터페이스를 테스트합니다. [자원 한도](glossary/resource-limit.md)는 Actor 단위로 적용되며, runtime은 개별 container의 한도를 무시합니다. |
-| `microvm` | Actor마다 별도의 Linux guest가 있습니다. Cloud Hypervisor가 VM을 제공하고 Kata의 guest 구성 요소가 그 안에서 container를 실행합니다. | `/dev/kvm`을 제공하는 node가 필요합니다. Guest RAM과 VM의 부가 비용을 감안해 용량을 확보합니다. 이 class는 guest 안에서 개별 container의 한도를 적용하지만, 그렇다고 container마다 별도의 VM을 제공하지는 않습니다. |
+| `gvisor` | Actor마다 gVisor [`runsc`](https://gvisor.dev/docs/architecture_guide/intro/#how-can-i-test-gvisor) sandbox를 사용합니다. gVisor의 [Sentry](https://gvisor.dev/docs/architecture_guide/intro/#how-does-gvisor-provide-isolation)는 [user-space kernel](glossary/user-space-kernel.md)로서 Linux [system call](glossary/system-call.md)을 구현하며, Linux [guest kernel](glossary/guest.md)을 부팅하지 않습니다. | 일반 Linux node에서 실행됩니다. Workload에 필요한 Linux 인터페이스를 테스트합니다. [자원 한도](glossary/resource-limit.md)는 Actor 단위로 적용되며, runtime은 개별 container의 한도를 무시합니다. |
+| `microvm` | Actor마다 별도의 Linux guest가 있습니다. Cloud Hypervisor가 VM을 제공하고 Kata의 guest 구성 요소가 그 안에서 container를 실행합니다. | [`/dev/kvm`](glossary/kernel-based-virtual-machine.md)을 제공하는 node가 필요합니다. Guest RAM과 VM의 부가 비용을 감안해 용량을 확보합니다. 이 class는 guest 안에서 개별 container의 한도를 적용하지만, 그렇다고 container마다 별도의 VM을 제공하지는 않습니다. |
 
 ### 누가 Actor를 배치하고 복원하며 요청을 전달합니까? {#agent-substrate-request-path}
 

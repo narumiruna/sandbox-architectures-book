@@ -56,8 +56,8 @@ flowchart TB
 
 | Class | Actor をどう隔離するか | 選ぶ前に確認すること |
 | --- | --- | --- |
-| `gvisor` | Actor ごとに gVisor の `runsc` sandbox を使います。Sentry は Linux の [system call](glossary/system-call.md) を実装する [user-space kernel](glossary/user-space-kernel.md) です。Linux の [guest kernel](glossary/guest.md) は起動しません。 | 標準的な Linux ノードで動作します。workload に必要な Linux インターフェースをテストしてください。[リソースの上限](glossary/resource-limit.md)は Actor 単位で適用され、runtime は container ごとの上限を無視します。 |
-| `microvm` | Actor ごとに専用の Linux guest を使います。Cloud Hypervisor が VM を提供し、Kata の guest コンポーネントがその中で container を実行します。 | ノードに `/dev/kvm` が必要です。guest の RAM と VM 自体のオーバーヘッドを見込んで容量を確保してください。この class では guest 内で container ごとの上限が適用されますが、container ごとに VM が割り当てられるわけではありません。 |
+| `gvisor` | Actor ごとに gVisor の [`runsc`](https://gvisor.dev/docs/architecture_guide/intro/#how-can-i-test-gvisor) sandbox を使います。[Sentry](https://gvisor.dev/docs/architecture_guide/intro/#how-does-gvisor-provide-isolation) は Linux の [system call](glossary/system-call.md) を実装する [user-space kernel](glossary/user-space-kernel.md) です。Linux の [guest kernel](glossary/guest.md) は起動しません。 | 標準的な Linux ノードで動作します。workload に必要な Linux インターフェースをテストしてください。[リソースの上限](glossary/resource-limit.md)は Actor 単位で適用され、runtime は container ごとの上限を無視します。 |
+| `microvm` | Actor ごとに専用の Linux guest を使います。Cloud Hypervisor が VM を提供し、Kata の guest コンポーネントがその中で container を実行します。 | ノードに [`/dev/kvm`](glossary/kernel-based-virtual-machine.md) が必要です。guest の RAM と VM 自体のオーバーヘッドを見込んで容量を確保してください。この class では guest 内で container ごとの上限が適用されますが、container ごとに VM が割り当てられるわけではありません。 |
 
 ### Actor の配置と復元、要求の転送は誰が行うか {#agent-substrate-request-path}
 

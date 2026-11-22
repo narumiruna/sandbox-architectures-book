@@ -56,8 +56,8 @@ flowchart TB
 
 | Class | 如何隔離 Actor | 選擇前要確認什麼 |
 | --- | --- | --- |
-| `gvisor` | 每個 Actor 都有自己的 gVisor `runsc` sandbox。Sentry 是負責實作 Linux [system calls](glossary/system-call.md) 的 [user-space kernel](glossary/user-space-kernel.md)，不會啟動獨立的 Linux [guest kernel](glossary/guest.md)。 | 可在一般 Linux node 上執行。要測試 workload 需要的 Linux 介面；[資源限制](glossary/resource-limit.md)套用在 Actor 層級，runtime 不會執行個別 container 的資源限制。 |
-| `microvm` | 每個 Actor 各有一個 Linux guest；Cloud Hypervisor 提供 VM，Kata Containers 的 guest 元件在其中執行 workload。 | Node 必須提供 `/dev/kvm`，也要為 guest RAM 和 VM 本身的開銷預留容量。可以在 guest 內限制個別 container 的資源，但不會給每個 container 一台 VM。 |
+| `gvisor` | 每個 Actor 都有自己的 gVisor [`runsc`](https://gvisor.dev/docs/architecture_guide/intro/#how-can-i-test-gvisor) sandbox。[Sentry](https://gvisor.dev/docs/architecture_guide/intro/#how-does-gvisor-provide-isolation) 是負責實作 Linux [system calls](glossary/system-call.md) 的 [user-space kernel](glossary/user-space-kernel.md)，不會啟動獨立的 Linux [guest kernel](glossary/guest.md)。 | 可在一般 Linux node 上執行。要測試 workload 需要的 Linux 介面；[資源限制](glossary/resource-limit.md)套用在 Actor 層級，runtime 不會執行個別 container 的資源限制。 |
+| `microvm` | 每個 Actor 各有一個 Linux guest；Cloud Hypervisor 提供 VM，Kata Containers 的 guest 元件在其中執行 workload。 | Node 必須提供 [`/dev/kvm`](glossary/kernel-based-virtual-machine.md)，也要為 guest RAM 和 VM 本身的開銷預留容量。可以在 guest 內限制個別 container 的資源，但不會給每個 container 一台 VM。 |
 
 ### 誰負責排程、還原與轉送請求？ {#agent-substrate-request-path}
 
