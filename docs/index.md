@@ -6,7 +6,10 @@ An AI agent that calls a few APIs needs a different environment from an agent th
 
 ## Start here
 
-[Agent sandbox architectures](agent-sandbox-architectures.md) compares virtual machines, user-space kernels, operating-system process sandboxes, WebAssembly, engine isolates, and restricted interpreters. It also explains how control planes manage sandboxes without defining the isolation boundary.
+1. [Sandbox isolation boundaries](sandbox-isolation-boundaries.md) introduces six ways to isolate a workload and explains when each is useful.
+2. [Agent sandbox architectures](agent-sandbox-architectures.md) compares implementations and covers recent developments.
+
+Use the [glossary](glossary.md) to look up unfamiliar terms in either chapter.
 
 As you compare designs, ask three questions:
 

@@ -2,7 +2,7 @@
 
 A book about software sandboxes: how they isolate programs and control what those programs can access. The book is written primarily in English.
 
-Start with [Agent sandbox architectures](docs/agent-sandbox-architectures.md), a survey of the boundaries used to isolate coding agents and their generated scripts.
+Start with [Sandbox isolation boundaries](docs/sandbox-isolation-boundaries.md) for an introduction, then read [Agent sandbox architectures](docs/agent-sandbox-architectures.md) for a survey of implementations.
 
 ## Preview locally
 

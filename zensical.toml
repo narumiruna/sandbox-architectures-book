@@ -12,7 +12,9 @@ repo_name = "narumiruna/sandbox-architectures-book"
 
 nav = [
   { "Home" = "index.md" },
+  { "Sandbox isolation boundaries" = "sandbox-isolation-boundaries.md" },
   { "Agent sandbox architectures" = "agent-sandbox-architectures.md" },
+  { "Glossary" = "glossary.md" },
 ]
 
 # extra_css = ["stylesheets/extra.css"]

@@ -2,20 +2,11 @@
 
 *Survey updated November 22, 2026. This chapter compares documented architecture, not measured performance or security guarantees.*
 
-An agent sandbox limits what an AI agent or its generated code can access. The first question is not “Does it run in a container?” but **“What are we isolating?”** A script that combines search results needs access to a few tools. A coding agent that installs packages, runs tests, and starts services needs a Linux environment. These two jobs can use different boundaries in the same system.
+This survey compares how specific projects isolate coding agents and the code they generate.
 
 ## Execution boundaries
 
-| Boundary | What separates the workload from the host? | Use it when… |
-| --- | --- | --- |
-| Hardware-backed VM | A guest kernel runs behind a virtualization boundary. A virtual machine monitor (VMM) manages the guest and the devices it can see. | The agent needs a Linux environment with native tools, or you need separate guest kernels between workloads. |
-| User-space kernel | A kernel-like layer handles the workload's system calls in user space and limits its exposure to the host kernel. | You deploy Linux containers and can test your workload against a different implementation of the Linux system interface. |
-| OS process sandbox | The host kernel restricts processes with controls such as namespaces, filesystem rules, or system-call filters. There is no separate guest kernel. | A local agent needs familiar tools, but should not have full access to the developer's machine. |
-| WebAssembly (Wasm) | A Wasm runtime confines module memory and exposes only the host functions the embedding application supplies. | Your code, or the interpreter that runs it, can be packaged as a Wasm module. |
-| Engine isolate | An engine such as V8 separates programs into isolated instances with their own heaps. The embedding application decides which APIs each instance can use. | Generated code needs a supported language and selected APIs, not a native Linux environment. |
-| Restricted interpreter | A custom interpreter implements a limited language and its own built-ins. Programs reach the host only through the functions it exposes. | You control the tool interface and can accept a subset of JavaScript or another language. |
-
-These are not product categories. A container is a way to package and run a workload, not a statement about its isolation. A platform can offer more than one boundary. A **control plane** manages sandbox creation, networking, and lifecycle; it does not by itself say what separates workload code from the host.
+Start with [Sandbox isolation boundaries](sandbox-isolation-boundaries.md) for the six types of isolation. In this survey, a **virtual machine monitor (VMM)** is the component that manages a VM and the devices it can see. It is not the same as a complete sandbox product.
 
 ## Hardware-backed Linux environments
 
