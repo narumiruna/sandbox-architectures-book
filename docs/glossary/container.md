@@ -10,6 +10,6 @@ A code review service starts a container with the compiler and test tools a proj
 
 The [container runtime](container-runtime.md) sets up the environment. In a shared-kernel setup, Linux [namespaces](namespace.md) can give processes separate views of resources, and [control groups](control-group.md) can account for or limit resource use. A runtime can also place containers behind a [user-space kernel](user-space-kernel.md) or run them in a [virtual machine](virtual-machine.md). These approaches can start from the same image but have different [isolation boundaries](isolation-boundary.md).
 
-Check what the runtime shares with the workload. A writable host [mount](mount.md), for example, can let code change host files regardless of how the container was packaged. See [Sandbox isolation boundaries](../sandbox-isolation-boundaries.md) for a comparison.
+Check what the runtime shares with the workload. A writable host [mount](mount.md), for example, can let code change host files regardless of how the container was packaged. See [the VM, container, and microVM comparison](../sandbox-isolation-boundaries.md#compare-a-vm-a-container-and-a-microvm).
 
 [Back to Glossary](../glossary.md)

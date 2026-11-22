@@ -74,6 +74,70 @@ In an [operating-system process sandbox](glossary/operating-system-process-sandb
 
 **Use it when:** A local agent needs the developer's usual commands, but should not inherit unrestricted access to the host. Check that the restrictions also apply to processes started by those commands. [Read about operating-system process sandboxes](isolation/native-programs/operating-system-process-sandboxes.md).
 
+### Compare a VM, a container, and a microVM
+
+A **microVM is a kind of VM**. It typically presents fewer virtual devices but uses the same hardware isolation as a general-purpose VM on the same backend. A native Linux container, by contrast, runs its processes directly on the host kernel.
+
+The example puts a native container, a [QEMU v9.2.0](https://github.com/qemu/qemu/blob/v9.2.0/docs/system/introduction.rst#L6-L50) VM, and a [Firecracker v1.11.0](https://github.com/firecracker-microvm/firecracker/blob/v1.11.0/docs/design.md#internal-architecture) microVM on one Linux host. QEMU and Firecracker run in host [user space](glossary/user-space.md) as [virtual machine monitors (VMMs)](glossary/virtual-machine-monitor.md). Both use [KVM](glossary/kernel-based-virtual-machine.md) in the host kernel to run their guests on an [Intel x86-64 CPU with VT-x](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html).
+
+```mermaid
+---
+config:
+  flowchart:
+    rankSpacing: 18
+    nodeSpacing: 8
+    wrappingWidth: 85
+    minNodeWidth: 52
+    padding: 4
+---
+flowchart TB
+    accTitle: A QEMU VM, a native Linux container, and a Firecracker microVM on one host
+    accDescr: A native container's app makes system calls to Linux. Both VMs have a separate guest kernel and can send device I/O to their own monitor in host user space. Both monitors use KVM in the host Linux kernel on the same physical machine.
+    subgraph Host["One Linux host"]
+        subgraph MicroVM["microVM"]
+            MApp["App"] --> MKernel["Guest<br/>kernel"]
+        end
+        subgraph Container["Container"]
+            CApp["App"]
+        end
+        subgraph VM["VM"]
+            QApp["App"] --> QKernel["Guest<br/>kernel"]
+        end
+        FC["Firecracker<br/>Host VMM"]
+        QEMU["QEMU<br/>Host VMM"]
+        subgraph Kernel["Linux kernel"]
+            KVM["KVM"]
+            Linux["OS services"]
+        end
+        MKernel -.-> FC
+        CApp --> Linux
+        QKernel -.-> QEMU
+        FC --- KVM
+        QEMU --- KVM
+        Kernel --- Hardware["CPU + RAM"]
+    end
+```
+
+Solid arrows show system calls. Dotted arrows show device requests that the guest's VMM handles; they do not show every I/O path. Lines without arrows show which lower layer a component uses, not a request path. QEMU and Firecracker both open `/dev/kvm` to use the [KVM API](https://docs.kernel.org/virt/kvm/api.html#general-description), but Firecracker presents a smaller set of virtual devices.
+
+**Figure sources:** Redrawn and extended from [Agache et al., *Firecracker: Lightweight Virtualization for Serverless Applications*, Figure 1 (NSDI 2020)](https://files.usenix.org/s3fs-public/cdn/nsdi20-paper-agache.pdf#page=4), using [Firecracker v1.11.0 Host Integration](https://github.com/firecracker-microvm/firecracker/blob/v1.11.0/docs/design.md#host-integration) and the [QEMU v9.2.0 system emulation overview](https://github.com/qemu/qemu/blob/v9.2.0/docs/system/introduction.rst#L6-L50).
+
+#### CPU execution, memory, and device I/O
+
+1. **CPU execution.** Take the test runner's file-open call. On x86-64, `SYSCALL` switches the CPU's [privilege level](glossary/cpu-privilege-level.md) from ring 3 (app) to ring 0 (kernel). In the container, the host kernel looks up the path in the process's mount [namespace](glossary/namespace.md); [seccomp](glossary/seccomp.md) can block the call before lookup. In either VM, the app enters its own guest kernel. Both run in **VMX non-root operation**, Intel's term for guest mode. Entering guest ring 0 does not by itself cause a [VM exit](glossary/vm-exit.md), which is a separate CPU transition that returns control to KVM. See [Intel's VMX manual, Figure 26-1](https://cdrdv2.intel.com/v1/dl/getContent/671506#page=4).
+2. **Memory translation.** A page table maps memory addresses and records permissions. In the container, the CPU uses the host process's page tables to translate virtual addresses to host physical addresses. In either VM, there are two mappings: the guest's page tables map guest virtual addresses to guest physical addresses, and [Extended Page Tables (EPT)](glossary/extended-page-tables.md) map guest physical addresses to host physical addresses. The guest kernel controls the first mapping; KVM controls the second. The CPU applies EPT even when it reads the guest page tables. See the [Linux KVM memory documentation](https://docs.kernel.org/virt/kvm/x86/mmu.html#translation).
+3. **Device I/O.** If the guest needs disk data that is not in memory, its driver sends a request to a virtual disk. If a device access causes a VM exit, KVM can handle it in the host kernel or return from [`KVM_RUN`](https://docs.kernel.org/virt/kvm/api.html#kvm-run) to the host-side VMM. For example, a device register access can return as [`KVM_EXIT_MMIO`](https://docs.kernel.org/virt/kvm/api.html#the-kvm-run-structure), which asks the VMM to handle a read or write to a memory address assigned to a device. Not every virtual disk request takes that route. A virtual disk can be backed by a file on the host; the guest does not get to open arbitrary host files.
+
+| What to compare | General-purpose VM | Native Linux container | microVM |
+| --- | --- | --- | --- |
+| Isolation and sharing | Hardware-backed isolation; processes in the same VM share its guest kernel. | [Namespaces](glossary/namespace.md) separate views of resources. [Control groups](glossary/control-group.md) can account for or limit resource use. Apps make requests directly to the same kernel as other containers and host processes. | The same kind of hardware-backed isolation as a general-purpose VM; processes in the same microVM share its guest kernel. |
+| OS and device support | Can run a supported guest OS, which can differ from the host OS. A VMM such as [QEMU v9.2.0](https://github.com/qemu/qemu/blob/v9.2.0/docs/system/introduction.rst#L39-L50) provides a wide choice of virtual devices. | Can have different Linux tools and libraries, but must work with the host's Linux kernel and the interfaces the runtime exposes. | Check the supported guest OS and the smaller device set. For example, [Firecracker v1.11.0](https://github.com/firecracker-microvm/firecracker/blob/v1.11.0/docs/design.md#machine-model) offers virtual storage and networking but no graphical display device. |
+| Fresh startup | Boots a guest OS before starting the app. | Starts processes without a guest boot. Fetching and unpacking the image can still delay startup. | Also boots a guest OS. A smaller device model and a minimal guest can reduce startup work. |
+| Memory overhead | Needs memory for the guest OS and its apps, plus memory for the VMM on the host. | No separate guest or VMM per container. Each app still needs memory. | Also needs guest and VMM memory. A smaller device model and a minimal guest can lower overhead. |
+| When it fits | The job needs a separate kernel plus a guest OS or device that a candidate microVM does not support. | The job needs a packaged Linux toolchain, and sharing the host kernel is acceptable. | Short-lived jobs need separate kernels, and the supported guest OS and devices meet their needs. |
+
+Choose the boundary before comparing speed. A smaller device set can reduce the code a guest can reach through virtual devices, but it does not guarantee stronger isolation or a fixed startup time. VMs can share physical hardware even when they have separate guest kernels. For either VM design, check whether each job gets its own guest; for all three, check which files and network services are exposed. Then [measure the same workload](practice/verification/measuring-a-sandbox.md), separating fresh starts from [snapshot](glossary/snapshot.md) restores and [warm pool](glossary/warm-pool.md) assignments.
+
 ## Sandboxes for generated scripts
 
 An agent that looks up issue titles and sorts the results may only need to run a short script with one tool. A [runtime](glossary/runtime.md) runs code or sets up the environment for it. Here a language or module runtime can run the script without giving it a full Linux environment.

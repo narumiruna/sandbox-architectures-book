@@ -6,7 +6,7 @@ A [virtual machine (VM)](../../glossary/virtual-machine.md) gives an [agent](../
 
 When the [Lamp](../../practice/design/from-issue-to-patch.md) test runner makes a [system call](../../glossary/system-call.md) to open `total.c`, the [guest kernel](../../glossary/guest.md) handles it. The kernel looks for the path in the guest's filesystem. If the project is on a virtual disk or a shared directory, the guest can read it there. It cannot open arbitrary files on the host just because it can run ordinary Linux commands.
 
-A [virtual machine monitor (VMM)](../../glossary/virtual-machine-monitor.md) manages the VM and the devices the guest sees. For example, [Firecracker at revision `58cf1b2c`](https://github.com/firecracker-microvm/firecracker/blob/58cf1b2cdca407f2323d1b0b25ebb95dfe5b4bcb/docs/design.md) presents virtual disk and network devices to Linux guests. A [microVM](../../glossary/microvm.md) typically exposes fewer devices than a general-purpose VM. It still has a guest kernel.
+A [virtual machine monitor (VMM)](../../glossary/virtual-machine-monitor.md) manages the VM and the devices the guest sees. For example, [Firecracker at revision `58cf1b2c`](https://github.com/firecracker-microvm/firecracker/blob/58cf1b2cdca407f2323d1b0b25ebb95dfe5b4bcb/docs/design.md) presents virtual disk and network devices to Linux guests. A [microVM](../../glossary/microvm.md) typically exposes fewer devices than a general-purpose VM. It still has a guest kernel. See [the VM, container, and microVM comparison](../../sandbox-isolation-boundaries.md#compare-a-vm-a-container-and-a-microvm) for the boundary and trade-offs side by side.
 
 ## What stays shared?
 
