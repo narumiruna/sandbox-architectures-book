@@ -54,7 +54,7 @@ nav = [
     { "Glossary" = "glossary/index.md" },
     { "References" = "references/index.md" },
   ] },
-  { "台灣正體中文" = [
+  { "正體中文" = [
     { "首頁" = "zh-TW/index.md" },
     { "基礎概念" = [
       { "Sandbox 的隔離邊界" = "zh-TW/sandbox-isolation-boundaries.md" },
@@ -585,7 +585,7 @@ unlisted_pages = [
 ]
 
 [project.extra.editions]
-zh-TW = { name = "台灣正體中文", unavailable = "台灣正體中文（尚未翻譯）" }
+zh-TW = { name = "正體中文", unavailable = "正體中文（尚未翻譯）" }
 ja = { name = "日本語", unavailable = "日本語（未翻訳）" }
 ko = { name = "한국어", unavailable = "한국어(번역 없음)" }
 

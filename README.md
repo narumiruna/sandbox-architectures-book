@@ -1,6 +1,6 @@
 # Sandbox Architectures Book
 
-A book about software sandboxes: how they isolate programs and control what those programs can access. English is the source edition. The home page, introductory chapter, and glossary are also available in [台灣正體中文](docs/zh-TW/index.md), [日本語](docs/ja/index.md), and [한국어](docs/ko/index.md).
+A book about software sandboxes: how they isolate programs and control what those programs can access. English is the source edition. The home page, introductory chapter, and glossary are also available in [正體中文](docs/zh-TW/index.md), [日本語](docs/ja/index.md), and [한국어](docs/ko/index.md).
 
 Use the [book home page](docs/index.md) to choose a starting point. Begin with [Sandbox isolation boundaries](docs/sandbox-isolation-boundaries.md) if you are new to sandboxes, or follow the worked example in [From issue to patch](docs/practice/design/from-issue-to-patch.md) if you already know the basics.
 

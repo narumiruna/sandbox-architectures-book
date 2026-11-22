@@ -14,7 +14,7 @@
 - [x] **驗證：** [存取測試](docs/practice/verification/verifying-access-rules.md)、[量測](docs/practice/verification/measuring-a-sandbox.md)、[實作評估](docs/agent-sandbox-architectures.md#how-to-evaluate-a-candidate)
 - [x] **遷移：** [雙租戶隔離、容量和切換演練及實測結果](docs/practice/operations/scaling-a-sandbox.md)
 
-- [x] **多語言版本：** [台灣正體中文](docs/zh-TW/index.md)、[日文](docs/ja/index.md)、[韓文](docs/ko/index.md)均已涵蓋全書 87 頁。見[章節翻譯進度](#章節翻譯進度)。
+- [x] **多語言版本：** [正體中文](docs/zh-TW/index.md)、[日文](docs/ja/index.md)、[韓文](docs/ko/index.md)均已涵蓋全書 87 頁。見[章節翻譯進度](#章節翻譯進度)。
 - [x] **擴充案例：** [為需要下載套件的 CI 工作設定對外連線](docs/practice/data-and-access/network-policy.md#case-a-ci-job-that-needs-packages)。
 
 本機演練使用假資料與程序沙箱；不是對正式 VM 或服務的驗證。
@@ -106,7 +106,7 @@
 
 - [x] **預設語言：** 英文（`en`）是目前的預設語言，也是後續翻譯的對照基準。
 - [x] **新增首批翻譯：** 每種語言均包含首頁、隔離邊界章、術語表和全部詞條。
-  - [x] 台灣正體中文（`zh-TW`）
+  - [x] 正體中文（`zh-TW`）
   - [x] 日文（`ja`）
   - [x] 韓文（`ko`）
 - [x] **翻譯版保留英文專有名詞。** 各語言版的正文與詞條都沿用同一套英文術語、產品名稱和縮寫。詞條以英文術語為標題，定義、解釋、使用情境與範例的說明文字使用該版本的語言。
@@ -116,7 +116,7 @@
 
 #### 章節翻譯進度
 
-台灣正體中文、日文及韓文各有 87 頁，與英文原稿一一對應。以下 22 頁的 66 個譯本均已補齊並在 `zensical.toml` 登錄。
+正體中文、日文及韓文各有 87 頁，與英文原稿一一對應。以下 22 頁的 66 個譯本均已補齊並在 `zensical.toml` 登錄。
 
 - **Foundations（6 頁）**
   - [x] [Hardware-backed virtual machines](docs/isolation/native-programs/hardware-backed-virtual-machines.md)
