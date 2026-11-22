@@ -1,10 +1,10 @@
 # Multi-tenant isolation
 
-Separate running jobs and check access to the data that outlives them. In this illustrative service, Lamp and Cedar are two [tenants](../../glossary/tenant.md): groups whose work and data must stay separate. The read-only issue tool serves Lamp's `LAMP-17` report to authorized Lamp callers. A separate Linux worker compiles the tiny C program, runs the tests, and returns a text patch and test output to a Lamp reviewer. Cedar must not be able to see any of it, and the worker cannot publish.
+Separate running jobs and check access to the data that outlives them. In the [Lamp walkthrough](../design/from-issue-to-patch.md), Lamp and Cedar are two [tenants](../../glossary/tenant.md): groups whose work and data must stay separate. Cedar must not be able to read Lamp's issue, workspace, or review output, even if it knows the IDs and filenames.
 
 ## Decide what shares a boundary
 
-The [isolation unit](../../glossary/isolation-unit.md) is the set of workloads that share one instance of a boundary. Choosing what shares an instance is different from choosing the mechanism. The [architecture survey](../../agent-sandbox-architectures.md#which-workloads-share-a-guest-kernel) compares systems that group work differently even when all use virtual machines (VMs).
+The [isolation unit](../../glossary/isolation-unit.md) is the set of [workloads](../../glossary/workload.md) that share one instance of an [isolation boundary](../../glossary/isolation-boundary.md). Choosing what shares an instance is different from choosing the mechanism. The [architecture survey](../../agent-sandbox-architectures.md#which-workloads-share-a-guest-kernel) compares systems that group work differently even when all use [virtual machines (VMs)](../../glossary/virtual-machine.md).
 
 | One boundary per | Benefit | What can carry over |
 | --- | --- | --- |
@@ -14,9 +14,11 @@ The [isolation unit](../../glossary/isolation-unit.md) is the set of workloads t
 
 ## Keep shared resources deliberate
 
-Use a fresh Linux VM for each build request here. The [control plane](../../glossary/control-plane.md) assigns it to the authenticated tenant and attaches that job's [workspace](workspaces-and-artifacts.md) at `/work`. The service can share a clean, read-only compiler image and verified public dependencies from a cache, a store that avoids fetching the same inputs repeatedly. Jobs cannot change those shared inputs. Private dependency caches and cached build outputs must be separated by tenant if kept at all; the cache service checks tenant access before returning an entry. A naming convention alone does not enforce access.
+Lamp starts one fresh VM per build attempt, even for a retry by the same tenant. The [control plane](../../glossary/control-plane.md) binds the tenant and run to the VM based on the requester's verified identity. The workspace service checks that binding before it attaches the run's disposable [workspace](../../glossary/workspace.md) at `/work`. A name like `lamp/work` is a label, not a permission check.
 
-Keep workspace copies and any snapshots with job data separate. The issue tool and artifact store check the authenticated tenant and applicable permissions on each request, even when a caller knows an issue or artifact identifier. A separate runtime cannot stop an artifact service from giving a file to the wrong caller.
+The jobs can share a clean, read-only compiler image. They do not share workspace disks, running VMs, or writable caches (stores that save inputs or build results for later use). This example saves no snapshots after job data is attached. If a later design needs a private cache, its service must check tenant access before it returns an entry.
+
+The issue handler checks tenant, action, and record on each call. The review store checks tenant and the run's reviewer assignment on each read. Lamp membership alone is not enough. Diagnostic records are also tenant-scoped for the operator handling the run. A separate VM cannot prevent one of these stores from handing data to the wrong tenant.
 
 ## Check with dummy data
 

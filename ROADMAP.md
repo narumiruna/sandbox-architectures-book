@@ -6,9 +6,15 @@
 
 ## 目前進度
 
-- [沙箱隔離邊界](docs/sandbox-isolation-boundaries.md) 已介紹六種隔離方式，以及哪些程式共用同一道邊界。
-- [代理程式沙箱架構調查](docs/agent-sandbox-architectures.md) 已用實作比較這些概念；各章可搭配[術語表](docs/glossary.md)閱讀。
-- 實務篇以[從工單到修補檔](docs/practice/design/from-issue-to-patch.md)為起點，並已比較[不同情境下的選擇](docs/practice/design/choosing-a-sandbox.md)。接下來要讓讀者能把這套判斷用到自己的工作，而不只是看懂範例。
+| 階段 | 書稿與範例 |
+| --- | --- |
+| 基礎 | [隔離邊界](docs/sandbox-isolation-boundaries.md)、[術語表](docs/glossary.md)、[clone 後帶讀](README.md#read-a-local-copy-with-a-coding-agent) |
+| 選型 | [三種情境的 Lamp 選型紀錄與公開產品案例](docs/practice/design/choosing-a-sandbox.md) |
+| 權限與維運 | [權限、資料流與選型紀錄範本](docs/practice/design/from-issue-to-patch.md) |
+| 驗證 | [存取測試](docs/practice/verification/verifying-access-rules.md)、[量測](docs/practice/verification/measuring-a-sandbox.md)、[實作評估](docs/agent-sandbox-architectures.md#how-to-evaluate-a-candidate) |
+| 遷移 | [雙租戶隔離、容量和切換演練及實測結果](docs/practice/operations/scaling-a-sandbox.md) |
+
+本機演練使用假資料與程序沙箱；不是對正式 VM 或服務的驗證。多語言版本仍是後續工作。
 
 ## 第一階段：建立基礎知識，理解隔離原理
 

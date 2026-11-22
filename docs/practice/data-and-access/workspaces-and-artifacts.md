@@ -1,6 +1,6 @@
 # Workspaces and artifacts
 
-Let the worker edit a copy of the project and return only the files the reviewer needs. In this illustrative design, `LAMP-17` reports that adding two item counts gives the wrong total in project Lamp. A read-only issue tool retrieves the report. A separate Linux worker builds and tests a fix in `/work`. It returns a text patch and test output for review, but cannot publish the fix.
+Let the worker edit a copy of the project and return only the files the reviewer needs. In the [Lamp walkthrough](../design/from-issue-to-patch.md), the Linux worker builds and tests a fix in `/work`. It can return a text patch and test output for review, but it cannot publish the fix.
 
 ## Choose what the worker can change
 
@@ -16,10 +16,13 @@ Read-only does not mean private: the worker can still read everything exposed by
 
 ## Decide what leaves `/work`
 
-[Artifacts](../../glossary/artifact.md) are selected outputs kept after a job. The Lamp reviewer needs only two: the patch and the test output.
+[Artifacts](../../glossary/artifact.md) are selected outputs kept after a job. The Lamp reviewer needs only two: `change.patch` (128 KiB max) and `test.log` (64 KiB max). These example caps apply to the accepted files, separately from the worker's disk limit.
 
-1. The [control plane](../../glossary/control-plane.md) prepares the needed Lamp source files and tests at a known revision. The worker edits its copy, compiles the tiny C program, and runs the tests there.
-2. A collector outside the worker boundary accepts only the two named text files. It sets size limits, does not follow filesystem links, and records the source revision and job status separately from the worker's text. Only an authorized Lamp reviewer can read the files. They are untrusted text: a log that says the tests passed is not approval to apply the patch.
-3. After collection, or when collection fails, the control plane discards `/work`, including changed source, the compiled program, and temporary files. The review store keeps the accepted artifacts for a limited time. Applying the patch or publishing it is a separate action outside the worker.
+1. The workspace service follows the run assignment from the [control plane](../../glossary/control-plane.md). It copies the approved revision's source and tests and the task summary to a fresh [guest](../../glossary/guest.md) disk mounted at `/work`. It does not copy repository history, settings, or secrets, and does not mount the original checkout. The worker can change the copy, including the tests.
+2. After the build and test commands report success and the worker stops, a collector outside the worker's [isolation boundary](../../glossary/isolation-boundary.md) reads only the two named files from that run's disk. It accepts the pair only if both are regular UTF-8 text files within the limits, without following filesystem links. It rejects missing, oversized, or invalid results instead of exposing partial output. It uses the run ID, base revision, and attempt status from the control plane rather than trusting worker-provided labels.
+3. The review store accepts uploads only from the collector and permits reads only for the designated Lamp reviewer of that run. Being a requester does not automatically grant review access. The store presents the two files as untrusted text, never as commands or approval to apply the patch. It removes both copies seven days after acceptance. In this example, there are no secondary copies in backups.
+4. The workspace service discards `/work`, including changed source, binaries, and temporary files, even if export fails. The [control plane verifies that cleanup](../operations/sandbox-lifecycle.md#what-gets-deleted-and-when); expiry in the review store is separate.
 
-File access is only one part of the design. The [network policy](network-policy.md) controls whether the worker can send or receive data over the network.
+Checking filenames and sizes does not check what the text says. The worker can put any data it can read into either file. Leave secrets and unrelated data out of the workspace in the first place.
+
+Next: [Network policy](network-policy.md) explains why the worker can exchange those files without getting access to network services.

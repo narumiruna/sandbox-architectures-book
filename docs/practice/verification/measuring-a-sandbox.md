@@ -1,75 +1,41 @@
 # Measuring a sandbox
 
-Measure a whole task, not just how fast a sandbox starts. A worker can accept commands quickly and still take a long time to prepare its workspace, build the project, or return a result. Compare one change at a time on the same workload.
+Record when the caller sees the first output **and** when the work finishes. A worker may respond quickly but still take much longer to compile, test, and write the result. Before comparing times, [verify the access rules](verifying-access-rules.md); a fast worker that cannot enforce a requirement is not a candidate.
 
-## Decide what each clock measures
+## Use the same workload each time
 
-| Measure | Start and stop | What it tells you |
-| --- | --- | --- |
-| Time to first usable command | From local launch to the first line emitted by a command inside the worker | How long the caller waits before the worker can do anything useful |
-| End-to-end time | From local launch to the exit of the build-and-test command | What the caller waits for in this fixture; there is no remote queue or artifact upload here |
-| Peak memory | [Maximum resident set size (RSS)](https://www.gnu.org/software/time/manual/html_node/Memory-Resources.html) as reported by GNU `time` for the timed launcher | A process high-water mark, not the peak for the worker as a whole; process accounting may not cover all sandbox descendants |
-| Cache state | Record what was prepared or reused before each run | Whether two timings include the same setup work |
+A [workload](../../glossary/workload.md) is the code and processes the sandbox runs. This exercise uses the [Lamp task](../design/from-issue-to-patch.md) from the access checks. It fixes the subtraction bug in a copy of `total.c`, builds the C program with GCC, checks that two plus three is five, and writes a patch and test log. It runs the same fixture in the same [Bubblewrap process sandbox](../../isolation/native-programs/operating-system-process-sandboxes.md) every time, with no service calls or artificial delays.
 
-A [cold start](../../glossary/cold-start.md), an assignment from a warm pool, and a snapshot restore overlap but do not do identical work. Compare their launch paths separately. For a hosted service, also record whether the start time includes queueing and whether the end time includes artifact transfer. See [Sandbox lifecycle](../operations/sandbox-lifecycle.md) for the state that can be reused.
+| Measure | When the clock stops |
+| --- | --- |
+| Time to first output | When the caller receives `LAMP-17: loaded`. The worker emits this line after reading the fixture and before compiling or testing the fix. |
+| Time to completion | When the caller has drained the worker's output and observed its exit. A successful run has built the program, run its test, and written `change.patch` and `test.log`. |
 
-## Run a small local example
+Both clocks start just before the host launches Bubblewrap, so both include creating the process sandbox and starting Python. The clocks **exclude** staging the input and output directories before launch, checking the artifacts and deleting the workspace afterward, and any remote queue or artifact transfer. In a deployment, measure those stages as well if they contribute to the user's wait.
 
-This measures the corrected version of the fictional [Lamp task](../design/from-issue-to-patch.md). It compiles a small C program and checks the output. The local lab uses an [operating-system process sandbox](../../glossary/operating-system-process-sandbox.md), not the VM in the example design. Run it from this book's checkout on a Linux system with `uv`, Bubblewrap, GNU `time`, and GCC available in `/usr`. The example assumes a merged `/usr` layout as used on the Ubuntu x86-64 test host, where both `/lib` and `/lib64` resolve under `/usr`. The [Bubblewrap 0.11.1 README](https://github.com/containers/bubblewrap/blob/v0.11.1/README.md) explains how its arguments define the sandbox environment.
+## Run ten fresh launches
+
+Use the Linux, Bubblewrap, Python, GCC, and `uv` prerequisites listed in [Verifying access rules](verifying-access-rules.md#run-the-local-checks). From the root of your book checkout, run:
 
 ```bash
-uv run --locked python - <<'PY'
-from pathlib import Path
-from statistics import median
-from subprocess import PIPE, Popen
-from tempfile import TemporaryDirectory
-from time import perf_counter
-
-samples = []
-for _ in range(5):
-    with TemporaryDirectory() as directory:
-        workspace = Path(directory) / 'work'
-        workspace.mkdir()
-        rss = Path(directory) / 'peak-rss'
-        (workspace / 'lamp.c').write_text(
-            '#include <stdio.h>\n'
-            'int main(void) { printf("%d\\n", 2 + 3); return 0; }\n'
-        )
-        start = perf_counter()
-        with Popen([
-            '/usr/bin/time', '-f', '%M', '-o', str(rss),
-            'bwrap', '--clearenv', '--setenv', 'PATH', '/usr/bin',
-            '--unshare-net', '--unshare-pid', '--new-session', '--die-with-parent',
-            '--ro-bind', '/usr', '/usr', '--symlink', 'usr/lib', '/lib',
-            '--symlink', 'usr/lib64', '/lib64', '--symlink', 'usr/bin', '/bin',
-            '--tmpfs', '/tmp', '--bind', str(workspace), '/work', '--chdir', '/work',
-            '/usr/bin/sh', '-ec',
-            'printf "ready\\n"; gcc lamp.c -o lamp; test "$(./lamp)" = 5',
-        ], stdout=PIPE, text=True) as process:
-            line = process.stdout.readline()
-            ready = perf_counter()
-            status = process.wait()
-            done = perf_counter()
-        if status or line != 'ready\n':
-            raise SystemExit(f'fixture did not complete: {status=}, {line=}')
-        samples.append(((ready - start) * 1000, (done - start) * 1000,
-                        int(rss.read_text())))
-
-print(f'{len(samples)} launches; fresh workspace; host caches not flushed')
-for label, values in zip(('ready_ms', 'done_ms', 'peak_rss_kib'), zip(*samples)):
-    print(f'{label}: median={median(values):.1f}, '
-          f'min={min(values):.1f}, max={max(values):.1f}')
-PY
+uv run --offline --no-project --python /usr/bin/python3 python -B examples/lamp/lab.py measure
 ```
+
+Expect ten rows of paired times in milliseconds (`first_output_ms` and `completion_ms`), followed by the minimum, median, and maximum for each measure. The runner requires a zero exit status, both expected output lines, and the expected patch and log on every launch. A failed run stops the exercise instead of reporting a time for that launch.
+
+Each launch uses a new input copy, output directory, and sandbox. There is no persistent build cache, and nothing flushes or tracks the host filesystem cache. Later launches can reuse cached reads of the compiler or libraries. A fresh sandbox does not mean a cold host cache. If you compare another candidate, record the host, kernel, tool versions, runtime policy, concurrency, and how you prepared or reused its workspace and caches.
 
 ## Interpret one run
 
-One local run on Ubuntu 26.04.1 in WSL2 (Linux 6.18.33.2, x86-64, AMD Ryzen 9 7950X3D; Bubblewrap 0.11.1 and GCC 15.2.0) produced the following. These are five sequential launches, each with a new workspace, no build cache, and host caches left in their normal state.
+One set of ten sequential runs on Ubuntu 26.04.1 LTS in WSL2 (Linux 6.18.33.2, x86-64, AMD Ryzen 9 7950X3D, host temporary files on `tmpfs`) used Bubblewrap 0.11.1, Python 3.14.4, and GCC 15.2.0. The runner created fresh workspaces. The access checks ran before this sample; nothing flushed or tracked the host caches.
 
 | Measure | Median | Min–max |
 | --- | ---: | ---: |
-| Time to first command | 5.4 ms | 4.6–5.9 ms |
-| End-to-end time | 34.7 ms | 31.3–64.7 ms |
-| Launcher peak RSS | 2,196 KiB | 2,160–2,204 KiB |
+| Time to first output | 24.37 ms | 21.49–26.48 ms |
+| Time to completion | 62.23 ms | 58.47–63.94 ms |
 
-This is an example of the method, not a performance baseline. The [launcher RSS](../../glossary/resident-set-size.md) is not total worker peak memory. To measure the latter, use a dedicated [control group](../../glossary/control-group.md) or equivalent backend accounting. This fixture also does not measure warm-pool assignment or snapshot restore. Do not flush the host cache to simulate a cold worker: it is a different thing, and it affects unrelated processes.
+The caller saw the first line well before the result was complete. The ranges show why one launch is not enough to characterize even this small task. This is an example of the method, not a performance baseline or a product ranking.
+
+For a real candidate, keep the workload fixed and explain what the launch includes: a [cold start](../../glossary/cold-start.md), an assignment from a [warm pool](../../glossary/warm-pool.md), and a [snapshot](../../glossary/snapshot.md) restore do not do identical work. This example does not measure any VM or warm pool, memory, disk usage, startup under load, or artifact transfer. To measure peak worker memory, use a dedicated [control group](../../glossary/control-group.md) or equivalent backend accounting, not one process's peak [resident set size](../../glossary/resident-set-size.md). See [Sandbox lifecycle](../operations/sandbox-lifecycle.md) for state a service can reuse and the [candidate evaluation checklist](../../agent-sandbox-architectures.md#how-to-evaluate-a-candidate) for what else to compare.
+
+Next: [Grow a sandbox service](../operations/scaling-a-sandbox.md) compares queue times and rehearses a cutover with two test tenants.
