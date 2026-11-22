@@ -28,6 +28,12 @@ Install [prek](https://prek.j178.dev/), then run `prek install` to enable the ch
 
 Run `prek run --all-files` to check tracked files on demand.
 
+## Pi tools
+
+[`.pi/mcp.json`](.pi/mcp.json) configures alphaXiv and Firecrawl for this project. Pi loads these servers after you trust the project. Set `FIRECRAWL_API_KEY` in the environment that starts Pi; do not put the key in the config file.
+
+Run `/reload` in an open Pi session, then use `/mcp` to check the servers or sign in to alphaXiv if prompted.
+
 ## License
 
 [MIT](LICENSE).

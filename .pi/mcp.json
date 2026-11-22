@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "alphaxiv": {
+      "url": "https://api.alphaxiv.org/mcp/v1",
+      "description": "Search and read research papers on alphaXiv."
+    },
+    "firecrawl": {
+      "url": "https://mcp.firecrawl.dev/v2/mcp",
+      "headers": {
+        "Authorization": "Bearer ${FIRECRAWL_API_KEY}"
+      },
+      "description": "Search, scrape, and extract web content with Firecrawl."
+    }
+  }
+}
