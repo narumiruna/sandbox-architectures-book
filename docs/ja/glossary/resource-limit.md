@@ -4,4 +4,4 @@ resource limit は、ジョブが使用できるメモリ、ディスク容量�
 
 たとえば、ディスク容量の上限を設ければ、agent のビルドでストレージを使い切るのを防げます。ただし、誤って公開されたディレクトリからビルドがデータを読み取るのは防げません。アクセスは [policy](policy.md) で別に制御してください。
 
-「[resource limit（英語）](../../practice/operations/resource-limits.md)」を参照してください。
+「[resource limit](../practice/operations/resource-limits.md)」を参照してください。

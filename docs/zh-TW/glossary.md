@@ -1,6 +1,6 @@
 # 術語表
 
-請搭配 [Sandbox 的隔離邊界](sandbox-isolation-boundaries.md)和 [Agent sandbox 架構（英文）](../agent-sandbox-architectures.md)使用本表。術語依英文全名的字母順序排列。查找術語時，可以在本頁搜尋全名或縮寫。例如，`WebAssembly` 和 `Wasm` 在同一個條目中，連到同一頁。每個條目都會說明術語並提供範例。
+請搭配 [Sandbox 的隔離邊界](sandbox-isolation-boundaries.md)和 [Agent sandbox 架構](agent-sandbox-architectures.md)使用本表。術語依英文全名的字母順序排列。查找術語時，可以在本頁搜尋全名或縮寫。例如，`WebAssembly` 和 `Wasm` 在同一個條目中，連到同一頁。每個條目都會說明術語並提供範例。
 
 - **[Agent](glossary/agent.md)** — 使用模型決定下一步，並且可以呼叫 tool 來執行動作的系統。Sandbox 可以容納整個 agent，也可以只執行 agent 產生的程式碼。
 - **[Allowlist](glossary/allowlist.md)** — Policy 允許使用的資源或允許執行的動作清單。例如，egress allowlist 可以讓對外連線只能連到指定的服務。

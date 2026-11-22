@@ -10,4 +10,4 @@ Sandbox session 是 [sandbox](sandbox.md) 服務當作一個單位追蹤的一�
 
 多個請求共用同一個 session 時，請確認暫停、恢復和清理後會保留哪些檔案和狀態。關閉 session 可以停止命令並釋出 worker，卻不一定會刪除另行儲存的輸出。
 
-請參閱 [sandbox 生命週期（英文）](../../practice/operations/sandbox-lifecycle.md)。
+請參閱 [sandbox 生命週期](../practice/operations/sandbox-lifecycle.md)。

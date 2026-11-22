@@ -8,7 +8,7 @@ Isolation unit은 하나의 isolation boundary 인스턴스를 공유하는 work
 
 ## 이 단위가 가리키는 계층
 
-[Isolation boundary](isolation-boundary.md)는 작업을 *어떻게* 분리하는지 알려 준다. Isolation unit은 경계 인스턴스마다 *어떤 작업*을 한 단위로 분리하는지 알려 준다. Pod마다 VM을 하나씩 두면 pod가 단위이고, container마다 VM을 하나씩 두면 [container](container.md)가 단위다. 세 구현을 비교한 다이어그램은 [어떤 workload가 guest kernel을 공유하는가 (영어)](../../agent-sandbox-architectures.md#which-workloads-share-a-guest-kernel)를 참고한다.
+[Isolation boundary](isolation-boundary.md)는 작업을 *어떻게* 분리하는지 알려 준다. Isolation unit은 경계 인스턴스마다 *어떤 작업*을 한 단위로 분리하는지 알려 준다. Pod마다 VM을 하나씩 두면 pod가 단위이고, container마다 VM을 하나씩 두면 [container](container.md)가 단위다. 세 구현을 비교한 다이어그램은 [어떤 workload가 guest kernel을 공유하는가](../agent-sandbox-architectures.md#which-workloads-share-a-guest-kernel)를 참고한다.
 
 같은 시스템이라도 다른 계층에서는 더 작은 단위가 있을 수 있다. 한 VM 안의 process마다 서로 다른 파일 시스템이 보이게 할 수 있지만, 그렇다고 process마다 별도의 guest kernel이 생기는 것은 아니다. 두 [tenants](tenant.md)가 guest kernel을 공유해서는 안 된다면, 서비스가 VM을 쓰는지만 보지 말고 [control plane](control-plane.md)이 각 tenant의 workload를 어떻게 배치하는지 확인한다.
 

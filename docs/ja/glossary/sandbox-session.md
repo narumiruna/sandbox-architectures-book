@@ -10,4 +10,4 @@ Lamp の session には、ソースを編集する要求とテストを実行す
 
 複数の要求で session を再利用するときは、一時停止、再開、後片付けの後にどのファイルと状態が残るかを確認してください。session を閉じると、別のストレージにある出力を消さずに、コマンドを停止して worker を解放できます。
 
-「[sandbox のライフサイクル（英語）](../../practice/operations/sandbox-lifecycle.md)」を参照してください。
+「[sandbox のライフサイクル](../practice/operations/sandbox-lifecycle.md)」を参照してください。

@@ -4,4 +4,4 @@ Resident set size 是 process 目前存放在實體記憶體中的記憶體用�
 
 啟動程式的峰值 RSS 可能很低，但它啟動的多個編譯器 process 合計可能用掉更多記憶體。比較各次執行前，請記錄量測涵蓋哪個 process 或哪個用量統計範圍。
 
-請參閱[量測 sandbox（英文）](../../practice/verification/measuring-a-sandbox.md)。
+請參閱[量測 sandbox](../practice/verification/measuring-a-sandbox.md)。

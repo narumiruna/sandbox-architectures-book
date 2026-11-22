@@ -12,6 +12,6 @@ Code Mode は、モデルがツールを呼び出して結果をまとめるプ�
 
 ## ツール呼び出しの確認
 
-スクリプトを囲む境界は、スクリプトが利用できるツールを制限できます。それでも各 [tool](tool.md) のハンドラーは、要求された操作が許されているか確認する必要があります。スクリプトに直接のネットワークアクセスがなくても、Issue の検索ではプロジェクトを確認する必要があります。他の実装については[アーキテクチャの概観（英語）](../../agent-sandbox-architectures.md#code-mode-isolating-tool-scripts-instead-of-shells)を参照してください。
+スクリプトを囲む境界は、スクリプトが利用できるツールを制限できます。それでも各 [tool](tool.md) のハンドラーは、要求された操作が許されているか確認する必要があります。スクリプトに直接のネットワークアクセスがなくても、Issue の検索ではプロジェクトを確認する必要があります。他の実装については[アーキテクチャの概観](../agent-sandbox-architectures.md#code-mode-isolating-tool-scripts-instead-of-shells)を参照してください。
 
 [用語集に戻る](../glossary.md)

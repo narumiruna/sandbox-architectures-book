@@ -8,6 +8,6 @@ script는 issue 조회 [tool](tool.md)을 호출해 `LAMP-17`을 읽을 수 있�
 
 ## 확인해야 하는 경우
 
-어떤 작업이 호출자를 대신해 데이터를 반환하거나 변경을 가할 수 있다면 authorization을 확인한다. [sandbox](sandbox.md)는 script가 호출할 수 있는 tool을 제한할 수 있지만, 각 tool은 여전히 해당 호출자가 어떤 작업을 할 수 있는지 확인해야 한다. 구체적인 예시는 [Tool authorization (영어)](../../practice/design/tool-authorization.md)을 참고한다.
+어떤 작업이 호출자를 대신해 데이터를 반환하거나 변경을 가할 수 있다면 authorization을 확인한다. [sandbox](sandbox.md)는 script가 호출할 수 있는 tool을 제한할 수 있지만, 각 tool은 여전히 해당 호출자가 어떤 작업을 할 수 있는지 확인해야 한다. 구체적인 예시는 [Tool authorization](../practice/design/tool-authorization.md)을 참고한다.
 
 [용어집으로 돌아가기](../glossary.md)

@@ -48,14 +48,14 @@ Theme CSS and JavaScript live in [`overrides/assets/`](overrides/assets/). Edit 
 
 ### Translation editions
 
-Use the **Language** button next to Search to open the same page in another edition. Unavailable translations are listed without links; **English (original)** opens the source. If the button is unavailable, use the language links above the article instead. In translated chapters, links to untranslated book pages mark the destination as English. Site controls and the shared technical figures remain in English.
+Use the **Language** button next to Search to open the same page in another edition. Unavailable translations are listed without links; **English (original)** opens the source. If the button is unavailable, use the language links above the article instead. Site controls and the shared technical figures remain in English.
 
 To add or maintain a translation:
 
-1. Give the translation the same path under `docs/zh-TW/`, `docs/ja/`, or `docs/ko/` as its source under `docs/`. For example, translate `docs/glossary/policy.md` as `docs/ja/glossary/policy.md`.
+1. For each new English page under `docs/`, add a translation at the same relative path for every edition listed in `[project.extra.editions]` in `zensical.toml`. For example, `docs/glossary/policy.md` needs a copy under each of `docs/zh-TW/`, `docs/ja/`, and `docs/ko/`.
 2. Preserve English technical terms, product names, abbreviations, glossary term headings, code, and citations. For cross-page references, keep the source heading IDs with explicit anchors such as `{#follow-a-request-to-open-a-file}`.
-3. Link to translated glossary entries and chapters when they exist. For an untranslated target, link to the English page and mark it in the link text: `（英文）`, `（英語）`, or `(영어)`.
-4. Register the page in `zensical.toml`. The language links use these registrations; do not register missing pages as translations. Run the strict build and check the same-page language links and the English fallback in the preview.
+3. Link to chapters and glossary entries in the same edition.
+4. Register the English page and its translations in `zensical.toml`. Run the strict build and check that the language links open the same page in each edition.
 
 ### Math in Markdown
 
@@ -75,7 +75,7 @@ Install [prek](https://prek.j178.dev/), then run `prek install` to enable the ch
 
 Run `prek run --all-files` to run all hooks on demand. These two hooks use uv and scan `docs/`, including untracked files:
 
-- `prek run check-docs-coverage --all-files` checks Markdown page registrations and that each translation has an English original.
+- `prek run check-docs-coverage --all-files` checks that all Markdown pages are registered, each English page has a translation in every configured edition, and each translation has an English original.
 - `prek run check-docs-no-web-assets --all-files` rejects standalone CSS, HTML, and JavaScript files under `docs/`. Put styles and scripts in `overrides/assets/` and HTML templates in `overrides/`.
 
 ## Pi tools

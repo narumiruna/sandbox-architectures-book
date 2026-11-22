@@ -54,18 +54,132 @@ nav = [
   ] },
   { "台灣正體中文" = [
     { "首頁" = "zh-TW/index.md" },
-    { "Sandbox 的隔離邊界" = "zh-TW/sandbox-isolation-boundaries.md" },
-    { "術語表" = "zh-TW/glossary.md" },
+    { "基礎概念" = [
+      { "Sandbox 的隔離邊界" = "zh-TW/sandbox-isolation-boundaries.md" },
+      { "作業系統 workload" = [
+        { "使用硬體輔助虛擬化的 VM" = "zh-TW/isolation/native-programs/hardware-backed-virtual-machines.md" },
+        { "User-space kernel" = "zh-TW/isolation/native-programs/user-space-kernels.md" },
+        { "作業系統層級的 process sandbox" = "zh-TW/isolation/native-programs/operating-system-process-sandboxes.md" },
+      ] },
+      { "語言與模組 runtime" = [
+        { "WebAssembly" = "zh-TW/isolation/generated-scripts/webassembly.md" },
+        { "Engine isolate" = "zh-TW/isolation/generated-scripts/engine-isolates.md" },
+        { "Restricted interpreter" = "zh-TW/isolation/generated-scripts/restricted-interpreters.md" },
+      ] },
+    ] },
+    { "設計 sandbox" = [
+      { "從議題到修補檔" = "zh-TW/practice/design/from-issue-to-patch.md" },
+      { "選擇 sandbox" = "zh-TW/practice/design/choosing-a-sandbox.md" },
+      { "部署模式" = "zh-TW/practice/design/deployment-patterns.md" },
+    ] },
+    { "設定存取規則" = [
+      { "Tool 的授權" = "zh-TW/practice/design/tool-authorization.md" },
+      { "Workspace 與 artifact" = "zh-TW/practice/data-and-access/workspaces-and-artifacts.md" },
+      { "網路 policy" = "zh-TW/practice/data-and-access/network-policy.md" },
+      { "Credentials 與身分" = "zh-TW/practice/data-and-access/credentials-and-identity.md" },
+      { "多 tenant 隔離" = "zh-TW/practice/data-and-access/multi-tenant-isolation.md" },
+    ] },
+    { "營運 sandbox" = [
+      { "Control plane" = "zh-TW/practice/operations/control-planes.md" },
+      { "Sandbox 生命週期" = "zh-TW/practice/operations/sandbox-lifecycle.md" },
+      { "資源上限" = "zh-TW/practice/operations/resource-limits.md" },
+      { "可觀測性與除錯" = "zh-TW/practice/operations/observability-and-debugging.md" },
+    ] },
+    { "驗證 sandbox" = [
+      { "驗證存取規則" = "zh-TW/practice/verification/verifying-access-rules.md" },
+      { "測量 sandbox 的執行時間" = "zh-TW/practice/verification/measuring-a-sandbox.md" },
+    ] },
+    { "擴充 sandbox 服務" = "zh-TW/practice/operations/scaling-a-sandbox.md" },
+    { "參考資料" = [
+      { "Agent 的 sandbox 架構" = "zh-TW/agent-sandbox-architectures.md" },
+      { "術語表" = "zh-TW/glossary.md" },
+    ] },
   ] },
   { "日本語" = [
     { "ホーム" = "ja/index.md" },
-    { "Sandbox の隔離境界" = "ja/sandbox-isolation-boundaries.md" },
-    { "用語集" = "ja/glossary.md" },
+    { "基礎" = [
+      { "Sandbox の隔離境界" = "ja/sandbox-isolation-boundaries.md" },
+      { "OS 上の workload" = [
+        { "ハードウェア支援型の VM" = "ja/isolation/native-programs/hardware-backed-virtual-machines.md" },
+        { "User-space kernel" = "ja/isolation/native-programs/user-space-kernels.md" },
+        { "OS の process sandbox" = "ja/isolation/native-programs/operating-system-process-sandboxes.md" },
+      ] },
+      { "言語と module の runtime" = [
+        { "WebAssembly" = "ja/isolation/generated-scripts/webassembly.md" },
+        { "Engine isolate" = "ja/isolation/generated-scripts/engine-isolates.md" },
+        { "Restricted interpreter" = "ja/isolation/generated-scripts/restricted-interpreters.md" },
+      ] },
+    ] },
+    { "Sandbox の設計" = [
+      { "Issue からパッチまで" = "ja/practice/design/from-issue-to-patch.md" },
+      { "Sandbox の選び方" = "ja/practice/design/choosing-a-sandbox.md" },
+      { "デプロイのパターン" = "ja/practice/design/deployment-patterns.md" },
+    ] },
+    { "アクセスルールの設定" = [
+      { "Tool のアクセス認可" = "ja/practice/design/tool-authorization.md" },
+      { "Workspace と artifact" = "ja/practice/data-and-access/workspaces-and-artifacts.md" },
+      { "ネットワークの policy" = "ja/practice/data-and-access/network-policy.md" },
+      { "Credentials と実行主体の識別" = "ja/practice/data-and-access/credentials-and-identity.md" },
+      { "複数 tenant の隔離" = "ja/practice/data-and-access/multi-tenant-isolation.md" },
+    ] },
+    { "Sandbox の運用" = [
+      { "Control plane の役割" = "ja/practice/operations/control-planes.md" },
+      { "Sandbox のライフサイクル" = "ja/practice/operations/sandbox-lifecycle.md" },
+      { "リソースの上限" = "ja/practice/operations/resource-limits.md" },
+      { "Observability とデバッグ" = "ja/practice/operations/observability-and-debugging.md" },
+    ] },
+    { "Sandbox の検証" = [
+      { "アクセスルールの検証" = "ja/practice/verification/verifying-access-rules.md" },
+      { "Sandbox の計測" = "ja/practice/verification/measuring-a-sandbox.md" },
+    ] },
+    { "Sandbox サービスの規模を拡大する" = "ja/practice/operations/scaling-a-sandbox.md" },
+    { "参考資料" = [
+      { "Agent sandbox のアーキテクチャ" = "ja/agent-sandbox-architectures.md" },
+      { "用語集" = "ja/glossary.md" },
+    ] },
   ] },
   { "한국어" = [
     { "홈" = "ko/index.md" },
-    { "Sandbox의 격리 경계" = "ko/sandbox-isolation-boundaries.md" },
-    { "용어집" = "ko/glossary.md" },
+    { "기초" = [
+      { "Sandbox의 격리 경계" = "ko/sandbox-isolation-boundaries.md" },
+      { "운영 체제 workload" = [
+        { "하드웨어 지원을 받는 Virtual machine" = "ko/isolation/native-programs/hardware-backed-virtual-machines.md" },
+        { "User-space kernel 사용 방식" = "ko/isolation/native-programs/user-space-kernels.md" },
+        { "운영체제 Process Sandbox" = "ko/isolation/native-programs/operating-system-process-sandboxes.md" },
+      ] },
+      { "언어 및 module runtime" = [
+        { "WebAssembly" = "ko/isolation/generated-scripts/webassembly.md" },
+        { "Engine isolate 사용 방식" = "ko/isolation/generated-scripts/engine-isolates.md" },
+        { "Restricted interpreter 사용 방식" = "ko/isolation/generated-scripts/restricted-interpreters.md" },
+      ] },
+    ] },
+    { "Sandbox 설계" = [
+      { "이슈에서 패치까지" = "ko/practice/design/from-issue-to-patch.md" },
+      { "Sandbox 고르기" = "ko/practice/design/choosing-a-sandbox.md" },
+      { "배포 패턴" = "ko/practice/design/deployment-patterns.md" },
+    ] },
+    { "접근 규칙 설정" = [
+      { "Tool 호출 권한 확인" = "ko/practice/design/tool-authorization.md" },
+      { "Workspace와 artifact" = "ko/practice/data-and-access/workspaces-and-artifacts.md" },
+      { "네트워크 policy" = "ko/practice/data-and-access/network-policy.md" },
+      { "Credential과 신원" = "ko/practice/data-and-access/credentials-and-identity.md" },
+      { "여러 tenant 간 격리" = "ko/practice/data-and-access/multi-tenant-isolation.md" },
+    ] },
+    { "Sandbox 운영" = [
+      { "Control plane" = "ko/practice/operations/control-planes.md" },
+      { "Sandbox 수명 주기" = "ko/practice/operations/sandbox-lifecycle.md" },
+      { "Resource limit" = "ko/practice/operations/resource-limits.md" },
+      { "Observability와 디버깅" = "ko/practice/operations/observability-and-debugging.md" },
+    ] },
+    { "Sandbox 검증" = [
+      { "접근 규칙 검증" = "ko/practice/verification/verifying-access-rules.md" },
+      { "Sandbox의 실행 시간 측정" = "ko/practice/verification/measuring-a-sandbox.md" },
+    ] },
+    { "Sandbox 서비스 확장하기" = "ko/practice/operations/scaling-a-sandbox.md" },
+    { "참고 자료" = [
+      { "Agent sandbox 아키텍처" = "ko/agent-sandbox-architectures.md" },
+      { "용어집" = "ko/glossary.md" },
+    ] },
   ] },
 ]
 

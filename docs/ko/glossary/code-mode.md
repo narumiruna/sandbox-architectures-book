@@ -12,6 +12,6 @@ Code Mode는 모델이 tool을 호출하고 그 결과를 합치는 프로그램
 
 ## tool 호출 검사
 
-script의 경계는 script가 접근할 수 있는 tool을 제한할 수 있다. 그래도 각 [tool](tool.md) handler는 요청된 작업이 허용되는지 확인해야 한다. script에 직접적인 네트워크 접근 권한이 없어도 issue 조회 시에는 프로젝트를 확인해야 한다. 다른 구현은 [아키텍처 개관 (영어)](../../agent-sandbox-architectures.md#code-mode-isolating-tool-scripts-instead-of-shells)을 참고한다.
+script의 경계는 script가 접근할 수 있는 tool을 제한할 수 있다. 그래도 각 [tool](tool.md) handler는 요청된 작업이 허용되는지 확인해야 한다. script에 직접적인 네트워크 접근 권한이 없어도 issue 조회 시에는 프로젝트를 확인해야 한다. 다른 구현은 [아키텍처 개관](../agent-sandbox-architectures.md#code-mode-isolating-tool-scripts-instead-of-shells)을 참고한다.
 
 [용어집으로 돌아가기](../glossary.md)

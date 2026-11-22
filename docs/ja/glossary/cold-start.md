@@ -35,6 +35,6 @@ flowchart TB
 
 起動と復元はどちらも Cold start の一部になり得ます。Warm pool から実行中の VM を確保する場合、起動や復元は要求の前に済みますが、プロジェクトの Workspace の接続などの準備がまだ必要なことがあります。
 
-準備が必要な要求と、準備済みの Sandbox を受け取る要求を比較します。どのファイルやイメージがすでにキャッシュされていたかを明記し、測定に何が含まれるかが読者に分かるようにします。環境の準備方法の違いについては、[Agent 用 Sandbox のアーキテクチャ（英語）](../../agent-sandbox-architectures.md#what-is-changing-in-2026)の例を参照してください。
+準備が必要な要求と、準備済みの Sandbox を受け取る要求を比較します。どのファイルやイメージがすでにキャッシュされていたかを明記し、測定に何が含まれるかが読者に分かるようにします。環境の準備方法の違いについては、[Agent 用 Sandbox のアーキテクチャ](../agent-sandbox-architectures.md#what-is-changing-in-2026)の例を参照してください。
 
 [用語集に戻る](../glossary.md)

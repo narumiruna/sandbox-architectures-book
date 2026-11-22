@@ -1,6 +1,6 @@
 # 용어집
 
-이 용어집을 [Sandbox의 격리 경계](sandbox-isolation-boundaries.md), [Agent sandbox 아키텍처 (영어)](../agent-sandbox-architectures.md)와 함께 활용하세요. 용어는 전체 이름을 기준으로 알파벳순으로 정렬했습니다. 이 페이지에서 전체 이름이나 약어로 검색하세요. 예를 들어 `WebAssembly`와 `Wasm`은 같은 항목에 나오며 같은 페이지로 연결됩니다. 각 항목에서는 용어를 설명하고 예를 듭니다.
+이 용어집을 [Sandbox의 격리 경계](sandbox-isolation-boundaries.md), [Agent sandbox 아키텍처](agent-sandbox-architectures.md)와 함께 활용하세요. 용어는 전체 이름을 기준으로 알파벳순으로 정렬했습니다. 이 페이지에서 전체 이름이나 약어로 검색하세요. 예를 들어 `WebAssembly`와 `Wasm`은 같은 항목에 나오며 같은 페이지로 연결됩니다. 각 항목에서는 용어를 설명하고 예를 듭니다.
 
 - **[Agent](glossary/agent.md)** — 모델로 다음 행동을 결정하고 tool을 호출해 실행할 수 있는 시스템입니다. Sandbox 안에는 agent 전체가 들어갈 수도 있고, agent가 생성한 코드만 들어갈 수도 있습니다.
 - **[Allowlist](glossary/allowlist.md)** — Policy가 허용하는 자원이나 동작의 목록입니다. 예를 들어 egress allowlist로 외부 연결 대상을 지정된 서비스로 제한할 수 있습니다.
