@@ -24,7 +24,21 @@ uv run --locked zensical build --strict
 
 The build writes the site to `site/` and stops if it finds warnings.
 
-The light palette is defined in [`docs/stylesheets/parchment.css`](docs/stylesheets/parchment.css). The stylesheet does not change the dark palette or the system preference option.
+In light mode, the **Daytime paper** menu in the header offers Oat, Sage, Tea, and Linen (the default). The browser remembers the selected paper. Zensical's separate theme toggle still controls light, dark, and system preference.
+
+Theme CSS and JavaScript live in [`overrides/assets/`](overrides/assets/). Edit the paper colors in [`parchment.css`](overrides/assets/stylesheets/parchment.css) and the menu in [`paper.js`](overrides/assets/javascripts/paper.js).
+
+### Math in Markdown
+
+Use `$E = mc^2$` for inline math. For a display equation, put `$$` on separate lines with a blank line before and after the block:
+
+```markdown
+$$
+\frac{1}{2} + \frac{1}{2} = 1
+$$
+```
+
+[KaTeX](https://katex.org/docs/supported.html) renders the formulas in the browser. It supports a subset of LaTeX commands and loads its assets from jsDelivr, so the preview needs network access to render math.
 
 ## Git checks
 

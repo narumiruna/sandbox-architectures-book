@@ -1,0 +1,86 @@
+:root {
+  --paper-bg: 238 234 226;
+  --paper-ink: 66 65 59;
+  --paper-code: 228 224 215;
+  --paper-muted: #625d53;
+  --paper-link: 91 83 67;
+}
+
+:root[data-paper="oat"] {
+  --paper-bg: 241 235 222;
+  --paper-ink: 68 56 45;
+  --paper-code: 232 223 207;
+  --paper-muted: #65584b;
+  --paper-link: 112 72 39;
+}
+
+:root[data-paper="sage"] {
+  --paper-bg: 235 238 228;
+  --paper-ink: 52 63 54;
+  --paper-code: 227 232 219;
+  --paper-muted: #56604f;
+  --paper-link: 61 93 70;
+}
+
+:root[data-paper="tea"] {
+  --paper-bg: 238 235 219;
+  --paper-ink: 66 70 56;
+  --paper-code: 229 225 207;
+  --paper-muted: #5f5e4b;
+  --paper-link: 86 89 50;
+}
+
+[data-md-color-scheme="default"] {
+  --md-default-bg-color: rgb(var(--paper-bg));
+  --md-default-bg-color--light: rgb(var(--paper-bg) / 92%);
+  --md-default-bg-color--lighter: rgb(var(--paper-bg) / 30%);
+  --md-default-bg-color--lightest: rgb(var(--paper-bg) / 12%);
+  --md-default-fg-color: rgb(var(--paper-ink));
+  --md-default-fg-color--light: var(--paper-muted);
+  --md-default-fg-color--lighter: var(--paper-muted);
+  --md-default-fg-color--lightest: rgb(var(--paper-ink) / 13%);
+
+  --md-primary-fg-color: rgb(var(--paper-link));
+  --md-primary-fg-color--light: var(--md-primary-fg-color);
+  --md-primary-fg-color--dark: var(--md-primary-fg-color);
+  --md-accent-fg-color: var(--md-primary-fg-color);
+  --md-accent-fg-color--transparent: rgb(var(--paper-link) / 9%);
+
+  --md-code-bg-color: rgb(var(--paper-code));
+  --md-code-bg-color--light: rgb(var(--paper-code) / 70%);
+  --md-code-bg-color--lighter: rgb(var(--paper-code) / 30%);
+  --md-code-fg-color: var(--md-default-fg-color);
+  --md-code-hl-number-color: #b02020;
+  --md-code-hl-special-color: #a41545;
+  --md-code-hl-function-color: #79368a;
+  --md-code-hl-constant-color: #5342ae;
+  --md-code-hl-keyword-color: #2c539b;
+  --md-code-hl-string-color: #16613c;
+
+  --color-foreground: var(--paper-ink);
+  --color-background: var(--paper-bg);
+  --color-background-subtle: var(--paper-code);
+  --color-backdrop: var(--paper-bg);
+}
+
+[data-md-color-scheme="slate"] .paper-picker {
+  display: none;
+}
+
+.paper-picker select {
+  appearance: auto;
+  min-height: 44px;
+  margin-inline: .2rem;
+  padding-inline: .3rem;
+  border: 1px solid var(--md-default-fg-color--light);
+  border-radius: .25rem;
+  background-color: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  font: inherit;
+  font-size: 16px;
+}
+
+.paper-picker select:focus-visible {
+  outline: 2px solid var(--md-accent-fg-color);
+  outline-offset: 2px;
+}
