@@ -118,6 +118,10 @@ Docker와 Kata 예시에서는 A와 B가 guest kernel을 공유합니다. Apple 
 - [Google gVisor](https://gvisor.dev/docs/architecture_guide/intro/)는 OCI runtime인 `runsc`를 제공합니다. [user-space kernel](glossary/user-space-kernel.md)인 **Sentry**가 Linux [system call](glossary/system-call.md)을 [workload](glossary/workload.md)에서 받아 처리합니다. gVisor의 KVM 플랫폼에서도 Linux 시스템 인터페이스를 제공하는 것은 Sentry입니다. Kata처럼 별도의 Linux guest kernel을 쓰는 것은 아닙니다. 모든 Linux 인터페이스가 똑같이 동작한다고 가정하지 말고, 실제 workload로 호환성과 성능을 시험합니다.
 - [Anthropic Sandbox Runtime](https://github.com/anthropic-experimental/sandbox-runtime)은 guest VM 없이 native process를 제한할 수 있습니다. Linux에서는 [Bubblewrap](https://github.com/containers/bubblewrap), macOS에서는 Seatbelt를 사용하며, 프록시를 통해 네트워크를 제한합니다. 이는 [operating-system process sandbox](glossary/operating-system-process-sandbox.md)입니다. gVisor와 달리 workload가 여전히 host OS kernel을 직접 사용하며 해당 OS의 제한을 받습니다.
 
+## Agent Substrate: Kubernetes에서 Actor마다 별도의 sandbox 사용 {#agent-substrate}
+
+[Agent Substrate](agent-substrate.md)는 미리 준비한 Kubernetes worker pod의 pool에서 Actor를 실행합니다. 한 pod가 여러 Actor를 동시에 실행하더라도 각 Actor는 전용 gVisor sandbox 또는 Cloud Hypervisor 기반 Kata Containers microVM을 사용합니다. 일시 중지한 Actor를 snapshot으로 저장하고 요청이 오면 복원하므로 Actor마다 pod를 계속 실행할 필요가 없습니다.
+
 ## Code Mode: 셸 대신 tool 스크립트 격리하기 {#code-mode-isolating-tool-scripts-instead-of-shells}
 
 [Code Mode](glossary/code-mode.md)에서 모델은 [tool](glossary/tool.md)을 호출하고 그 결과를 조합하는 프로그램을 작성합니다. 외부 애플리케이션이 어떤 tool을 사용할 수 있고 그 tool이 무엇을 할 수 있는지 결정합니다. 이 프로그램을 실행하는 sandbox가 [host tool handler](glossary/host-function.md)나 agent의 나머지 부분까지 자동으로 제한하지는 않습니다.

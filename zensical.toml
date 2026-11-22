@@ -50,6 +50,7 @@ nav = [
   { "Grow a sandbox service" = "practice/operations/scaling-a-sandbox.md" },
   { "Reference" = [
     { "Agent sandbox architectures" = "agent-sandbox-architectures.md" },
+    { "Agent Substrate" = "agent-substrate.md" },
     { "Glossary" = "glossary/index.md" },
     { "References" = "references/index.md" },
   ] },
@@ -93,6 +94,7 @@ nav = [
     { "擴充 sandbox 服務" = "zh-TW/practice/operations/scaling-a-sandbox.md" },
     { "參考資料" = [
       { "Agent 的 sandbox 架構" = "zh-TW/agent-sandbox-architectures.md" },
+      { "Agent Substrate" = "zh-TW/agent-substrate.md" },
       { "術語表" = "zh-TW/glossary/index.md" },
       { "引用來源" = "zh-TW/references/index.md" },
     ] },
@@ -137,6 +139,7 @@ nav = [
     { "Sandbox サービスの規模を拡大する" = "ja/practice/operations/scaling-a-sandbox.md" },
     { "参考資料" = [
       { "Agent sandbox のアーキテクチャ" = "ja/agent-sandbox-architectures.md" },
+      { "Agent Substrate" = "ja/agent-substrate.md" },
       { "用語集" = "ja/glossary/index.md" },
       { "出典" = "ja/references/index.md" },
     ] },
@@ -181,6 +184,7 @@ nav = [
     { "Sandbox 서비스 확장하기" = "ko/practice/operations/scaling-a-sandbox.md" },
     { "참고 자료" = [
       { "Agent sandbox 아키텍처" = "ko/agent-sandbox-architectures.md" },
+      { "Agent Substrate" = "ko/agent-substrate.md" },
       { "용어집" = "ko/glossary/index.md" },
       { "인용 출처" = "ko/references/index.md" },
     ] },
@@ -295,6 +299,7 @@ unlisted_pages = [
   "references/docker-sandboxes-local-isolation-layers.md",
   "references/docker-sandboxes-local-vs-cloud.md",
   "references/docker-what-is-a-container.md",
+  "references/e2b-runtime-readme-47c9255.md",
   "references/e2b-runtime-repository.md",
   "references/earendil-djs-c34b2a59.md",
   "references/firecracker-design-58cf1b2c.md",

@@ -120,73 +120,7 @@ A and B share a guest kernel in the Docker and Kata examples. In the Apple examp
 
 ## Agent Substrate: one sandbox per actor on Kubernetes {#agent-substrate}
 
-[Agent Substrate](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/concepts/architecture.md) is a **stateful sandbox platform on Kubernetes**. Kubernetes keeps worker pods ready. Substrate assigns each running *Actor* to a worker and gives it its own sandbox: **gVisor** or a **Kata Containers microVM backed by Cloud Hypervisor**. The standard counter demo uses gVisor; in a deployment, the pool configuration determines the class. An Actor is an instance of a workload, not necessarily an AI agent. It can keep its identity and saved state without keeping a pod or sandbox running. This case study describes upstream revision `f5428049`.
-
-### The worker pod is not the isolation unit {#agent-substrate-isolation}
-
-A [warm pool](glossary/warm-pool.md) of pre-started worker pods provides capacity. One worker can host several Actors **at the same time**, each in a separate sandbox. Each sandbox can contain several containers for the same Actor. Do not assign mutually untrusted workloads to containers within one Actor. The [upstream security model](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/security/security.md#defensible-multi-tenancy) treats the Actor, not its individual containers, as the boundary.
-
-```mermaid
----
-config:
-  flowchart:
-    nodeSpacing: 14
-    rankSpacing: 18
----
-flowchart TB
-    accTitle: Two separate actor sandboxes in one worker pod
-    accDescr: The ateworker process manages Actor A and Actor B. They share the worker pod's capacity but run in separate sandboxes.
-    subgraph Pod["One worker pod"]
-        W["ateworker"]
-        A["Actor A sandbox"]
-        B["Actor B sandbox"]
-        W --> A
-        W --> B
-    end
-```
-
-Each `WorkerPool` uses one [sandbox class](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/reference/sandbox-classes.md#summary-of-differences). A cluster can offer both classes in separate pools. Both run workloads packaged as OCI container images; the image format does not determine how the code is isolated. A plain Linux container is not a supported Actor sandbox.
-
-| Class | What separates Actors | What to check before choosing |
-| --- | --- | --- |
-| `gvisor` | Each Actor gets a gVisor `runsc` sandbox. Its Sentry implements Linux system calls in user space; it does not boot a Linux guest kernel. | Runs on standard Linux nodes. Test the Linux interfaces your workload needs. Resource limits apply at Actor level; the runtime ignores per-container limits. |
-| `microvm` | Each Actor gets its own Linux guest. Cloud Hypervisor provides the VM, and the Kata guest components run the containers inside it. | Needs nodes with `/dev/kvm`. Allow capacity for guest RAM and VM overhead. This class enforces per-container limits inside the guest, but those limits do not give each container its own VM. |
-
-### Who schedules, restores, and routes an Actor? {#agent-substrate-request-path}
-
-Kubernetes and Substrate make different placement decisions. `atecontroller` turns the Kubernetes `WorkerPool` resource into a Deployment, and Kubernetes schedules those pods onto nodes. Substrate's own `ate-api-server` schedules **Actors onto existing workers**. It stores `ActorTemplate`, Actor, and Worker records in PostgreSQL, not as Kubernetes objects. An `ActorTemplate` supplies the image, resources, and snapshot settings; a Kubernetes `SandboxConfig` supplies the runtime versions for its class. See the [resource model](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/concepts/architecture.md#api-resource-models).
-
-1. **Create.** Substrate registers the Actor without reserving a running sandbox. It normally starts from the template's prepared *golden snapshot*, if one is available when the Actor is created. Without a starting snapshot, it starts from the ActorTemplate's images. See [the golden snapshot workflow](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/reference/api-guide.md#the-golden-snapshot).
-2. **Wake and route.** On an incoming HTTP request, `atenet-router` asks the control plane to find the Actor by its atespace and name. An *atespace* groups Substrate resources for access control; it is not a Kubernetes namespace. If the Actor is suspended, the control plane assigns eligible worker capacity. The node supervisor `atelet` tells `ateworker` inside that pod to restore or boot the sandbox. When ready, the router forwards the request through the worker's authenticated `atunnel` connection. See the [request path and lifecycle](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/concepts/architecture.md#actor-lifecycle).
-3. **Suspend and reuse.** The application or agent harness calls `SuspendActor` when it wants to release the Actor's compute capacity. Do not assume the router suspends an Actor when a request finishes. The runtime captures a snapshot and releases the Actor's slot. A later request can restore the same Actor on another compatible worker. Under burst load, the router can [hold requests briefly and retry](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/concepts/request-parking.md#behavior); if capacity does not free up, it can still return HTTP `503`.
-
-### What survives suspension? {#agent-substrate-snapshots}
-
-The [snapshot settings](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/concepts/architecture.md#state-management--persistence) control what can survive. The template's `preferredFidelity` is an upper limit, not a promise that every restore keeps memory.
-
-| Snapshot level | What it preserves | What happens on resume |
-| --- | --- | --- |
-| `VOLUMES` | Data in snapshot-capable `DurableDir` volumes. | Starts new processes with that data available. |
-| `ROOTFS` | Volume data and changes to the containers' writable root filesystems. | Starts new processes with those file changes in place. |
-| `MEMORY` (default preference) | Volume data, root filesystem changes, and running process state and memory. | Can resume the saved processes on a worker with a compatible runtime. |
-
-The [counter demo](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/demos/counter/README.md#how-to-use) shows the difference between restoring a process and restarting from an image: after a memory snapshot, the in-memory count and two file-based counts all continue from 1 to 2. This does not mean that every snapshot can move anywhere. A restore stays in the original sandbox class. If no compatible worker has capacity for a memory restore, a durable snapshot can [fall back to `ROOTFS` and start new processes](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/reference/sandbox-classes.md#snapshots-volumes-rootfs-and-memory).
-
-By default, suspension returns when the **node-local** checkpoint is ready. A background transfer makes it durable in object storage (Google Cloud Storage or S3). If the node fails before the upload completes, the latest checkpoint can be lost. A synchronous suspend waits for upload; it is a better fit when the application must know that state is off the node before releasing it. The [eviction guide](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/reference/api-guide.md#eviction) explains why a harness must plan for eviction instead of relying on automatic checkpointing at pod shutdown.
-
-### Network access and credentials {#agent-substrate-access}
-
-The [security model](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/security/security.md#security-boundaries) gives each Actor a private network. Inbound traffic comes through the authenticated router, not directly from another Actor. Outbound traffic is denied by default. The DNS relay and `atenet-egress` enforce what an Actor can reach. The outside application still has to decide **which end user can invoke which Actor**.
-
-For [credential injection](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/guides/egress-credential-injection.md#how-it-works), the Actor sends a placeholder in a request header. If the rule permits the request and names that header, the gateway obtains a credential or a signed token that identifies the Actor, replaces the placeholder, and sends the request upstream. For HTTPS header replacement, the gateway must terminate TLS and the Actor must trust the gateway's certificate authority. The Actor does not need the credential to make the call, so the injection step does not put the secret in its memory or snapshot. This does not protect secrets that an application puts into the sandbox or that an upstream service sends back in its response. A broad rule can still authorize unwanted calls.
-
-The platform still trusts infrastructure outside the sandbox, including the worker manager, gateways, and snapshot storage. The upstream [status table](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/security/security.md#defensible-multi-tenancy) lists worker privilege reduction and cleanup guarantees as work in progress. An atespace is not a substitute for a separate sandbox or a network policy.
-
-### When to choose Agent Substrate {#agent-substrate-when-to-choose}
-
-Consider it when you already operate Kubernetes and need many long-lived agent identities or workspaces, but only a fraction need compute at once. For example, an agent that waits hours for user input can release its slot and resume the same workspace on demand. An agent fleet that runs continuously gains less from suspend and resume. This is infrastructure for running agent code, not a framework for choosing tools or managing conversations.
-
-The design trades idle compute for snapshot storage, transfer, and restore work. Measure the time from the incoming request to the first usable response with your workload: compare an already-running Actor, a node-local restore, and a remote restore. Include a burst that fills the pool, and check both latency and `503` rates. Do not use a control-plane number as end-to-end latency: upstream's [ResumePaused benchmark](https://github.com/agent-substrate/substrate/blob/f5428049ac0b81458eb12e81fa5a6b65cd39a2ad/docs/guides/benchmarking.md#resumepaused-benchmark) deliberately excludes the router and real sandbox restore.
+[Agent Substrate](agent-substrate.md) runs Actors on a pool of ready Kubernetes worker pods. One pod can host several Actors at once, each in its own gVisor sandbox or Kata Containers microVM backed by Cloud Hypervisor. Substrate saves idle Actors as snapshots and restores them on demand so they do not need a dedicated, always-running pod.
 
 ## Code Mode: isolating tool scripts instead of shells
 

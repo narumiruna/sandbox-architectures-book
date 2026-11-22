@@ -118,6 +118,10 @@ Docker と Kata の例では、A と B は guest kernel を共有します。App
 - [Google gVisor](https://gvisor.dev/docs/architecture_guide/intro/) は、OCI runtime の `runsc` を提供します。[user-space kernel](glossary/user-space-kernel.md) である **Sentry** が Linux [system call](glossary/system-call.md) を処理します。この呼び出しは [workload](glossary/workload.md) が行います。gVisor の KVM プラットフォームでも、Linux のシステムインターフェースを提供するのは Sentry です。Kata のように独立した Linux guest kernel があるわけではありません。すべての Linux インターフェースが同じように動くと想定せず、実際の workload で互換性と性能を確認してください。
 - [Anthropic Sandbox Runtime](https://github.com/anthropic-experimental/sandbox-runtime) は、guest VM を使わずにネイティブ process を制限できます。Linux では [Bubblewrap](https://github.com/containers/bubblewrap)、macOS では Seatbelt を使い、ネットワークはプロキシで制限します。これは [operating-system process sandbox](glossary/operating-system-process-sandbox.md) です。gVisor とは異なり、workload は host OS の制限を受けながら、その OS の kernel を直接使います。
 
+## Agent Substrate：Kubernetes 上で Actor ごとに sandbox を分ける {#agent-substrate}
+
+[Agent Substrate](agent-substrate.md) は、あらかじめ起動した Kubernetes worker pods の pool で Actor を実行します。1 つの pod で複数の Actor が同時に動いても、それぞれ専用の gVisor sandbox または Cloud Hypervisor 上の Kata Containers microVM を使います。休止した Actor を snapshot に保存し、リクエストに応じて復元するので、Actor ごとに pod を動かし続ける必要はありません。
+
 ## Code Mode：シェルではなく tool スクリプトを隔離する {#code-mode-isolating-tool-scripts-instead-of-shells}
 
 [Code Mode](glossary/code-mode.md) では、モデルが [tool](glossary/tool.md) を呼び出し、その結果を組み合わせるプログラムを書きます。どの tool を利用でき、その tool に何ができるかは、外側のアプリケーションが決めます。このプログラムを実行する sandbox が、[host 側の tool ハンドラー](glossary/host-function.md) や agent の他の部分まで自動的に隔離するわけではありません。

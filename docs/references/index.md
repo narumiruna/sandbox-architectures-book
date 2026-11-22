@@ -39,6 +39,7 @@ This index lists the source records shared by all editions. The book and reposit
 - [Docker Sandboxes architecture](docker-sandboxes-local-architecture.md)
 - [Docker Sandboxes isolation layers](docker-sandboxes-local-isolation-layers.md)
 - [E2B Runtime](e2b-runtime-repository.md)
+- [E2B Runtime README (47c9255)](e2b-runtime-readme-47c9255.md)
 - [Earendil djs README (c34b2a59)](earendil-djs-c34b2a59.md)
 - [elf(5) — Linux manual page](linux-elf-5.md)
 - [Firecracker Design (58cf1b2c)](firecracker-design-58cf1b2c.md)
