@@ -69,7 +69,10 @@ nav = [
   ] },
 ]
 
-extra_css = ["assets/stylesheets/parchment.css"]
+extra_css = [
+  "assets/stylesheets/parchment.css",
+  "assets/stylesheets/language-switcher.css",
+]
 
 [project.extra]
 # Pages published without an entry in the site menu.
