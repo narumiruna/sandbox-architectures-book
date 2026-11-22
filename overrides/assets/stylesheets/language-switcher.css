@@ -1,0 +1,55 @@
+.language-switcher button:focus-visible,
+.language-switcher a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -2px;
+}
+
+.language-versions[popover] {
+  inset: 2.75rem .5rem auto auto;
+  margin: 0;
+  max-inline-size: calc(100vw - 1rem);
+  max-block-size: calc(100dvh - 3.25rem);
+  overflow: auto;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: .25rem;
+  padding: .2rem;
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  box-shadow: var(--md-shadow-z2);
+  font-size: .8rem;
+}
+
+@supports (position-area: block-end span-inline-start) {
+  .language-versions[popover] {
+    inset: auto;
+    position-area: block-end span-inline-start;
+    position-try-fallbacks: flip-inline;
+    justify-self: end;
+  }
+}
+
+.language-versions[popover] ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.language-versions[popover] :is(a, span) {
+  display: block;
+  padding: .35rem .6rem;
+  overflow-wrap: anywhere;
+}
+
+.language-versions[popover] a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: .15em;
+}
+
+.language-versions[popover] a:hover {
+  background: var(--md-default-fg-color--lightest);
+}
+
+.language-versions[popover] [aria-current="page"] {
+  font-weight: bold;
+}

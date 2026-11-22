@@ -25,20 +25,28 @@
   {% if route is not none and route != "404.html" %}
     {% set navigable = nav.pages | map(attribute="url") | list %}
     {% set unlisted = config.extra.unlisted_pages %}
-    <nav aria-label="Language versions">
-      <p>
-        <a href="{{ version.original | url }}" hreflang="en"{% if version.locale == "en" %} aria-current="page"{% endif %}>English (original)</a>
+    <template id="language-switcher-template">
+      <div class="md-header__option language-switcher">
+        <button type="button" class="md-header__button md-icon" aria-label="Language" title="Language" popovertarget="language-versions">
+          <span aria-hidden="true">{% include ".icons/lucide/languages.svg" %}</span>
+        </button>
+      </div>
+    </template>
+    <nav class="language-versions" aria-label="Language versions">
+      <ul>
+        <li><a href="{{ version.original | url }}" hreflang="en"{% if version.locale == "en" %} aria-current="page"{% endif %}>English (original)</a></li>
         {% for code in editions %}
           {% set edition = editions[code] %}
           {% set translation = code ~ "/" ~ version.original %}
-          ·
-          {% if translation in navigable or (translation | trim("/") ~ ".md") in unlisted or (translation ~ "index.md") in unlisted %}
-            <a href="{{ translation | url }}" lang="{{ code }}" hreflang="{{ code }}"{% if code == version.locale %} aria-current="page"{% endif %}>{{ edition.name }}</a>
-          {% else %}
-            <span lang="{{ code }}">{{ edition.unavailable }}</span>
-          {% endif %}
+          <li>
+            {% if translation in navigable or (translation | trim("/") ~ ".md") in unlisted or (translation ~ "index.md") in unlisted %}
+              <a href="{{ translation | url }}" lang="{{ code }}" hreflang="{{ code }}"{% if code == version.locale %} aria-current="page"{% endif %}>{{ edition.name }}</a>
+            {% else %}
+              <span lang="{{ code }}">{{ edition.unavailable }}</span>
+            {% endif %}
+          </li>
         {% endfor %}
-      </p>
+      </ul>
     </nav>
   {% endif %}
   {% if version.locale == "en" %}
@@ -52,6 +60,7 @@
 
 {% block scripts %}
   {{ super() }}
+  <script defer src="{{ 'assets/javascripts/language-switcher.js' | url }}"></script>
   <script defer
           src="https://cdn.jsdelivr.net/npm/katex@0.19.1/dist/katex.min.js"
           integrity="sha384-a1WQdjRj162i159OYq041X6I4K8NenkrI09LlPmiHg0YOb7CR+wJOraXwK9abpnE"

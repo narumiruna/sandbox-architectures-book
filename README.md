@@ -48,7 +48,7 @@ Theme CSS and JavaScript live in [`overrides/assets/`](overrides/assets/). Edit 
 
 ### Translation editions
 
-Use the language links above a chapter or term to open the same page in another edition. A language marked as unavailable has no version of that page; **English (original)** opens the source. In translated chapters, links to untranslated book pages mark the destination as English. Site controls and the shared technical figures remain in English.
+Use the **Language** button next to Search to open the same page in another edition. Unavailable translations are listed without links; **English (original)** opens the source. If the button is unavailable, use the language links above the article instead. In translated chapters, links to untranslated book pages mark the destination as English. Site controls and the shared technical figures remain in English.
 
 To add or maintain a translation:
 
