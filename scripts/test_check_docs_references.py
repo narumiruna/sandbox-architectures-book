@@ -49,6 +49,28 @@ def test_collects_links_but_not_code_or_comments():
     }
 
 
+def test_collects_responsive_image_sources():
+    html = """
+<picture>
+  <source srcset="https://example.com/small.png 320w,
+                  https://example.com/large.png?size=640,480 640w">
+  <img src="fallback.png" srcset="data:image/png;base64,AAAA 1x,
+                                 //example.com/retina.png 2x">
+</picture>
+<img srcset="local.png, https://example.com/optional.png">
+<video><source srcset="https://example.com/not-a-picture.png"></video>
+"""
+    collector = LinkCollector()
+    collector.feed(Markdown(extensions=EXTENSIONS).convert(html))
+    collector.close()
+    assert collector.urls == {
+        "https://example.com/small.png",
+        "https://example.com/large.png?size=640,480",
+        "https://example.com/retina.png",
+        "https://example.com/optional.png",
+    }
+
+
 def test_matching_keeps_distinct_pages_and_queries():
     assert source_url("HTTPS://EXAMPLE.COM#fragment") == "https://example.com/"
     assert (
@@ -81,7 +103,10 @@ def test_checks_repository_markdown_against_shared_source_records(tmp_path, caps
         "[See also](https://example.com/missing#section)\n",
     )
     write("docs/zh-TW/chapter.md", "[Covered](https://example.com/covered#section)\n")
-    write("README.MD", "[Missing](https://example.com/missing)\n")
+    write(
+        "README.MD",
+        '<img src="fallback.png" srcset="https://example.com/missing 2x">\n',
+    )
     write("docs/copy.md", '---\nurl: "https://example.com/missing"\n---\n')
     write("docs/references/index.md", '---\nurl: "https://example.com/missing"\n---\n')
     subprocess.run(["git", "-C", str(tmp_path), "add", "README.MD"], check=True)

@@ -4,6 +4,7 @@ import os
 import re
 import subprocess
 import sys
+from collections.abc import Iterator
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -18,6 +19,7 @@ FRONT_MATTER = re.compile(
 )
 EXTENSIONS = ["extra", "pymdownx.superfences", "pymdownx.magiclink"]
 LINK_ATTRIBUTES = {"a": "href", "area": "href", "img": "src"}
+SRCSET_URL = re.compile(r"[ \t\n\f\r,]*([^ \t\n\f\r,][^ \t\n\f\r]*)")
 
 
 def markdown_paths(root: Path) -> list[Path]:
@@ -60,16 +62,56 @@ def source_url(url: str) -> str | None:
     ).geturl()
 
 
+def srcset_urls(value: str) -> Iterator[str]:
+    """Read candidate URLs without treating an embedded comma as a separator."""
+    position = 0
+    while match := SRCSET_URL.match(value, position):
+        token = match[1]
+        yield token.rstrip(",")
+        position = match.end()
+        if token.endswith(","):
+            continue
+
+        # Skip descriptors up to the next comma outside parentheses.
+        in_parens = False
+        while position < len(value):
+            char = value[position]
+            position += 1
+            if char == "," and not in_parens:
+                break
+            if char == "(":
+                in_parens = True
+            elif char == ")":
+                in_parens = False
+
+
 class LinkCollector(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
         self.urls: set[str] = set()
+        self.picture_depth = 0
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag == "picture":
+            self.picture_depth += 1
+        attributes = dict(attrs)
         attribute = LINK_ATTRIBUTES.get(tag)
-        target = dict(attrs).get(attribute) if attribute else None
+        target = attributes.get(attribute) if attribute else None
         if target and (url := source_url(target)):
             self.urls.add(url)
+
+        if (candidates := attributes.get("srcset")) and (
+            tag == "img" or (tag == "source" and self.picture_depth)
+        ):
+            self.urls.update(
+                url
+                for candidate in srcset_urls(candidates)
+                if (url := source_url(candidate))
+            )
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag == "picture" and self.picture_depth:
+            self.picture_depth -= 1
 
 
 def split_front_matter(text: str) -> tuple[str, str]:
