@@ -5,6 +5,7 @@
     sage: "Sage",
     tea: "Tea",
     linen: "Linen",
+    original: "Original",
   };
   const root = document.documentElement;
 

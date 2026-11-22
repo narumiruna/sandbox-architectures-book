@@ -30,7 +30,7 @@
   --paper-link: 86 89 50;
 }
 
-[data-md-color-scheme="default"] {
+:where(:root:not([data-paper="original"])) [data-md-color-scheme="default"] {
   --md-default-bg-color: rgb(var(--paper-bg));
   --md-default-bg-color--light: rgb(var(--paper-bg) / 92%);
   --md-default-bg-color--lighter: rgb(var(--paper-bg) / 30%);

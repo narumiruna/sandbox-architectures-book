@@ -24,7 +24,7 @@ uv run --locked zensical build --strict
 
 The build writes the site to `site/` and stops if it finds warnings.
 
-In light mode, the **Daytime paper** menu in the header offers Oat, Sage, Tea, and Linen (the default). The browser remembers the selected paper. Zensical's separate theme toggle still controls light, dark, and system preference.
+In light mode, the **Daytime paper** menu in the header offers Oat, Sage, Tea, Linen (the default), and Original (Zensical's built-in light palette). The browser remembers the selection. Zensical's separate theme toggle still controls light, dark, and system preference.
 
 Theme CSS and JavaScript live in [`overrides/assets/`](overrides/assets/). Edit the paper colors in [`parchment.css`](overrides/assets/stylesheets/parchment.css) and the menu in [`paper.js`](overrides/assets/javascripts/paper.js).
 
