@@ -10,4 +10,4 @@ Kernel は、オペレーティングシステムの中核です。CPU 時間、
 
 通常の [operating-system process sandbox](operating-system-process-sandbox.md) は、基盤となるオペレーティングシステムの kernel、つまり *host kernel* を使います。Kernel は、それらの process に [namespace](namespace.md) や [seccomp](seccomp.md) などの制御を適用します。VM では、VM に提供されたリソースを管理する *guest kernel* が動きます。[User-space kernel](user-space-kernel.md) は第 3 の方法で、workload が使う kernel インターフェースを host kernel の外にあるソフトウェアとして実装します。違いについては [Sandbox の isolation boundary](../sandbox-isolation-boundaries.md) を参照してください。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

@@ -45,4 +45,4 @@ The token appears only on the proxy's request to the registry. A rejected reques
 
 The proxy must send the credential only to the intended service on approved requests and keep it out of logs the workload can read. Trust the destination service not to reveal the credential in its response. Hiding the token does not make a broad [egress](egress.md) rule safe: the workload can still ask the proxy to perform whatever actions the policy allows.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

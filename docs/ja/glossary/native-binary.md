@@ -10,4 +10,4 @@ Native binary は、特定の種類のプロセッサーとオペレーティン
 
 実行ファイル形式は、プログラムをどう読み込むかをオペレーティングシステムに伝えます。たとえば Linux の [ELF 実行ファイル](https://man7.org/linux/man-pages/man5/elf.5.html) には、対象のプロセッサーアーキテクチャが記録されています。プログラムが共有ライブラリを使う場合は、互換性のある [loader とライブラリ](https://man7.org/linux/man-pages/man8/ld.so.8.html) も必要です。プログラムが使う [system call](system-call.md) は、実行先の kernel インターフェースに対応していなければなりません。プロセッサーが一致するだけでは不十分です。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

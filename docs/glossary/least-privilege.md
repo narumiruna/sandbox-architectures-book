@@ -12,4 +12,4 @@ First identify the operations the [workload](workload.md) needs. Scope file acce
 
 Check each allowed path on its own. A read-only [mount](mount.md) prevents writes through that mount, but it does not stop a separate tool from writing to the same files. The tool handler must enforce its own limits. Least privilege reduces what the workload can affect; it does not prevent harm from actions that the workload is allowed to take.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

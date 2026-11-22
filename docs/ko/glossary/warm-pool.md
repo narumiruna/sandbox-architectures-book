@@ -12,4 +12,4 @@ Warm pool은 요청이 도착하기 전에 준비해 둔 [sandboxes](sandbox.md)
 
 [snapshot](snapshot.md)은 저장된 상태다. 서비스는 snapshot을 복원해 warm pool을 다시 채울 수 있지만, snapshot만 보관하면 요청이 도착했을 때 여전히 복원 작업을 해야 한다. Pool은 인스턴스가 대기하는 동안 리소스를 점유하는 대신 작업을 미리 처리한다. 할당되지 않은 인스턴스에는 [tenant](tenant.md) 데이터를 두지 말고, 준비 상태를 측정할 때는 할당과 workspace 설정도 고려한다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

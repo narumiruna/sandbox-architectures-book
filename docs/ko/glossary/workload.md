@@ -12,4 +12,4 @@ Workload에 따라 필요한 실행 환경이 다르다. 여러 도구의 결과
 
 [container image](container-image.md)는 시작에 필요한 파일과 설정을 제공하지만, 실행 중인 workload 자체는 아니다. Workload의 자식 프로세스가 실제로 어디에서 실행되는지, 어떤 리소스에 접근할 수 있는지, 여러 workload가 하나의 [isolation unit](isolation-unit.md)을 공유하는지 확인한다. 작업 유형별로 어떤 환경이 적합한지는 [Sandbox 격리 경계](../sandbox-isolation-boundaries.md)를 참조한다.
 
-[Glossary로 돌아가기](../glossary.md)
+[Glossary로 돌아가기](index.md)

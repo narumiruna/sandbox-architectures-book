@@ -12,4 +12,4 @@ Kernel-based Virtual Machine (KVM)은 프로세서의 가상화 기능을 사용
 
 VMM에는 host의 `/dev/kvm`에 접근할 권한이 필요하다. 예를 들어 [리비전 `42f413d`의 NVX Linux/KVM 요구 사항](https://github.com/microsoft/nvx/blob/42f413d226290e31ea288686d6f3dbfd20c45733/doc/setup.md#linux--kvm)은 하드웨어 가상화와 해당 장치에 대한 읽기 및 쓰기 권한을 요구한다. 이 권한은 sandbox 안의 workload가 아니라 host에서 실행되는 VMM에 필요하다. 다른 host 인터페이스로는 [MSHV](microsoft-hypervisor.md)와 [WHP](windows-hypervisor-platform.md)를 참고한다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

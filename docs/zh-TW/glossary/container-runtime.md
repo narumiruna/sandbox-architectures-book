@@ -14,4 +14,4 @@ Container 軟體堆疊可解開 image 內的檔案，加入 runtime 設定以備
 
 Runtime 可以搭配 [namespace](namespace.md) 直接使用 host 的 [kernel](kernel.md)，也可以提供 [user-space kernel](user-space-kernel.md)，或在具備自身 kernel 的 [virtual machine](virtual-machine.md) 中執行 workload。[Control plane](control-plane.md) 負責管理 workload；runtime 的執行機制與設定則決定 workload 如何與 host 隔離。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

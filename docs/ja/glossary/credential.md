@@ -12,4 +12,4 @@ Sandbox は Issue のタイトルを必要としています。Sandbox の外で
 
 [least privilege](least-privilege.md) を適用します。タスクに必要な操作とリソースだけへのアクセスを許可し、有効期間が短い Credential を優先します。コードに必要なのが Credential ではなく結果なら、Host 側のツールや [credential injection](credential-injection.md) を使い、プログラムに Credential を渡さずに済みます。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

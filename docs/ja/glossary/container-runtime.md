@@ -14,4 +14,4 @@ Container のソフトウェア群は、イメージのファイルを展開し�
 
 Runtime は、[namespace](namespace.md) を用いて [host kernel](kernel.md) を直接使うことも、[user-space kernel](user-space-kernel.md) を提供することも、独自の Kernel を持つ [virtual machine](virtual-machine.md) で Workload を実行することもできます。[control plane](control-plane.md) は Workload を管理します。Workload を Host から何で隔てるかは、Runtime の実行の仕組みと設定で決まります。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

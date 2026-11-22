@@ -12,4 +12,4 @@ Container는 하나 이상의 프로그램이 실행될 수 있도록 준비한 
 
 Runtime이 workload와 무엇을 공유하는지 확인한다. 예를 들어 쓰기 가능한 host [mount](mount.md)가 있으면, container를 어떤 방식으로 패키징했는지와 관계없이 코드가 host 파일을 변경할 수 있다. [VM, container, microVM 비교](../sandbox-isolation-boundaries.md#compare-a-vm-a-container-and-a-microvm)를 참고한다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

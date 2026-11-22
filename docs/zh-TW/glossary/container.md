@@ -12,4 +12,4 @@ Container 是為一或多個程式準備的執行環境。它提供檔案系統�
 
 請檢查 runtime 與 workload 共用哪些資源。例如，不論 container 如何封裝，來自 host 的可寫入 [mount](mount.md) 都可能讓程式碼變更 host 檔案。請參閱 [VM、container 與 microVM 的比較](../sandbox-isolation-boundaries.md#compare-a-vm-a-container-and-a-microvm)。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

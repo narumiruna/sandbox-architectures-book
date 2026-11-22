@@ -12,4 +12,4 @@ The [OCI Image Format v1.1.0](https://github.com/opencontainers/image-spec/blob/
 
 An image neither preserves running processes like a memory [snapshot](snapshot.md) nor decides how the workload is isolated. The same compatible image can run under different runtimes. Check the runtime and its policy to learn what the code can reach.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

@@ -20,7 +20,7 @@ Use the [book home page](docs/index.md) to choose a starting point. Begin with [
 
 4. Open the cited sections and glossary entries, then answer the question. If you want a Git check, run `git status --short --untracked-files=all` yourself before and after reading. A clean checkout should show no changes in either check; Git status does not report ignored files. Keep any agent logs outside the checkout.
 
-Use [`docs/index.md`](docs/index.md) as the chapter map and [`docs/glossary.md`](docs/glossary.md) to look up terms and abbreviations. For a separate hands-on session, find the [Lamp lab files](examples/lamp/) and follow the instructions for [checking access rules](docs/practice/verification/verifying-access-rules.md) or [measuring a sandbox](docs/practice/verification/measuring-a-sandbox.md). Before running an example, ask the agent to explain its prerequisites, what each command does, and what result to expect. Decide yourself whether to run it.
+Use [`docs/index.md`](docs/index.md) as the chapter map and [`docs/glossary/index.md`](docs/glossary/index.md) to look up terms and abbreviations. For a separate hands-on session, find the [Lamp lab files](examples/lamp/) and follow the instructions for [checking access rules](docs/practice/verification/verifying-access-rules.md) or [measuring a sandbox](docs/practice/verification/measuring-a-sandbox.md). Before running an example, ask the agent to explain its prerequisites, what each command does, and what result to expect. Decide yourself whether to run it.
 
 ## Preview locally
 

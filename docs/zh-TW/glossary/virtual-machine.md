@@ -12,4 +12,4 @@ Virtual machine（VM）是一種運算環境，會向自己的作業系統提供
 
 一台 VM 可以執行一個 workload，也可以容納多個 [containers](container.md)。這些 container 可以各有獨立的檔案系統，但仍共用 guest kernel。請確認哪些工作負載有自己的 VM，以及外層 sandbox 開放哪些磁碟、mount 和網路連線。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

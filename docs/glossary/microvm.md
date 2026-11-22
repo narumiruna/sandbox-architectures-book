@@ -12,4 +12,4 @@ A [virtual machine monitor](virtual-machine-monitor.md) for microVMs can omit de
 
 The [isolation unit](isolation-unit.md) depends on the service: a microVM can contain one job or several workloads. Workloads in the same microVM share a guest kernel. Also check which host files and network services the sandbox exposes; a smaller VM does not decide what access is allowed.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

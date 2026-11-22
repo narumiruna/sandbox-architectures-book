@@ -10,4 +10,4 @@ guest 드라이버가 가상 장치에 접근한다. 이 접근에서 VM exit가
 
 [system call](system-call.md)은 일반적으로 guest를 벗어나지 않고 [privilege level](cpu-privilege-level.md)을 guest 앱에서 guest kernel로 전환한다. VM exit는 guest 경계를 넘는다. 또한 KVM에서는 host의 [`KVM_RUN`](https://docs.kernel.org/virt/kvm/api.html#kvm-run) 호출이 VMM으로 반환되는 것과도 구별된다. 일부 VM exit는 해당 호출이 반환되지 않은 상태에서 처리되고 guest 실행이 재개된다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

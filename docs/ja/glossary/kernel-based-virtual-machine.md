@@ -12,4 +12,4 @@ Kernel-based Virtual Machine (KVM) は、プロセッサーの仮想化機能を
 
 VMM には host 上の `/dev/kvm` へのアクセスが必要です。たとえば [リビジョン `42f413d` の NVX Linux/KVM 要件](https://github.com/microsoft/nvx/blob/42f413d226290e31ea288686d6f3dbfd20c45733/doc/setup.md#linux--kvm) では、ハードウェア仮想化とデバイスへの読み書きアクセスが必要です。このアクセス権は host 側の VMM に必要なもので、sandbox 内の workload に与えるものではありません。ほかの host インターフェースについては [MSHV](microsoft-hypervisor.md) と [WHP](windows-hypervisor-platform.md) を参照してください。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

@@ -12,4 +12,4 @@ Container image는 [container runtime](container-runtime.md)이 [container](cont
 
 Image는 메모리 [snapshot](snapshot.md)처럼 실행 중인 process를 보존하지 않으며, workload를 어떻게 격리할지도 결정하지 않는다. 호환되는 동일한 image를 서로 다른 runtime에서 실행할 수 있다. 코드가 어디까지 접근할 수 있는지 알려면 runtime과 그 policy를 확인한다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

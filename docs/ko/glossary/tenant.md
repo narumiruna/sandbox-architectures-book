@@ -12,4 +12,4 @@ Tenant는 서비스가 작업이나 데이터를 다른 이들의 것과 구분�
 
 Tenant가 반드시 [isolation unit](isolation-unit.md)인 것은 아니다. 서비스는 한 tenant에 작업마다 별도의 VM을 제공할 수 있다. 또한 저장된 출력, 캐시, 복원된 [snapshots](snapshot.md)가 지정된 tenant 범위를 벗어나지 않게 해야 한다. VM을 분리해도 공유 서비스가 다른 tenant의 데이터를 반환하는 문제는 해결되지 않는다.
 
-[Glossary로 돌아가기](../glossary.md)
+[Glossary로 돌아가기](index.md)

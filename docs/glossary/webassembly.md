@@ -20,4 +20,4 @@ The workload can be a Wasm module, or the module can be a language engine that r
 
 Consider Wasm for code that can run with selected host operations instead of a full operating system. An ordinary Linux [native binary](native-binary.md) cannot run directly as a Wasm module. See [WebAssembly in Foundations](../isolation/generated-scripts/webassembly.md) for a tool lookup example.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

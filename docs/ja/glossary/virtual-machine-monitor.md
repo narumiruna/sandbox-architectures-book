@@ -12,4 +12,4 @@ virtual machine monitor（VMM）は、[virtual machine](virtual-machine.md) を�
 
 sandbox の [control plane](control-plane.md) は VMM を使って VM を起動・停止できますが、ジョブをどこで実行するか、誰に workspace やネットワークへのアクセスを与えるかは別の責務です。公開されるものを知るには VMM だけでなく sandbox 全体を確認してください。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

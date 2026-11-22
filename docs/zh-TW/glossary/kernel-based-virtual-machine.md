@@ -12,4 +12,4 @@ Kernel-based Virtual Machine (KVM) 是 Linux kernel 的一項功能，透過處�
 
 VMM 必須能存取 host 上的 `/dev/kvm`。例如，[修訂版 `42f413d` 的 NVX Linux/KVM 需求](https://github.com/microsoft/nvx/blob/42f413d226290e31ea288686d6f3dbfd20c45733/doc/setup.md#linux--kvm)要求硬體虛擬化及該裝置的讀寫權限。這項權限供 host 端的 VMM 使用，而非供 sandbox 內的 workload 使用。其他 host 介面請參閱 [MSHV](microsoft-hypervisor.md) 和 [WHP](windows-hypervisor-platform.md)。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

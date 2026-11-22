@@ -12,4 +12,4 @@ A [host function](host-function.md) can grant an operation such as issue lookup.
 
 Judge a capability by its effect, not its name. A tool called “read issue” is only project-scoped if the handler checks the requested project. A script with general network access and an API token may be able to act without that tool, so evaluate both direct access and access through tools when applying [least privilege](least-privilege.md).
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

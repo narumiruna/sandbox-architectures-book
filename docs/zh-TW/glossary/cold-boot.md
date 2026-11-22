@@ -12,4 +12,4 @@ Cold boot 透過開機啟動新 [virtual machine](virtual-machine.md) 內的作�
 
 請分開量測開機和就緒時間。Guest 開機完畢時，sandbox 可能還沒接上專案的 workspace，也可能還無法執行第一道指令。[Cold start](cold-start.md) 可以包含 cold boot，也可以使用 [snapshot](snapshot.md) 跳過 guest 開機。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

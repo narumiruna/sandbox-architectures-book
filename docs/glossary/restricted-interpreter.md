@@ -16,4 +16,4 @@ For example, [OpenCode Code Mode at revision `5310e422`](https://github.com/anom
 
 A supported loop can still run too long, and an approved tool call can still return more data than expected. Limit execution time, memory, and tool use separately. Apply [least privilege](least-privilege.md) to each tool: a test-results reader should not also offer a way to run arbitrary commands.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

@@ -12,4 +12,4 @@ Cold boot는 저장해 둔 실행 상태를 재개하는 대신 새 [virtual mac
 
 부팅이 끝나는 시점과 사용할 준비가 되는 시점을 따로 측정한다. Sandbox가 프로젝트 workspace를 연결하거나 첫 명령을 실행할 수 있게 되기 전에 guest의 부팅이 끝날 수도 있다. [cold start](cold-start.md)는 cold boot를 포함할 수 있지만, [snapshot](snapshot.md)을 사용하여 guest 부팅을 건너뛸 수도 있다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

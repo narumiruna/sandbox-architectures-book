@@ -14,4 +14,4 @@ The application chooses the tools that the script can call and which [runtime](r
 
 The script boundary can restrict which tools it can reach. Each [tool](tool.md) handler must still check whether the requested action is allowed. An issue lookup should check the project even if the script has no direct network access. See the [architecture survey](../agent-sandbox-architectures.md#code-mode-isolating-tool-scripts-instead-of-shells) for other implementations.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

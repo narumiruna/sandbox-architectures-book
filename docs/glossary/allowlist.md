@@ -12,4 +12,4 @@ The scope depends on what the component doing the checks can see. A connection r
 
 Allowing a connection to a service does not limit what the workload can send to it or what actions the service will accept. For [least privilege](least-privilege.md), match the action as well as the destination when the workload needs only one operation. Make sure the restricted access goes through the component that enforces the rule; a check on one path does not cover other paths.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

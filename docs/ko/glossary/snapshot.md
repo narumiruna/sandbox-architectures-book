@@ -14,4 +14,4 @@ Snapshot에 실제로 어떤 파일과 외부 리소스가 보존되는지 확�
 
 Snapshot은 저장된 artifact이며, 미리 준비된 sandbox의 [warm pool](warm-pool.md)이 아니다. 서비스는 snapshot으로 pool을 채우거나 [cold start](cold-start.md)가 필요할 때 snapshot을 복원할 수 있다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

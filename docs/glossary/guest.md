@@ -12,4 +12,4 @@ Guest programs make [system calls](system-call.md) to the guest kernel. The gues
 
 An administrator inside the guest does not automatically have administrator rights on the host. Still, any host file, network service, or other resource deliberately exposed to the guest must have its own access controls. Workloads in the same VM share the guest kernel; check the [isolation unit](isolation-unit.md) if those workloads must be separate.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

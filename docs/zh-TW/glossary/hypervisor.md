@@ -12,4 +12,4 @@ Hypervisor 是一種軟體，控制 [virtual machines](virtual-machine.md) 如�
 
 是否讓 sandbox 看見專案目錄或連線到外部服務，並非由 hypervisor 決定。這取決於周邊系統開放哪些資源，以及它如何強制執行 [policy](policy.md)。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

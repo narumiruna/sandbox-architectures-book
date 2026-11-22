@@ -10,4 +10,4 @@ An app loads data from a virtual address. The guest's page tables map it to a gu
 
 On a Linux host using [KVM](kernel-based-virtual-machine.md), KVM sets up the second mapping. The CPU enforces its access permissions while the guest runs. See the [KVM memory documentation](https://docs.kernel.org/virt/kvm/x86/mmu.html#translation) for the address translations KVM supports.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

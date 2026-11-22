@@ -31,4 +31,4 @@ flowchart TB
 
 [virtual machine](virtual-machine.md) も [restricted interpreter](restricted-interpreter.md) も sandbox として使えますが、実行できるコードの種類は異なります。同じ境界を持つ sandbox でも、許可するアクセスは異なる場合があります。比較するときは、使っている技術だけでなく、境界を越えて何を出し入れできるかを列挙してください。「[Sandbox isolation boundaries](../sandbox-isolation-boundaries.md)」を参照してください。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

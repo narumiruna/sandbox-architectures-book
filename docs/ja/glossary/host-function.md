@@ -12,4 +12,4 @@ Host function は、言語 Sandbox の外に実装され、その中のコード
 
 [tool](tool.md) は Agent やスクリプトに提供する操作です。Host function は、その操作を言語 Sandbox から呼び出せるようにする手段の一つです。時計などの基本サービスを提供する Host function もあります。どちらの場合も、ハンドラーは入力、操作の影響、返すデータに対して、該当する [policy](policy.md) を適用する必要があります。スクリプト自体の制限は、その代わりにはなりません。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

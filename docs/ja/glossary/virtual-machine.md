@@ -12,4 +12,4 @@ VM 内のプログラムは、ファイルを開くなどの機能を guest kern
 
 VM は一つの workload を実行することも、複数の [containers](container.md) を収容することもできます。各 container は別々のファイルシステムを持ちながら guest kernel を共有できます。何に専用の VM が割り当てられ、外側の sandbox がどのディスク、mount、ネットワーク接続を公開するかを確認してください。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

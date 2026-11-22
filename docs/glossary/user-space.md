@@ -10,4 +10,4 @@ An editor and a test runner can both run in user space on the same Linux machine
 
 When a program needs to open a file or perform another kernel operation, it makes a [system call](system-call.md), often through a library. The [Linux system call introduction](https://man7.org/linux/man-pages/man2/intro.2.html) describes how the kernel handles the request and returns a result. A [user-space kernel](user-space-kernel.md) implements that interface as software outside the host kernel.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

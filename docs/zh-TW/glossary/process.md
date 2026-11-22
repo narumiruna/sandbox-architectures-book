@@ -12,4 +12,4 @@ Agent 啟動 Lamp 的測試執行器時，作業系統會啟動一個可要求�
 
 請參閱 [Sandbox isolation boundaries](../sandbox-isolation-boundaries.md#follow-a-request-to-open-a-file)，瞭解開啟檔案的請求會經過哪些環節。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

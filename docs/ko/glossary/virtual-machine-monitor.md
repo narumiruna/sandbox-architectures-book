@@ -12,4 +12,4 @@ Virtual machine monitor (VMM)는 [virtual machine](virtual-machine.md)을 생성
 
 Sandbox의 [control plane](control-plane.md)은 VMM을 사용해 VM을 시작하고 중지할 수 있지만, 작업을 어디에서 실행할지 결정하는 일과 누구에게 workspace나 네트워크 접근 권한을 줄지 결정하는 일은 별도의 책임이다. Sandbox가 무엇을 노출하는지 알려면 VMM뿐 아니라 sandbox 전체를 확인해야 한다.
 
-[Glossary로 돌아가기](../glossary.md)
+[Glossary로 돌아가기](index.md)

@@ -12,4 +12,4 @@ The [Microsoft Hypervisor specification](https://learn.microsoft.com/en-us/virtu
 
 Do not confuse this Linux backend with [Windows Hypervisor Platform (WHP)](windows-hypervisor-platform.md), the host API that a VMM can use on Windows, or with [KVM](kernel-based-virtual-machine.md), a different Linux host interface.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

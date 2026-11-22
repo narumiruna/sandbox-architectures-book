@@ -12,4 +12,4 @@ Host 端負責建立邊界，並提供跨越邊界的方式。VM 可以取得虛
 
 Host 不一定是 [control plane](control-plane.md)。Control plane 可以決定 sandbox 放在哪裡，再由另一部機器執行它。設計中提到「host」時，請辨識所指的邊界，以及實際提供資源的元件。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

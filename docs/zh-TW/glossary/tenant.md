@@ -12,4 +12,4 @@ Tenant 可以是使用者、團隊或組織；服務會將其工作或資料與�
 
 Tenant 不一定是 [isolation unit](isolation-unit.md)。服務可以為同一個 tenant 的每項工作提供獨立的 VM，也必須將已儲存的輸出、快取和還原的 [snapshots](snapshot.md) 維持在預定的 tenant 範圍內。如果共用服務會傳回其他 tenant 的資料，使用獨立 VM 也無法解決這個問題。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

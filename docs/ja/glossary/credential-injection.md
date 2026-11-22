@@ -45,4 +45,4 @@ sequenceDiagram
 
 プロキシは承認済みの要求でのみ、意図したサービスだけに Credential を送信し、Workload が読めるログに残さないようにする必要があります。宛先サービスが応答に Credential を含めないと信頼できる必要があります。トークンを隠すだけでは、広い [egress](egress.md) ルールが安全になるわけではありません。Workload は、Policy が許すあらゆる操作をプロキシに要求できます。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

@@ -14,4 +14,4 @@ VM 將 guest 作業系統與 [host](host.md) 隔開。[operating-system process 
 
 為不受信任的程式碼選擇環境時，先確認必須保護哪些資源、哪個元件負責強制執行 policy，以及該元件開放哪些存取路徑。接著確認 [isolation unit](isolation-unit.md)：同一個 VM 中的兩項工作都在其邊界內，所以這道 VM 邊界不會把兩者隔開。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

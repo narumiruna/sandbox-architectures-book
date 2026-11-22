@@ -12,4 +12,4 @@ Linux 針對不同資源提供[不同類型的 namespaces](https://man7.org/linu
 
 Namespaces 決定 processes 能看到什麼。以路徑為依據的存取控制決定 processes 能對檔案做什麼，[seccomp](seccomp.md) 篩選 system calls，而 [control groups](control-group.md) 記錄或限制資源用量。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

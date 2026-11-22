@@ -12,4 +12,4 @@ The [container runtime](container-runtime.md) sets up the environment. In a shar
 
 Check what the runtime shares with the workload. A writable host [mount](mount.md), for example, can let code change host files regardless of how the container was packaged. See [the VM, container, and microVM comparison](../sandbox-isolation-boundaries.md#compare-a-vm-a-container-and-a-microvm).
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

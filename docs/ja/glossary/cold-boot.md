@@ -12,4 +12,4 @@ Cold boot とは、保存した実行状態を再開する代わりに、内部�
 
 起動時間と利用可能になるまでの時間は分けて測定します。Guest の起動が完了しても、Sandbox にプロジェクトの Workspace がまだ接続されていなかったり、最初のコマンドをまだ実行できなかったりすることがあります。[cold start](cold-start.md) には Cold boot が含まれる場合もありますが、[snapshot](snapshot.md) を使って Guest の起動を省略することもできます。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

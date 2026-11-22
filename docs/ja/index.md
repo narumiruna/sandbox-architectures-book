@@ -18,7 +18,7 @@
 ## 参考資料を使う {#use-the-reference}
 
 - [Agent 向け sandbox のアーキテクチャ](agent-sandbox-architectures.md) では、実際の実装を比較します。workload に必要な境界がわかったら、候補を探すために使ってください。
-- [用語集](glossary.md) では、なじみのない用語の定義を調べ、詳しい解説に進めます。
+- [用語集](glossary/index.md) では、なじみのない用語の定義を調べ、詳しい解説に進めます。
 
 ## 本書を通して考える問い {#questions-to-carry-through-the-book}
 

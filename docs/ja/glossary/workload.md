@@ -12,4 +12,4 @@ workload は、あるタスクのために環境が実行するコードと proc
 
 [container image](container-image.md) は起動時のファイルと設定を提供するもので、実行中の workload ではありません。workload の child process が実際にどこで動き、どのリソースにアクセスでき、複数の workload が一つの [isolation unit](isolation-unit.md) を共有するかを確認してください。作業の種類に合った環境については「[Sandbox isolation boundaries](../sandbox-isolation-boundaries.md)」を参照してください。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

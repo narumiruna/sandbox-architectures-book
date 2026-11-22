@@ -10,4 +10,4 @@ System call 또는 syscall은 프로그램이 운영 체제의 [kernel](kernel.m
 
 [Linux system call 소개](https://man7.org/linux/man-pages/man2/intro.2.html)에서 설명하듯이, 프로그램은 흔히 실제 system call을 수행하는 라이브러리 함수를 호출한다. Shared-kernel sandbox에서는 host kernel이 호출을 처리하며 [seccomp](seccomp.md)로 호출을 필터링할 수 있다. [virtual machine](virtual-machine.md)에서는 guest kernel이 그 안의 프로그램에서 들어오는 호출을 처리한다. [user-space kernel](user-space-kernel.md)은 각 요청을 host kernel에 직접 전달하지 않고도 같은 인터페이스를 구현할 수 있다.
 
-[Glossary로 돌아가기](../glossary.md)
+[Glossary로 돌아가기](index.md)

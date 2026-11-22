@@ -12,4 +12,4 @@ The tool interface describes what the caller can request. In a language sandbox,
 
 The sandbox can limit which tools a script can call, but it cannot impose the script's restrictions on a handler that runs outside it. A build tool can start a job in a separate sandbox suited to that [workload](workload.md). The script boundary and the build boundary then protect different parts of the system.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

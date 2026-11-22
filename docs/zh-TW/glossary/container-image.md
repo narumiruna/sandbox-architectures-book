@@ -12,4 +12,4 @@ Container image 是一組封裝好的檔案與設定，供 [container runtime](c
 
 Image 不會像記憶體 [snapshot](snapshot.md) 那樣保留執行中的 process，也不決定 workload 如何隔離。同一個相容的 image 可以在不同 runtime 下執行。請檢查 runtime 及其 policy，才能知道程式碼能存取哪些資源。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

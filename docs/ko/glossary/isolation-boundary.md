@@ -14,4 +14,4 @@ VM은 guest 운영체제를 [host](host.md)와 분리한다. [Operating-system p
 
 신뢰할 수 없는 코드를 실행할 환경을 고를 때는 보호해야 할 리소스, policy를 집행하는 구성 요소, 그 구성 요소가 제공하는 접근 경로를 확인한다. 그런 다음 [isolation unit](isolation-unit.md)을 확인한다. 같은 VM에서 실행되는 두 작업은 모두 그 VM 경계 안에 있으므로, 그 경계는 두 작업을 서로 분리하지 않는다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

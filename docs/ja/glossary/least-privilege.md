@@ -12,4 +12,4 @@ Least privilege とは、コードにその作業に必要な権限だけを与�
 
 許可した経路を一つずつ確認します。読み取り専用の [mount](mount.md) はその mount 経由の書き込みを防ぎますが、別の tool が同じファイルに書き込むことまでは防げません。Tool の handler は独自に制限を適用する必要があります。Least privilege は workload が影響を与えられる範囲を狭めますが、許可済みの操作による被害までは防げません。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

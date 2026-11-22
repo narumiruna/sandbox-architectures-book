@@ -10,4 +10,4 @@ gVisor를 사용하는 빌드 sandbox에서 테스트 프로그램이 자신의 
 
 Sentry는 host에 대한 호출을 단순히 허용하거나 거부하는 대신 Linux [system calls](system-call.md)를 구현한다. Sentry는 host kernel에 더 제한된 범위의 요청을 직접 보낼 수 있으며, 이러한 요청이 workload의 호출과 일대일로 대응할 필요는 없다. 이는 프로세스에 허용된 호출을 host kernel이 구현하는 shared-kernel [process sandbox](operating-system-process-sandbox.md)와 다르다. Workload가 Linux에서 직접 실행될 때와 똑같이 동작한다고 가정하지 말고, 필요한 인터페이스와 성능을 테스트해야 한다.
 
-[Glossary로 돌아가기](../glossary.md)
+[Glossary로 돌아가기](index.md)

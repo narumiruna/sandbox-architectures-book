@@ -12,4 +12,4 @@ Ingress 是跨越 sandbox 邊界、進入其中的網路流量。Ingress [policy
 
 確認路徑會開放哪些服務，以及何時關閉。預覽路徑不必開放 sandbox 中的其他服務，並應在工作階段結束時關閉。即使連線由外部用戶端發起，預覽伺服器送出 sandbox 的回覆仍屬於 [egress](egress.md) 流量。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

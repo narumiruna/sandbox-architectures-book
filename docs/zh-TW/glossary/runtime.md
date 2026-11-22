@@ -14,4 +14,4 @@ Agent 服務在可存取測試結果的 sandbox 中，執行已編譯成 [WebAss
 
 [control plane](control-plane.md) 可以決定何時及在哪裡啟動 sandbox，runtime 則負責執行程式碼或準備環境。同一個產品可以同時負責兩者。要辨識 [isolation boundary](isolation-boundary.md)，請確認哪個元件強制執行隔離，以及 workload 可以使用哪些 host 資源。例如，container runtime 可以啟動共用 host kernel 的 process，也可以將它們放在有獨立 kernel 的 VM 內。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

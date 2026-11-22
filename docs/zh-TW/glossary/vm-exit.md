@@ -10,4 +10,4 @@ Guest 的驅動程式存取虛擬裝置。如果該存取操作設定為觸發 V
 
 [system call](system-call.md) 通常會將 [privilege level](cpu-privilege-level.md) 從 guest 應用程式切換到 guest kernel，而不離開 guest。VM exit 則會跨越 guest 的邊界。在 KVM 上，這也不同於 host 的 [`KVM_RUN`](https://docs.kernel.org/virt/kvm/api.html#kvm-run) 呼叫返回 VMM：有些 exit 處理完成後，不須等該呼叫返回，就能繼續執行 guest。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

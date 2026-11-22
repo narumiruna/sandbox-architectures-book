@@ -12,4 +12,4 @@ Control group（cgroup）は、Linux の Process をまとめ、CPU 時間やメ
 
 リソースの見え方を分けるには [namespace](namespace.md) を、ファイルやネットワークへのアクセスを制御するには別の [policy](policy.md) を使います。これらの制御は、リソース使用量の集計や制限とは役割が異なります。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

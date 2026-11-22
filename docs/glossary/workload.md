@@ -12,4 +12,4 @@ Different workloads need different execution environments. A script that combine
 
 A [container image](container-image.md) supplies starting files and settings; it is not the running workload. Check where the workload's child processes actually run, which resources they can reach, and whether several workloads share one [isolation unit](isolation-unit.md). See [Sandbox isolation boundaries](../sandbox-isolation-boundaries.md) for environments that fit different kinds of work.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

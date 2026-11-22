@@ -10,4 +10,4 @@ A compiler in a build sandbox asks to open `/workspace/main.c`. In a shared-kern
 
 Programs often call a library function that makes the actual system call, as the [Linux system call introduction](https://man7.org/linux/man-pages/man2/intro.2.html) explains. In a shared-kernel sandbox, the host kernel handles the call and can filter it with [seccomp](seccomp.md). In a [virtual machine](virtual-machine.md), the guest kernel handles its programs' calls. A [user-space kernel](user-space-kernel.md) can implement the same interface without forwarding each request directly to the host kernel.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

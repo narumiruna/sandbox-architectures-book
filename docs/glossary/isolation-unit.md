@@ -12,4 +12,4 @@ The [isolation boundary](isolation-boundary.md) tells you *how* work is separate
 
 The same system can have smaller units at another layer. Processes in one VM can have separate filesystem views, but that does not give each process a separate guest kernel. If two [tenants](tenant.md) must not share a guest kernel, check how the [control plane](control-plane.md) places their workloads, not just whether the service uses VMs.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

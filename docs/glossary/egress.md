@@ -16,4 +16,4 @@ Check network access separately from the operations exposed through a [tool](too
 
 Replies to an outbound request are [ingress](ingress.md) traffic because they enter the sandbox. A network control can allow replies on connections the sandbox started without letting outside clients start new connections. [Kubernetes 1.35 network policies](https://github.com/kubernetes/website/blob/03c191bcc446f9c15a9e68d6cd1154b53bde4291/content/en/docs/concepts/services-networking/network-policies.md#the-two-sorts-of-pod-isolation) work this way when the cluster's networking software enforces them.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

@@ -10,4 +10,4 @@ Two test sandboxes on the same Linux machine can see different project directori
 
 A regular [operating-system process sandbox](operating-system-process-sandbox.md) uses the *host kernel*: the kernel of the underlying operating system. The kernel applies controls such as [namespaces](namespace.md) and [seccomp](seccomp.md) to those processes. A VM runs a *guest kernel* that manages the resources presented to the VM. A [user-space kernel](user-space-kernel.md) takes a third approach: it implements the workload's kernel interface as software outside the host kernel. See [Sandbox isolation boundaries](../sandbox-isolation-boundaries.md) for the differences.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

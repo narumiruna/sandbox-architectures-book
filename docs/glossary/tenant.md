@@ -12,4 +12,4 @@ The [control plane](control-plane.md) checks which tenant can start or claim a s
 
 A tenant is not necessarily an [isolation unit](isolation-unit.md). The service may give one tenant a separate VM for each job. It must also keep stored output, caches, and restored [snapshots](snapshot.md) within the intended tenant scope. Separate VMs do not fix a shared service that returns another tenant's data.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

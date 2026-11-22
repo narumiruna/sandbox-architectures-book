@@ -12,4 +12,4 @@ Host function 是在語言 sandbox 外實作、可由其中的程式碼呼叫的
 
 [Tool](tool.md) 是提供給 agent 或指令碼的操作；host function 是讓語言 sandbox 能呼叫該操作的一種方式。其他 host functions 則提供時鐘之類的基本服務。無論是哪一種，處理程式都必須對輸入、操作產生的影響及傳回的資料強制執行相關 [policy](policy.md)。指令碼本身的限制無法代替這些檢查。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

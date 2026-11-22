@@ -10,4 +10,4 @@ Extended Page Tables (EPT)를 사용하면 [Intel 프로세서](https://www.inte
 
 [KVM](kernel-based-virtual-machine.md)을 사용하는 Linux host에서는 KVM이 두 번째 매핑을 설정한다. guest가 실행되는 동안 CPU는 이 매핑의 접근 권한을 적용한다. KVM이 지원하는 주소 변환은 [KVM 메모리 문서](https://docs.kernel.org/virt/kvm/x86/mmu.html#translation)를 참조한다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

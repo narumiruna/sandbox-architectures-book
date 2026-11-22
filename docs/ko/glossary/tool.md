@@ -12,4 +12,4 @@ Tool 인터페이스는 호출자가 무엇을 요청할 수 있는지 명시한
 
 Sandbox는 스크립트가 호출할 수 있는 tool을 제한할 수 있지만, sandbox 밖에서 실행되는 handler에 스크립트와 같은 제약을 적용할 수는 없다. 빌드 tool은 해당 [workload](workload.md)에 적합한 별도의 sandbox에서 작업을 시작할 수 있다. 그러면 스크립트의 경계와 빌드의 경계가 시스템의 서로 다른 부분을 보호한다.
 
-[Glossary로 돌아가기](../glossary.md)
+[Glossary로 돌아가기](index.md)

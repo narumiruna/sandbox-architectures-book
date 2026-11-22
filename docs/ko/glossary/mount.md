@@ -10,4 +10,4 @@ filesystem이나 디렉터리를 mount한다는 것은 그 안의 파일을 특�
 
 [mount namespace](namespace.md)를 사용하면 프로세스 그룹마다 무엇이 mount되어 있는지 다르게 보이도록 할 수 있다. Linux [`mount(2)` 문서](https://man7.org/linux/man-pages/man2/mount.2.html)는 mount의 설정과 그 아래의 filesystem을 구분한다. 읽기 전용 bind mount는 해당 mount를 통한 쓰기를 막지만, 다른 mount를 통해 접근할 때도 원본 파일이 읽기 전용이 되는 것은 아니다. 파일의 내용을 숨기지도 않는다. [workload](workload.md)가 볼 필요가 있는 파일만 mount한다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

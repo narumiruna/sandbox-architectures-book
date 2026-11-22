@@ -12,4 +12,4 @@ Guest 上のプログラムは [system call](system-call.md) で Guest kernel �
 
 Guest 内の管理者が、自動的に Host の管理者権限を持つわけではありません。それでも、Guest に意図的に公開する Host 側のファイル、ネットワークサービス、その他のリソースには、それぞれアクセス制御が必要です。同じ VM にある Workload は Guest kernel を共有します。それらの Workload を分ける必要があるなら、[isolation unit](isolation-unit.md) を確認してください。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

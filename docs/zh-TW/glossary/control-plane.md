@@ -14,4 +14,4 @@ Control plane 可以選擇執行用的 [runtime](runtime.md)、要求特定的 w
 
 當許多工作都需要 sandbox 時，使用 control plane 分配環境，並在工作完成後清理。服務必須以 [authorization](authorization.md) 決定誰可以建立或申領環境，以及可以掛接誰的檔案。如果 control plane 把錯誤的 [tenant](tenant.md) 的 workspace 分配給 sandbox，execution boundary 無法補救。請參閱[分開處理封裝、管理與隔離](../sandbox-isolation-boundaries.md#keep-packaging-management-and-isolation-separate)。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

@@ -16,4 +16,4 @@ Firewall은 네트워크 주소와 포트의 [allowlist](allowlist.md)를 적용
 
 외부로 나간 요청에 대한 응답은 sandbox 안으로 들어오므로 [ingress](ingress.md) 트래픽이다. 네트워크 제어는 외부 클라이언트가 새 연결을 시작하지 못하게 하면서도 sandbox가 시작한 연결의 응답은 허용할 수 있다. 클러스터의 네트워크 소프트웨어가 [Kubernetes 1.35 network policies](https://github.com/kubernetes/website/blob/03c191bcc446f9c15a9e68d6cd1154b53bde4291/content/en/docs/concepts/services-networking/network-policies.md#the-two-sorts-of-pod-isolation)를 적용하면 이와 같이 동작한다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

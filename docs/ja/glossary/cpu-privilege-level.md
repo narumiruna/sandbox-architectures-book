@@ -10,4 +10,4 @@ Linux アプリケーションがファイルを開くとき、プロセッサ�
 
 [Intel VT-x](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html) は、[guest](guest.md) の実行（VMX non-root operation）と [host](host.md) の実行（VMX root operation）を分けます。どちらでも ring 0 と ring 3 を使えます。ring 0 の Guest kernel は自身のアプリケーションより高い特権を持ちますが、実行は Guest 側のままです。Guest の ring 3 から同じ Guest の ring 0 に移っても、[VM exit](vm-exit.md) にはなりません。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

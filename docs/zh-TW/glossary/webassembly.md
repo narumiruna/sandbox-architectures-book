@@ -20,4 +20,4 @@ Workload 可以是 Wasm 模組，也可以由作為 Wasm 模組的語言引擎�
 
 如果程式碼只需要選定的 host 操作，不需要完整的作業系統，可以考慮使用 Wasm。一般 Linux [native binary](native-binary.md) 無法直接當成 Wasm 模組執行。請參閱[基礎篇的 WebAssembly](../isolation/generated-scripts/webassembly.md)，其中有查詢 tool 的範例。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

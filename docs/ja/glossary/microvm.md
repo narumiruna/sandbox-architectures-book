@@ -12,4 +12,4 @@ MicroVM 用の [virtual machine monitor](virtual-machine-monitor.md) は、対�
 
 [Isolation unit](isolation-unit.md) はサービスによって異なります。MicroVM には 1 つのジョブだけを入れることも、複数の workload を入れることもできます。同じ microVM 内の workload は guest kernel を共有します。また、sandbox がどの host ファイルとネットワークサービスを公開するかも確認してください。VM の規模が小さいからといって、許可されるアクセスが決まるわけではありません。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

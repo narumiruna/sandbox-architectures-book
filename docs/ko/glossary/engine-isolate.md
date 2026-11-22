@@ -12,4 +12,4 @@ Engine isolate는 JavaScript 같은 언어의 코드를 실행하는 소프트�
 
 Isolate는 host function이 스크립트를 대신해 수행하는 작업을 제한하지 않는다. 스크립트가 접근할 수 있는 각 작업이 그 스크립트의 권한에 맞는지 확인하고, 플랫폼이 CPU와 메모리 사용량을 어떻게 제한하는지도 확인한다. 작업에 네이티브 프로그램 실행이 필요하면 [operating-system process sandbox](operating-system-process-sandbox.md)처럼 이를 지원하는 별도의 환경을 사용한다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

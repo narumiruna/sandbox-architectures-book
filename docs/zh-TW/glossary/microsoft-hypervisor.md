@@ -12,4 +12,4 @@ Microsoft Hypervisor 是控制 guest 作業系統如何使用實體電腦的軟�
 
 不要將這個 Linux 後端與 [Windows Hypervisor Platform (WHP)](windows-hypervisor-platform.md) 或 [KVM](kernel-based-virtual-machine.md) 混淆。WHP 是 VMM 可在 Windows 上使用的 host API，而 KVM 是另一種 Linux host 介面。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

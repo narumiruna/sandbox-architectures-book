@@ -10,4 +10,4 @@ User-space kernel 是在 [host kernel](kernel.md) 之外處理 workload 的作�
 
 Sentry 會實作 Linux [system calls](system-call.md)，而不是單純允許或拒絕送往 host 的呼叫。它可以自行向 host kernel 發出範圍更有限的請求；這些請求不必與 workload 的呼叫一一對應。這與共用 kernel 的 [process sandbox](operating-system-process-sandbox.md) 不同，後者由 host kernel 實作 process 獲准發出的呼叫。請測試 workload 所需的介面和效能，不要假設其行為與直接在 Linux 上執行完全相同。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

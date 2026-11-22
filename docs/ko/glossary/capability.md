@@ -12,4 +12,4 @@
 
 capability는 이름이 아니라 실제 효과를 기준으로 판단한다. 이름이 “read issue”인 tool도 handler가 요청 대상 프로젝트를 확인할 때만 접근 범위가 해당 프로젝트로 제한된다. 일반적인 네트워크 접근 권한과 API token이 있는 script는 그 tool 없이도 작업을 수행할 수 있으므로, [least privilege](least-privilege.md)를 적용할 때는 직접 접근과 tool을 통한 접근을 모두 평가한다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

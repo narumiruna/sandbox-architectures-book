@@ -12,4 +12,4 @@ Container は、一つ以上のプログラムを実行するために用意し�
 
 Runtime が Workload と何を共有するかを確認してください。たとえば、書き込み可能な Host の [mount](mount.md) があると、Container のパッケージ化の方法にかかわらず、コードが Host 上のファイルを変更できることがあります。[VM、Container、MicroVM の比較](../sandbox-isolation-boundaries.md#compare-a-vm-a-container-and-a-microvm)を参照してください。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

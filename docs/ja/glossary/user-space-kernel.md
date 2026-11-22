@@ -10,4 +10,4 @@ gVisor を使うビルド用 sandbox で、テストプログラムが自分の 
 
 Sentry は host への呼び出しを単に許可または拒否するのではなく、Linux の [system calls](system-call.md) を実装します。Sentry 自身がより限定された要求を host kernel に送ることもできます。それらは workload の呼び出しと一対一に対応する必要はありません。これは、process に許された呼び出しを host kernel が実装する、kernel 共有型の [process sandbox](operating-system-process-sandbox.md) とは異なります。Linux 上で直接動く場合と同じ挙動を想定せず、workload に必要なインターフェースと性能をテストしてください。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

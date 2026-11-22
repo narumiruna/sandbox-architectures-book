@@ -14,4 +14,4 @@ A VM separates a guest operating system from the [host](host.md). An [operating-
 
 When choosing an environment for code you do not trust, identify the resources it must protect, the component enforcing policy, and the paths it exposes. Then identify the [isolation unit](isolation-unit.md): two jobs in the same VM are both inside its boundary, so that VM boundary does not separate them from each other.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

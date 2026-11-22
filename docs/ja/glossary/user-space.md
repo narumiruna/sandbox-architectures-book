@@ -10,4 +10,4 @@ user space は、アプリケーションや大半のサービスが動く、OS 
 
 ファイルを開くなど kernel の操作が必要なとき、プログラムは多くの場合ライブラリを介して [system call](system-call.md) を行います。「[Linux の system call 入門](https://man7.org/linux/man-pages/man2/intro.2.html)」は、kernel が要求を処理して結果を返す仕組みを説明しています。[user-space kernel](user-space-kernel.md) はそのインターフェースを host kernel の外にあるソフトウェアとして実装します。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

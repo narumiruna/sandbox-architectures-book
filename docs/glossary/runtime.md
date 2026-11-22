@@ -14,4 +14,4 @@ A language runtime can run scripts with a language engine or a [restricted inter
 
 A [control plane](control-plane.md) can decide where and when to start a sandbox, while the runtime runs the code or prepares its environment. One product can do both. To identify the [isolation boundary](isolation-boundary.md), ask what enforces separation and what host resources the workload can use. For example, a container runtime can start processes that share the host kernel or place them inside a VM with a separate kernel.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

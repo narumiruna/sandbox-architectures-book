@@ -16,4 +16,4 @@ Sandbox がテストサーバー上のサンプルレコードを読み取るテ
 
 外向きの要求への応答は、Sandbox 内に入るため [ingress](ingress.md) の通信です。ネットワーク制御では、Sandbox が開始した接続への応答を許可しつつ、外部クライアントからの新規接続は許可しないようにできます。[Kubernetes 1.35 のネットワークポリシー](https://github.com/kubernetes/website/blob/03c191bcc446f9c15a9e68d6cd1154b53bde4291/content/en/docs/concepts/services-networking/network-policies.md#the-two-sorts-of-pod-isolation)は、クラスターのネットワークソフトウェアが適用すると、このように動作します。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

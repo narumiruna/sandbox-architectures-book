@@ -12,4 +12,4 @@ Seccomp는 프로그램이 kernel에 보내는 요청인 [system calls](system-c
 
 어떤 파일이 보이는지는 [mounts](mount.md)로 제어하고, 그 파일에 할 수 있는 작업은 파일 접근 규칙으로 제어한다. [control group](control-group.md)은 리소스 사용량을 측정하거나 제한하는 별개의 역할을 한다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

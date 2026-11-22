@@ -12,4 +12,4 @@ Linux には、リソースに応じて [異なる種類の namespace](https://m
 
 Namespace は process に何が見えるかを決めます。ファイルに何ができるかはパスベースのアクセス制御が決め、[seccomp](seccomp.md) は system call をフィルタリングし、[control group](control-group.md) はリソース使用量を計測または制限します。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

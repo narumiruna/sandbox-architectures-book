@@ -1,0 +1,66 @@
+# 用語集
+
+この用語集は、[Sandbox の隔離境界](../sandbox-isolation-boundaries.md) や [Agent 向け sandbox のアーキテクチャ](../agent-sandbox-architectures.md) と併せて利用してください。用語は正式名称のアルファベット順です。用語を探すときは、正式名称または略称でこのページを検索してください。たとえば、`WebAssembly` と `Wasm` は同じ項目にあり、同じページにリンクしています。各項目では、用語を例とともに説明します。
+
+- **[Agent](agent.md)** — モデルを使って次に何をするかを判断し、tool を呼び出して実行できるシステム。sandbox に入れるのは、agent 全体の場合も、agent が生成したコードだけの場合もある。
+- **[Allowlist](allowlist.md)** — policy が許可するリソースや操作の一覧。たとえば、egress の allowlist で、外部への接続を指定したサービスに限定できる。
+- **[Artifact](artifact.md)** — パッチやテストレポートなど、ジョブの終了後に残すことを選んだ出力。
+- **[Authorization](authorization.md)** — 識別済みの呼び出し元に対し、特定のリソースへの操作を許可するかどうかの判断。
+- **[Capability](capability.md)** — 本書では、host から許可を受けたコードが使えるリソースや操作を指す。たとえば、課題を読み取る tool は、ネットワーク全般への接続を許可せずに、その操作だけを許可できる。
+- **[Code Mode](code-mode.md)** — モデルが tool を呼び出し、その結果を組み合わせるプログラムを書く方式。プログラムの隔離方法ではなく、モデルが tool を使う方法を指す。
+- **[Cold boot](cold-boot.md)** — 稼働中だった VM の保存状態を復元するのではなく、guest OS を起動して新しい VM を立ち上げること。
+- **[Cold start](cold-start.md)** — 再利用できる実行環境がないときに、新たに環境を使えるようにすること。OS の起動、snapshot の復元、言語 runtime の起動などを伴う場合がある。cold-start latency は、環境が作業を始められるまでの待ち時間を指す。
+- **[Container](container.md)** — 1 つ以上の process の実行環境。通常は container image から作成する。process が host kernel を共有するか、user-space kernel を使うか、VM 内で動作するかは runtime が決める。
+- **[Container image](container-image.md)** — container の作成に使うファイルシステムと設定をまとめたもの。image 自体に、その process の実行中の状態は含まれない。
+- **[Container runtime](container-runtime.md)** — image や準備済みのバンドルから container を作成して実行するソフトウェア。設定された隔離を適用し、workload の process を起動する。
+- **[Control group (cgroup)](control-group.md)** — process をまとめ、CPU やメモリなどのリソース使用量を計測または制限する Linux の仕組み。cgroup はファイルシステムやネットワークの境界ではない。
+- **[Control plane](control-plane.md)** — sandbox をどこに配置し、いつ起動・停止するかなど、管理上の判断を行うシステムの一部。実行の境界ではない。
+- **[CPU privilege level](cpu-privilege-level.md)** — プロセッサでどこまでアクセスできるかを定めるレベル。x86-64 では、host 側でも guest 側でも、通常は kernel が ring 0、アプリケーションが ring 3 で動作する。
+- **[Credential](credential.md)** — API トークンや秘密鍵など、身元を証明したりアクセス権を与えたりする値。credential を受け取ったコードは、想定された tool の呼び出し以外にもそれを使える場合がある。
+- **[Credential injection](credential-injection.md)** — workload に代わって要求に credential を付加すること。プロキシは承認済みの要求だけに付加できるため、workload のコードに credential 自体を渡さずに済む。
+- **[Egress](egress.md)** — 環境の外に出るネットワークトラフィック。egress の policy は、workload がアクセスできる接続先やサービスを制御する。
+- **[Engine isolate](engine-isolate.md)** — V8 などの言語エンジン内にあり、独自の管理対象状態を持つ、独立した実行環境。OS の process や guest VM とは異なる。
+- **[Extended Page Tables (EPT)](extended-page-tables.md)** — guest の物理アドレスを host の物理アドレスに対応付ける Intel プロセッサの仕組み。
+- **[Guest](guest.md)** — VM 内で動作する OS とプログラム。**guest kernel** は、VM がそれらのプログラムに公開するリソースを管理する。
+- **[Host](host.md)** — sandbox の外でリソースを提供するシステム。VM では通常、それを実行するマシンや OS を指す。スクリプト用の sandbox では、runtime を組み込んだアプリケーションを指すこともある。
+- **[Host function](host-function.md)** — 言語 sandbox の外で実装され、内部で動作するコードに公開される関数。たとえば host は、プロジェクトのファイルを 1 つ読み取る関数や、サービスに問い合わせる関数を提供できる。
+- **[Hypervisor](hypervisor.md)** — guest がマシンの CPU とメモリをどう使うかを制御するソフトウェア。プロジェクトの文書では *hypervisor* と *virtual machine monitor* を同じ意味で使うこともある。本書では、VM とその仮想デバイスを管理するコンポーネントを VMM と呼ぶ。
+- **[Ingress](ingress.md)** — 環境に入ってくるネットワークトラフィック。sandbox 内の Web サーバーにプレビュー URL を用意するのは、ingress を許可する方法の一つ。
+- **[Isolation boundary](isolation-boundary.md)** — workload をリソースや他の workload から分ける技術的な仕組み。たとえば VM の境界や言語 runtime がある。何が境界を越えられるかは policy が定める。
+- **[Isolation unit](isolation-unit.md)** — 境界の同じインスタンスを共有する workload の集まり。たとえば pod ごとに VM を割り当てると pod 同士は隔離されるが、pod 内の各 container に独自の guest kernel が割り当てられるわけではない。
+- **[Kernel](kernel.md)** — OS の中核。process、メモリ、ファイル、デバイスを管理し、プログラムからの要求を処理する。
+- **[Kernel-based Virtual Machine (KVM)](kernel-based-virtual-machine.md)** — VMM がハードウェア支援を用いて guest を実行するために使える、Linux kernel の仮想化インターフェース。
+- **[Least privilege](least-privilege.md)** — 作業に必要な権限だけを workload に与えること。たとえばファイルの確認だけが必要なら、読み取り専用の workspace を使う。
+- **[Microsoft Hypervisor (MSHV)](microsoft-hypervisor.md)** — 対応する Linux host で、`/dev/mshv` を通じてソフトウェアに公開される仮想化バックエンド。
+- **[MicroVM](microvm.md)** — オーバーヘッドを抑えるよう設計された VM。一般に汎用 VM より仮想デバイスが少ないが、guest kernel は引き続き動作する。
+- **[Mount](mount.md)** — ファイルシステムやディレクトリを、あるパスでアクセスできるようにすること。bind mount は既存の host ディレクトリをコピーせずに公開する。書き込み可能な mount では、変更が host のファイルに即座に反映される場合がある。
+- **[Namespace](namespace.md)** — process ID、ファイルシステムの mount、ネットワークインターフェースなどのリソースについて、process ごとに見える範囲を分ける Linux の仕組み。process は引き続き kernel を共有する。
+- **[Native binary](native-binary.md)** — 特定の CPU と OS のインターフェース向けに機械語へコンパイルされたプログラム。Linux 向けの native binary は互換性のある Linux 環境で動作するが、Wasm モジュールとして直接実行することはできない。
+- **[Observability](observability.md)** — 状態、タイムスタンプ、ログなどの記録から、システムが何をしたかを把握できること。
+- **[Open Container Initiative (OCI)](open-container-initiative.md)** — container image、配布、runtime の公開仕様を管理する団体。OCI 互換であることから、runtime が使う isolation boundary は判断できない。
+- **[Operating-system process sandbox](operating-system-process-sandbox.md)** — host kernel 上でネイティブの process を実行し、OS の機能でアクセスを制限する sandbox。別の guest kernel は起動しない。
+- **[Pod](pod.md)** — 1 つ以上の container をまとめる Kubernetes のデプロイ単位。同じ pod に属する container はネットワーク環境を共有し、ストレージも共有できる。pod ごとに独自の VM を割り当てる runtime もある。
+- **[Policy](policy.md)** — workload に許可する操作やリソースを定めるルール。信頼できるコンポーネントが強制して初めて効力を持つ。
+- **[Process](process.md)** — 実行中のプログラムのインスタンス。独自の状態を持ち、リソースにアクセスできる。
+- **[Resident set size (RSS)](resident-set-size.md)** — ある process のメモリのうち、現在、物理メモリ上にある量。
+- **[Resource limit](resource-limit.md)** — メモリ、CPU 時間、ディスク容量など、ジョブが使用できるリソース量の上限。
+- **[Restricted interpreter](restricted-interpreter.md)** — 対応する言語機能と組み込み機能だけを実行するプログラム。コードは tool の呼び出しなど、host が提供する操作を通じて interpreter の外部にアクセスする。
+- **[Runtime](runtime.md)** — workload を実行するか、その実行環境を設定するソフトウェア。container runtime と Wasm runtime は異なる層で動作するため、runtime という言葉だけでは境界を特定できない。
+- **[Sandbox](sandbox.md)** — コードがアクセスできる範囲や影響を及ぼせる範囲を制限する実行環境。何を隔離するかは、境界、policy、公開するリソースによって決まる。
+- **[Sandbox session](sandbox-session.md)** — sandbox サービスが 1 単位として追跡する、1 回の実行または利用期間。複数の要求にまたがって workspace や worker の状態を維持できる。
+- **[Seccomp](seccomp.md)** — process が行う system call をフィルタリングできる Linux の機能。これだけではファイルシステム上のパスに関するルールは設定できない。
+- **[Snapshot](snapshot.md)** — 後で復元できるよう保存したシステムの状態。実装によってはディスクの内容、メモリとデバイスの状態、またはその両方を含む。メモリを含む snapshot には credential やその他の秘密情報が入っていることもある。
+- **[System call (syscall)](system-call.md)** — ファイルを開く、process を作成するなど、プログラムが kernel に出す要求。user-space kernel は、呼び出しを一つずつ host kernel に直接転送せずに、このインターフェースを実装できる。
+- **[Tenant](tenant.md)** — サービスが workload やデータを他と分けて扱う対象となるユーザー、チーム、組織。tenant と sandbox session が一対一で対応する必要はない。
+- **[Tool](tool.md)** — agent やスクリプトが呼び出せる操作。たとえば課題の検索やビルドの実行がある。スクリプト用の sandbox は呼び出せる tool を制限するが、各 tool は個々の操作が許可されるかを確認する必要がある。
+- **[User space](user-space.md)** — アプリケーションや大半のサービスが動作する、kernel の外側の領域。アプリケーションは system call を通じて kernel の機能を利用する。
+- **[User-space kernel](user-space-kernel.md)** — host kernel の外で OS のインターフェースを実装するソフトウェア。たとえば gVisor は、独立した Linux guest kernel を起動せず、Sentry コンポーネントで Linux の system call を処理する。
+- **[Virtual machine (VM)](virtual-machine.md)** — 独自の OS kernel を持つ仮想コンピューター。ハードウェア支援型の VM は、CPU の仮想化機能を使って guest の実行を host から分ける。
+- **[Virtual machine monitor (VMM)](virtual-machine-monitor.md)** — 仮想デバイスを含め、VM を作成または管理するコンポーネント。Firecracker は VMM であり、agent 向けの sandbox 全体では、これに workspace、ネットワーク、ライフサイクルの管理を加えられる。
+- **[VM exit](vm-exit.md)** — プロセッサの制御が guest の実行から hypervisor に移ること。hypervisor はイベントを処理し、guest の実行を再開できる。
+- **[Warm pool](warm-pool.md)** — 要求が来たときに、環境を一から準備するのを待たずに割り当てられるよう、事前に用意した sandbox の集まり。どの程度前から用意するかはプラットフォームによって異なる。
+- **[WebAssembly (Wasm)](webassembly.md)** — さまざまな環境で実行できるバイナリ形式。Wasm runtime はメモリアクセスを検査し、明示的なインターフェースを通じて host のサービスを公開する。Wasm のコードは、Wasm runtime で動作するだけでファイルシステムやシェルを使えるようになるわけではない。
+- **[WebAssembly System Interface (WASI)](webassembly-system-interface.md)** — 時刻の取得やファイルへのアクセスなどの操作向けに、Wasm の host が提供できるインターフェースの集まり。WASI があっても、既定ですべての host リソースを使えるわけではない。
+- **[Windows Hypervisor Platform (WHP)](windows-hypervisor-platform.md)** — VMM がハードウェア支援を用いて guest を実行するために使える Windows API。
+- **[Workload](workload.md)** — sandbox で実行されるコードと process。作業によっては、生成されたスクリプト 1 本、ビルド、agent セッション全体などが該当する。
+- **[Workspace](workspace.md)** — ジョブが利用できるファイルの集まり。コピーしたチェックアウトや mount したディレクトリなどが該当する。

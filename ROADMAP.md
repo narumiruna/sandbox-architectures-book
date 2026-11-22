@@ -8,7 +8,7 @@
 
 `[x]` 表示已完成；`[ ]` 表示尚待完成。
 
-- [x] **基礎：** [隔離邊界](docs/sandbox-isolation-boundaries.md)、[術語表](docs/glossary.md)、[clone 後帶讀](README.md#read-a-local-copy-with-a-coding-agent)
+- [x] **基礎：** [隔離邊界](docs/sandbox-isolation-boundaries.md)、[術語表](docs/glossary/index.md)、[clone 後帶讀](README.md#read-a-local-copy-with-a-coding-agent)
 - [x] **選型：** [三種情境的 Lamp 選型紀錄與公開產品案例](docs/practice/design/choosing-a-sandbox.md)
 - [x] **權限與維運：** [權限、資料流與選型紀錄範本](docs/practice/design/from-issue-to-patch.md)
 - [x] **驗證：** [存取測試](docs/practice/verification/verifying-access-rules.md)、[量測](docs/practice/verification/measuring-a-sandbox.md)、[實作評估](docs/agent-sandbox-architectures.md#how-to-evaluate-a-candidate)
@@ -29,7 +29,7 @@
 
 ### 讓術語隨手可查
 
-- [x] **在閱讀當下就找得到。** 各章第一次使用重要術語時，用一句白話定義並直接連到詞條。從[術語表](docs/glossary.md)查找時，也能用英文全名、常見縮寫或簡稱找到同一頁，例如 `WebAssembly` 和 `Wasm`。
+- [x] **在閱讀當下就找得到。** 各章第一次使用重要術語時，用一句白話定義並直接連到詞條。從[術語表](docs/glossary/index.md)查找時，也能用英文全名、常見縮寫或簡稱找到同一頁，例如 `WebAssembly` 和 `Wasm`。
 - [x] **詞條先給答案，再補細節。** 每個詞條以一句定義開頭，再解釋作用或原理、說明使用情境，並給一個具體範例。容易混淆的詞要說明差別，並連回相關章節。例如，`control plane` 可以在建置工作結束後清理沙箱，但不是實際攔下讀檔請求的元件。
 
 - [x] **完成條件：** 從隔離章中 `isolation boundary` 和 `policy` 的首次出現處各點一次，就能到對應詞條；架構調查與實務篇也各驗證一個術語首次出現處的連結。從術語表用 `WebAssembly` 或 `Wasm` 查找，都要找到同一頁。抽查的詞條均須包含定義、解釋、使用情境與範例。不熟虛擬化的讀者能說出範例中由誰處理檔案存取、由誰檢查工具權限，以及為什麼用了虛擬機器仍要檢查主機開放了哪些檔案。

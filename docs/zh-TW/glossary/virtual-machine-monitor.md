@@ -12,4 +12,4 @@ Virtual machine monitor（VMM）是建立或管理 [virtual machine](virtual-mac
 
 Sandbox 的 [control plane](control-plane.md) 可以用 VMM 啟動和停止 VM，但決定工作在哪裡執行，以及誰能存取 workspace 或網路，是不同的職責。要瞭解 sandbox 開放了什麼，請檢查整個 sandbox，而不只是 VMM。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

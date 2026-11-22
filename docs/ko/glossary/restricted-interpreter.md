@@ -16,4 +16,4 @@ Interpreter는 자체 규칙에 따라 스크립트를 평가한다. Restricted 
 
 지원하는 반복문도 너무 오래 실행될 수 있고, 승인된 tool 호출도 예상보다 많은 데이터를 반환할 수 있다. 실행 시간, 메모리, tool 사용을 각각 제한한다. 각 tool에 [least privilege](least-privilege.md)를 적용한다. 예를 들어 테스트 결과를 읽는 tool은 임의의 명령을 실행하는 기능까지 제공해서는 안 된다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

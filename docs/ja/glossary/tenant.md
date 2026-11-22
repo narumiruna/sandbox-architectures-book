@@ -12,4 +12,4 @@ tenant は、サービスが作業やデータを他と分けて扱うユーザ�
 
 tenant は必ずしも [isolation unit](isolation-unit.md) ではありません。サービスは一つの tenant でもジョブごとに別の VM を割り当てることがあります。保存した出力、キャッシュ、復元した [snapshots](snapshot.md) も対象の tenant の範囲内に保つ必要があります。VM を分けても、共有サービスが別の tenant のデータを返す問題は解決しません。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

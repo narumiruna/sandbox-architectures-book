@@ -14,4 +14,4 @@ Code Mode 是一種讓模型編寫程式來呼叫工具並彙整結果的模式�
 
 指令碼的執行界線可以限制它能使用哪些工具。每個 [tool](tool.md) 的處理程式仍須檢查是否允許請求的動作。即使指令碼無法直接存取網路，議題查詢也應檢查專案。其他實作方式請參閱[架構綜覽](../agent-sandbox-architectures.md#code-mode-isolating-tool-scripts-instead-of-shells)。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

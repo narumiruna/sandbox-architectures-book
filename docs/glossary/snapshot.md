@@ -14,4 +14,4 @@ When several VMs resume from one memory snapshot, they can inherit identifiers o
 
 A snapshot is a saved artifact, not a [warm pool](warm-pool.md) of prepared sandboxes. A service can use snapshots to fill a pool or restore one when a [cold start](cold-start.md) is necessary.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

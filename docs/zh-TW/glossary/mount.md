@@ -10,4 +10,4 @@ Mount 檔案系統或目錄，就是讓其中的檔案在指定路徑可見。*B
 
 [mount namespace](namespace.md) 可以讓一組 processes 各自有別於其他群組的掛載檢視。Linux 的 [`mount(2)` 文件](https://man7.org/linux/man-pages/man2/mount.2.html)區分 mount 設定與底層檔案系統。唯讀的 bind mount 會阻止透過該 mount 寫入，但不會讓底層檔案透過其他 mounts 存取時也變成唯讀，也不會隱藏檔案內容。只掛載 [workload](workload.md) 需要看到的檔案。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

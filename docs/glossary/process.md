@@ -12,4 +12,4 @@ In an [operating-system process sandbox](operating-system-process-sandbox.md), t
 
 See [Sandbox isolation boundaries](../sandbox-isolation-boundaries.md#follow-a-request-to-open-a-file) for the path a file request takes.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

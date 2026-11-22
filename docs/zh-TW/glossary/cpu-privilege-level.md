@@ -10,4 +10,4 @@ CPU privilege level 決定程式碼可在處理器上直接執行哪些操作。
 
 [Intel VT-x](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html) 將 [guest](guest.md) 執行（VMX non-root operation）和 [host](host.md) 執行（VMX root operation）分開。兩者都可以使用 ring 0 和 ring 3。在 ring 0 的 guest kernel 比自己的應用程式有更高的權限，但仍在 guest 模式下執行。從 guest ring 3 切換到 guest ring 0 並不是 [VM exit](vm-exit.md)。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

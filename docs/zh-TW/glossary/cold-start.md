@@ -37,4 +37,4 @@ flowchart TB
 
 比較需要設定的請求和取得已準備妥當的 sandbox 的請求。說明哪些檔案或映像檔已經快取，讓讀者知道量測涵蓋哪些步驟。不同環境準備方式的範例請參閱 [Agent sandbox 架構](../agent-sandbox-architectures.md#what-is-changing-in-2026)。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

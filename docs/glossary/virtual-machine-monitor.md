@@ -12,4 +12,4 @@ For a hardware-backed VM, the VMM configures guest memory and virtual processors
 
 A sandbox [control plane](control-plane.md) can use a VMM to start and stop VMs, but choosing where to run jobs and who gets workspace or network access are separate responsibilities. Check the whole sandbox, not just its VMM, to learn what it exposes.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

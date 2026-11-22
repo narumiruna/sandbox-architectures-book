@@ -12,4 +12,4 @@ Control group, 줄여서 cgroup은 운영 체제가 CPU 시간이나 메모리�
 
 리소스가 서로 다르게 보이도록 하려면 [namespaces](namespace.md)를 사용하고, 파일 및 network 접근을 제어하려면 별도의 [policy](policy.md)를 사용한다. 이러한 제어는 리소스 사용량을 집계하고 제한하는 것과는 역할이 다르다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

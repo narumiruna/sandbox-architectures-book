@@ -14,4 +14,4 @@ snapshot が実際に保存するファイルと外部リソースを確認し�
 
 snapshot は保存済みの artifact であり、準備済み sandbox の [warm pool](warm-pool.md) ではありません。サービスは snapshot でプールを補充したり、[cold start](cold-start.md) が必要なときに snapshot を復元したりできます。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

@@ -12,4 +12,4 @@ Windows Hypervisor Platform (WHP)은 [virtual machine monitor (VMM)](virtual-mac
 
 예를 들어 [리비전 `42f413d`의 NVX Windows/WHP 요구 사항](https://github.com/microsoft/nvx/blob/42f413d226290e31ea288686d6f3dbfd20c45733/doc/setup.md#windows--whp)에 따르면 host 펌웨어에서 하드웨어 가상화를 활성화하고 Windows에서 Windows Hypervisor Platform 기능을 활성화한 뒤 재부팅해야 한다. 이 API를 Linux host 인터페이스인 [KVM](kernel-based-virtual-machine.md) 및 [MSHV](microsoft-hypervisor.md)와 혼동하지 않는다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

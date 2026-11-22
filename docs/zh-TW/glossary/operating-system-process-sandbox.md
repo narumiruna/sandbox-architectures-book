@@ -10,4 +10,4 @@ Operating-system process sandbox 直接在 [host kernel](kernel.md) 上執行程
 
 在 Linux 上，[namespaces](namespace.md) 可以限制 processes 能看到哪些已掛載的檔案系統或網路介面。[Linux 6.12 Landlock 指南](https://docs.kernel.org/6.12/userspace-api/landlock.html#layers-of-file-path-access-rights)所述的路徑規則可限制對檔案階層的操作。[Seccomp](seccomp.md) 可篩選 system calls，而 [cgroups](control-group.md) 則可量測和限制資源用量。這些控制措施無法互相替代。確認 policy 允許哪些操作，也要確認 policy 同時適用於 sandbox 啟動的程式及其子 processes。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

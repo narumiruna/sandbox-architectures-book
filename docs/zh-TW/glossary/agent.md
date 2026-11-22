@@ -12,4 +12,4 @@ Agent 可以交付任務給模型、執行模型要求的工具，再把結果�
 
 另一種設計則把 agent 應用程式本身和它啟動的本機指令都放在 sandbox 內執行。要區分這兩種設計，可以問：在每個 [isolation boundary](isolation-boundary.md) 中，哪些程式碼是 [workload](workload.md)？界線外的工具處理程式使用自己的權限，即使請求來自界線內也一樣。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

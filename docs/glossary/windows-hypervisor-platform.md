@@ -12,4 +12,4 @@ The [Microsoft WHP API](https://learn.microsoft.com/en-us/virtualization/api/) l
 
 For example, the [NVX Windows/WHP requirements at revision `42f413d`](https://github.com/microsoft/nvx/blob/42f413d226290e31ea288686d6f3dbfd20c45733/doc/setup.md#windows--whp) call for enabling hardware virtualization in the host firmware, enabling the Windows Hypervisor Platform feature in Windows, and rebooting. Do not confuse this API with the Linux host interfaces [KVM](kernel-based-virtual-machine.md) and [MSHV](microsoft-hypervisor.md).
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

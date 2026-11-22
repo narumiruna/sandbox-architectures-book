@@ -12,4 +12,4 @@ MicroVM 的 [virtual machine monitor](virtual-machine-monitor.md) 可以省略�
 
 [isolation unit](isolation-unit.md) 取決於服務的設計：一個 microVM 可容納一項工作或多個 workloads。同一個 microVM 裡的 workloads 共用一個 guest kernel。此外，也要確認 sandbox 開放哪些 host 檔案和網路服務；VM 較精簡並不代表它會決定哪些存取可以放行。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

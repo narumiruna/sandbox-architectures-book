@@ -12,4 +12,4 @@ Microsoft Hypervisor는 guest 운영체제가 물리 컴퓨터를 사용하는 �
 
 이 Linux backend를 VMM이 Windows에서 사용할 수 있는 host API인 [Windows Hypervisor Platform (WHP)](windows-hypervisor-platform.md)이나, 별개의 Linux host 인터페이스인 [KVM](kernel-based-virtual-machine.md)과 혼동하지 않는다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

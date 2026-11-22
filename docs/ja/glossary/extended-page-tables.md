@@ -10,4 +10,4 @@ Extended Page Tables（EPT）を使うと、[Intel のプロセッサー](https:
 
 Linux Host が [KVM](kernel-based-virtual-machine.md) を使う場合、第 2 段階の対応付けは KVM が設定します。Guest の実行中は、CPU がそのアクセス権限を適用します。KVM が対応するアドレス変換については、[KVM のメモリーに関するドキュメント](https://docs.kernel.org/virt/kvm/x86/mmu.html#translation)を参照してください。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

@@ -12,4 +12,4 @@ The [Linux seccomp filter documentation](https://docs.kernel.org/userspace-api/s
 
 Use [mounts](mount.md) to control what files are visible and file access rules to control operations on them. A [control group](control-group.md) handles a different problem: measuring or limiting resource use.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

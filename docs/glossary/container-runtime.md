@@ -14,4 +14,4 @@ A container stack can unpack an image's files and combine them with runtime sett
 
 A runtime can use the [host kernel](kernel.md) directly with [namespaces](namespace.md), provide a [user-space kernel](user-space-kernel.md), or run the workload in a [virtual machine](virtual-machine.md) with its own kernel. The [control plane](control-plane.md) manages the workload; the runtime's execution mechanism and settings determine what separates it from the host.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

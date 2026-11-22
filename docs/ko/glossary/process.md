@@ -12,4 +12,4 @@ Agent가 Lamp의 테스트 runner를 시작하면 운영 체제는 `total.c`를 
 
 파일 요청이 어떤 경로를 거치는지는 [Sandbox isolation boundaries](../sandbox-isolation-boundaries.md#follow-a-request-to-open-a-file)를 참고한다.
 
-[Glossary로 돌아가기](../glossary.md)
+[Glossary로 돌아가기](index.md)

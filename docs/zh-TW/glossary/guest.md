@@ -12,4 +12,4 @@ Guest 程式透過 [system calls](system-call.md) 向 guest kernel 提出請求�
 
 Guest 內的管理員不會自動取得 host 的管理員權限。不過，任何刻意開放給 guest 的 host 檔案、網路服務或其他資源，都必須有自己的存取控制。同一部 VM 內的 workload 共用 guest kernel；如果這些 workload 必須彼此隔離，請檢查 [isolation unit](isolation-unit.md)。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

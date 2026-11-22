@@ -10,4 +10,4 @@ system call（syscall）は、プログラムが OS の [kernel](kernel.md) に�
 
 「[Linux の system call 入門](https://man7.org/linux/man-pages/man2/intro.2.html)」にあるように、プログラムは多くの場合、実際の system call を行うライブラリ関数を呼び出します。kernel を共有する sandbox では host kernel が呼び出しを処理し、[seccomp](seccomp.md) でフィルタリングできます。[virtual machine](virtual-machine.md) では guest kernel が内部のプログラムからの呼び出しを処理します。[user-space kernel](user-space-kernel.md) は各要求を host kernel に直接転送せずに同じインターフェースを実装できます。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

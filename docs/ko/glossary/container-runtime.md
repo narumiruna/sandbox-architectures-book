@@ -14,4 +14,4 @@ Container stack은 image의 파일을 풀고 runtime 설정과 결합하여 *bun
 
 Runtime은 [namespaces](namespace.md)를 사용해 [host kernel](kernel.md)을 직접 이용하거나, [user-space kernel](user-space-kernel.md)을 제공하거나, 자체 kernel이 있는 [virtual machine](virtual-machine.md)에서 workload를 실행할 수 있다. [control plane](control-plane.md)은 workload를 관리하고, runtime의 실행 방식과 설정은 무엇이 workload와 host를 분리하는지 결정한다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

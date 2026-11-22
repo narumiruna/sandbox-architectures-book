@@ -12,4 +12,4 @@ Linux has [different namespace types](https://man7.org/linux/man-pages/man7/name
 
 Namespaces shape what processes see. Path-based access controls decide what processes may do to files, [seccomp](seccomp.md) filters system calls, and [control groups](control-group.md) account for or limit resource use.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

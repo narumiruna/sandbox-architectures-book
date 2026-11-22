@@ -16,4 +16,4 @@ Wasm 程式將它需要的介面宣告為 imports，也就是對必須從程式�
 
 [WASI Preview 1](https://wasi.dev/releases/wasi-p1) 使用名稱為 `wasi_snapshot_preview1` 的核心 Wasm 模組 imports。[WASI 0.2 (Preview 2)](https://github.com/WebAssembly/WASI/blob/v0.2.0/preview2/README.md) 使用 WebAssembly Component Model，透過 WIT 描述的介面連接 Wasm 元件。WIT 是一種用於命名函式及其資料型別的語言。請確認 [runtime](runtime.md) 和 host 提供的版本和介面符合程式的需求。WASI 不提供 Linux kernel，也不能讓一般 Linux [native binary](native-binary.md) 當成 Wasm 執行。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

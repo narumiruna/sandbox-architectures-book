@@ -31,4 +31,4 @@ The [isolation boundary](isolation-boundary.md) separates the running code from 
 
 A [virtual machine](virtual-machine.md) and a [restricted interpreter](restricted-interpreter.md) can both serve as sandboxes, but they run different kinds of code. Even two sandboxes with the same boundary can grant different access. When comparing them, list what they let in or out, not just what technology they use. See [Sandbox isolation boundaries](../sandbox-isolation-boundaries.md).
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

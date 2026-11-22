@@ -12,4 +12,4 @@ Workload 是環境為了完成任務而執行的程式碼和 process。在 sandb
 
 [container image](container-image.md) 提供啟動時使用的檔案和設定，不是執行中的 workload。請確認 workload 的 child processes 實際在哪裡執行、能存取哪些資源，以及多個 workload 是否共用一個 [isolation unit](isolation-unit.md)。請參閱 [Sandbox isolation boundaries](../sandbox-isolation-boundaries.md)，瞭解適合不同工作的環境。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

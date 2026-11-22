@@ -14,4 +14,4 @@ The control plane can choose the execution [runtime](runtime.md), request a part
 
 When many jobs need sandboxes, use the control plane to assign environments and clean up after the jobs. The service must [authorize](authorization.md) who can create or claim an environment and whose files it attaches. An execution boundary cannot correct a control plane that assigns the wrong [tenant](tenant.md)'s workspace to a sandbox. See [Keep packaging, management, and isolation separate](../sandbox-isolation-boundaries.md#keep-packaging-management-and-isolation-separate).
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

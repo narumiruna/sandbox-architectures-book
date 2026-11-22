@@ -12,4 +12,4 @@ Isolation unit은 하나의 isolation boundary 인스턴스를 공유하는 work
 
 같은 시스템이라도 다른 계층에서는 더 작은 단위가 있을 수 있다. 한 VM 안의 process마다 서로 다른 파일 시스템이 보이게 할 수 있지만, 그렇다고 process마다 별도의 guest kernel이 생기는 것은 아니다. 두 [tenants](tenant.md)가 guest kernel을 공유해서는 안 된다면, 서비스가 VM을 쓰는지만 보지 말고 [control plane](control-plane.md)이 각 tenant의 workload를 어떻게 배치하는지 확인한다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

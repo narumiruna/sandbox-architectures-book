@@ -10,4 +10,4 @@ When a Linux application opens a file, the processor switches from ring 3 to rin
 
 [Intel VT-x](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html) separates [guest](guest.md) execution (VMX non-root operation) from [host](host.md) execution (VMX root operation). Each can use ring 0 and ring 3. A guest kernel at ring 0 has more privilege than its own applications, but it is still in guest operation. Moving from guest ring 3 to guest ring 0 is not a [VM exit](vm-exit.md).
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

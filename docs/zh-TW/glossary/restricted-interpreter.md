@@ -16,4 +16,4 @@ Interpreter 依照自己的規則執行指令碼。Restricted interpreter 可以
 
 即使支援某種迴圈，它仍可能執行過久；即使核准了 tool 呼叫，它仍可能傳回超出預期的資料。請分別限制執行時間、記憶體和 tool 用量。每項 tool 都應遵循 [least privilege](least-privilege.md)：讀取測試結果的 tool 不應也提供任意執行命令的功能。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

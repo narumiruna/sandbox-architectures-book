@@ -10,4 +10,4 @@ Linux 애플리케이션이 파일을 열면 프로세서는 ring 3에서 ring 0
 
 [Intel VT-x](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html)는 [guest](guest.md) 실행(VMX non-root operation)과 [host](host.md) 실행(VMX root operation)을 구분한다. 양쪽 모두 ring 0과 ring 3을 사용할 수 있다. Ring 0에서 실행되는 guest kernel은 같은 guest의 애플리케이션보다 권한이 높지만, 여전히 guest 실행 모드에 있다. Guest의 ring 3에서 guest의 ring 0으로 전환하는 것은 [VM exit](vm-exit.md)가 아니다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

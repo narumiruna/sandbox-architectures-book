@@ -12,4 +12,4 @@ Windows Hypervisor Platform（WHP）是 Windows 的程式設計介面，讓 [vir
 
 例如，[NVX 在 `42f413d` 修訂版的 Windows/WHP 需求](https://github.com/microsoft/nvx/blob/42f413d226290e31ea288686d6f3dbfd20c45733/doc/setup.md#windows--whp) 要求在 host 韌體中啟用硬體虛擬化，在 Windows 中啟用 Windows Hypervisor Platform 功能，然後重新開機。請勿將這個 API 與 Linux host 介面 [KVM](kernel-based-virtual-machine.md) 和 [MSHV](microsoft-hypervisor.md) 混淆。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

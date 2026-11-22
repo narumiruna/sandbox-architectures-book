@@ -18,7 +18,7 @@
 ## 善用參考資料 {#use-the-reference}
 
 - [Agent sandbox 架構](agent-sandbox-architectures.md)比較實際的實作方式。確認 workload 所需的邊界後，可以用這份比較找出候選方案。
-- [術語表](glossary.md)定義不熟悉的術語，並連結到詳細說明。
+- [術語表](glossary/index.md)定義不熟悉的術語，並連結到詳細說明。
 
 ## 閱讀本書時要思考的問題 {#questions-to-carry-through-the-book}
 

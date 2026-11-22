@@ -45,4 +45,4 @@ Token은 proxy가 registry에 보내는 요청에만 들어간다. 거부된 요
 
 Proxy는 승인된 요청에 한해 지정된 서비스에만 credential을 보내야 하며, workload가 읽을 수 있는 로그에는 credential을 남기지 않아야 한다. 대상 서비스가 응답에 credential을 노출하지 않는다고 신뢰할 수 있어야 한다. Token을 숨긴다고 해서 허용 범위가 넓은 [egress](egress.md) 규칙이 안전해지는 것은 아니다. Workload는 여전히 policy가 허용하는 모든 작업을 proxy에 요청할 수 있다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

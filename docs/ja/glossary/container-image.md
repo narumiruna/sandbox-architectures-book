@@ -12,4 +12,4 @@ Container image は、[container runtime](container-runtime.md) が [container](
 
 イメージは、メモリーの [snapshot](snapshot.md) のように実行中の Process を保存するものでも、Workload の隔離方法を決めるものでもありません。互換性があれば、同じイメージを異なる Runtime で実行できます。コードから何にアクセスできるかは、Runtime とその Policy を確認します。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

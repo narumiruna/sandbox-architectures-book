@@ -10,4 +10,4 @@ A script can call an issue lookup [tool](tool.md) to read `LAMP-17` but cannot r
 
 Check authorization when an operation can return data or make changes on behalf of a caller. A [sandbox](sandbox.md) may limit which tools a script can call, but each tool still needs to check what that caller may do. See [Tool authorization](../practice/design/tool-authorization.md) for a worked example.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

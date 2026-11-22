@@ -16,4 +16,4 @@ Wasm プログラムは、必要なインターフェースを import として�
 
 [WASI Preview 1](https://wasi.dev/releases/wasi-p1) は、`wasi_snapshot_preview1` という名前の core Wasm module の import を使います。[WASI 0.2 (Preview 2)](https://github.com/WebAssembly/WASI/blob/v0.2.0/preview2/README.md) は WebAssembly Component Model を使います。これは、関数名やデータ型を記述する言語である WIT で定義されたインターフェースを介して、Wasm component を接続する仕組みです。プログラムが期待するバージョンとインターフェースを、[runtime](runtime.md) と host が提供するものと照合してください。WASI は Linux kernel を提供せず、通常の Linux の [native binary](native-binary.md) を Wasm として実行できるようにするものでもありません。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

@@ -12,4 +12,4 @@ Isolation unit 是共用同一道 isolation boundary 的一組 workloads，也�
 
 同一個系統可以在另一層有更小的單位。同一個 VM 中的 processes 可以看到不同的檔案系統內容，但這不代表各自有獨立的 guest kernel。如果兩個 [tenants](tenant.md) 不得共用 guest kernel，除了確認服務是否使用 VM，也要確認 [control plane](control-plane.md) 如何安排它們的 workloads。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

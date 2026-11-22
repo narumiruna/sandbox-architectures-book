@@ -14,4 +14,4 @@ The [control plane](control-plane.md) can select the policy when it creates the 
 
 When you configure or test a sandbox, check what should succeed and what should fail at each [isolation boundary](isolation-boundary.md). If the same resource is reachable through both a [mount](mount.md) and a tool, check both paths. A denial on one path is not a denial on the other. See [Follow a request to open a file](../sandbox-isolation-boundaries.md#follow-a-request-to-open-a-file) for the two parts of the file rule.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

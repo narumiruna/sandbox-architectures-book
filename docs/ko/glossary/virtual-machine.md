@@ -12,4 +12,4 @@ VM 안에서 프로그램은 파일 열기 같은 서비스를 guest kernel에 �
 
 VM 하나는 workload 하나를 실행하거나 여러 [containers](container.md)를 실행할 수 있다. 이 container들은 파일 시스템을 따로 두면서도 guest kernel을 공유할 수 있다. 무엇에 별도의 VM이 할당되는지, 그리고 이를 둘러싼 sandbox가 어떤 디스크, mount, 네트워크 연결을 노출하는지 확인한다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

@@ -12,4 +12,4 @@ Windows Hypervisor Platform（WHP）は、[virtual machine monitor (VMM)](virtua
 
 たとえば [リビジョン `42f413d` の NVX の Windows/WHP 要件](https://github.com/microsoft/nvx/blob/42f413d226290e31ea288686d6f3dbfd20c45733/doc/setup.md#windows--whp)では、host のファームウェアでハードウェア仮想化を有効にし、Windows で Windows Hypervisor Platform 機能を有効にしてから再起動する必要があります。この API を Linux の host インターフェースである [KVM](kernel-based-virtual-machine.md) や [MSHV](microsoft-hypervisor.md) と混同しないでください。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

@@ -14,4 +14,4 @@ Lamp のテスト用 [sandbox](sandbox.md) は、`total.c` を読み取って一
 
 Sandbox を設定またはテストするときは、各 [isolation boundary](isolation-boundary.md) で何が成功し、何が失敗すべきかを確認します。同じリソースに [mount](mount.md) と tool の両方でアクセスできるなら、両方の経路を確認してください。一方の経路で拒否されても、もう一方で拒否されるとは限りません。ファイルアクセスのルールを構成する 2 つの部分については、[ファイルを開くリクエストを追う](../sandbox-isolation-boundaries.md#follow-a-request-to-open-a-file) を参照してください。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

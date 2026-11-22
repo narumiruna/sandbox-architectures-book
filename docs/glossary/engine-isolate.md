@@ -12,4 +12,4 @@ The [V8 13.8.258 Isolate API](https://github.com/v8/v8/blob/13.8.258/include/v8-
 
 An isolate does not limit what a host function does on the script's behalf. Check each exposed operation against the script's permissions, and check how the platform limits CPU and memory use. If a task needs to run native programs, use a separate environment that supports them, such as an [operating-system process sandbox](operating-system-process-sandbox.md).
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

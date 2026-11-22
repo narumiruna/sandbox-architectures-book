@@ -12,4 +12,4 @@ host 쪽에서 경계를 설정하고 그 경계를 넘을 방법을 제공한�
 
 host가 반드시 [control plane](control-plane.md)인 것은 아니다. control plane은 sandbox를 어디에 배치할지 결정하고, 다른 컴퓨터가 이를 실행할 수 있다. 설계에서 “host”라고 할 때는 어떤 경계를 기준으로 하는지, 어떤 구성 요소가 실제로 리소스를 제공하는지 확인한다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

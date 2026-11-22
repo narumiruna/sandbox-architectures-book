@@ -10,4 +10,4 @@ User space는 운영 체제의 [kernel](kernel.md) 밖에서 애플리케이션�
 
 프로그램은 파일을 열거나 다른 kernel 작업을 수행해야 할 때 [system call](system-call.md)을 하며, 흔히 라이브러리를 거친다. [Linux system call 소개](https://man7.org/linux/man-pages/man2/intro.2.html)에서는 kernel이 요청을 처리하고 결과를 반환하는 방식을 설명한다. [user-space kernel](user-space-kernel.md)은 host kernel 밖에서 그 인터페이스를 소프트웨어로 구현한다.
 
-[Glossary로 돌아가기](../glossary.md)
+[Glossary로 돌아가기](index.md)

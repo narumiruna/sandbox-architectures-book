@@ -12,4 +12,4 @@ Least privilege는 코드에 작업에 필요한 권한만 주는 것을 뜻한�
 
 허용된 접근 경로를 하나씩 확인한다. 읽기 전용 [mount](mount.md)는 그 mount를 통한 쓰기를 막지만, 별도의 tool이 같은 파일에 쓰는 것까지 막지는 않는다. Tool handler가 자체 제한을 적용해야 한다. Least privilege는 workload가 영향을 줄 수 있는 범위를 줄이지만, workload에 허용된 동작에서 피해가 발생하는 것까지 막지는 못한다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

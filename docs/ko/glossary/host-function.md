@@ -12,4 +12,4 @@ host function은 언어 sandbox 밖에서 구현되어 그 안의 코드가 호�
 
 [tool](tool.md)은 agent나 스크립트에 제공하는 작업이다. host function은 언어 sandbox 안에서 그 작업을 호출할 수 있게 하는 방법 중 하나다. 일부 host function은 그 대신 시계와 같은 기본 서비스를 제공한다. 어느 경우든 handler는 입력, 작업의 영향, 반환 데이터에 대해 해당 [policy](policy.md)를 적용해야 한다. 스크립트 자체에 걸린 제한이 handler를 대신해 이 일을 하지는 않는다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

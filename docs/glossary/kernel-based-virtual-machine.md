@@ -12,4 +12,4 @@ The [Linux KVM API](https://docs.kernel.org/virt/kvm/api.html) describes how the
 
 A VMM needs access to `/dev/kvm` on the host. For example, the [NVX Linux/KVM requirements at revision `42f413d`](https://github.com/microsoft/nvx/blob/42f413d226290e31ea288686d6f3dbfd20c45733/doc/setup.md#linux--kvm) call for hardware virtualization and read/write access to the device. That access is for the host-side VMM, not the sandboxed workload. See [MSHV](microsoft-hypervisor.md) and [WHP](windows-hypervisor-platform.md) for other host interfaces.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

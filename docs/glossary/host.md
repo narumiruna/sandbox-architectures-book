@@ -12,4 +12,4 @@ The host side sets up the boundary and provides ways to cross it. A VM may recei
 
 The host is not necessarily the [control plane](control-plane.md). A control plane can decide where to place a sandbox while a different machine runs it. When a design says “host,” identify the boundary and the component that actually supplies the resource.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

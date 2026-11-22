@@ -10,4 +10,4 @@ In a build sandbox that uses gVisor, a test program asks for its process ID. As 
 
 The Sentry implements Linux [system calls](system-call.md) rather than simply allowing or denying calls to the host. It can make its own, more limited requests to the host kernel; those requests need not match the workload's calls one for one. This differs from a shared-kernel [process sandbox](operating-system-process-sandbox.md), where the host kernel implements the calls the process is allowed to make. Test the interfaces and performance the workload needs rather than assuming it will behave exactly as it does on Linux directly.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

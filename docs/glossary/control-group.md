@@ -12,4 +12,4 @@ In [Linux cgroup v2](https://docs.kernel.org/admin-guide/cgroup-v2.html), groups
 
 Use [namespaces](namespace.md) for separate views of resources and a separate [policy](policy.md) to control file and network access. Those controls do different jobs from resource accounting and limits.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

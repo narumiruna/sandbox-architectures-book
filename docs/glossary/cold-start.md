@@ -37,4 +37,4 @@ Boot and restore can both be part of a cold start. Claiming a running VM from a 
 
 Compare requests that require setup with requests that get a prepared sandbox. State which files or images were already cached so readers can tell what the measurements include. See [Agent sandbox architectures](../agent-sandbox-architectures.md#what-is-changing-in-2026) for examples of different provisioning paths.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

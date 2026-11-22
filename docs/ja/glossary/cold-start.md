@@ -37,4 +37,4 @@ flowchart TB
 
 準備が必要な要求と、準備済みの Sandbox を受け取る要求を比較します。どのファイルやイメージがすでにキャッシュされていたかを明記し、測定に何が含まれるかが読者に分かるようにします。環境の準備方法の違いについては、[Agent 用 Sandbox のアーキテクチャ](../agent-sandbox-architectures.md#what-is-changing-in-2026)の例を参照してください。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

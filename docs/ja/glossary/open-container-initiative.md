@@ -10,4 +10,4 @@
 
 [Image Specification v1.1.0](https://github.com/opencontainers/image-spec/tree/v1.1.0) は、ファイルシステムへの変更と設定をまとめるパッケージを定義します。[Distribution Specification v1.1.0](https://github.com/opencontainers/distribution-spec/tree/v1.1.0) は、container image を保管するサービスである registry と tool の間で、コンテンツを送受信する方法を定義します。[Runtime Specification v1.2.1](https://github.com/opencontainers/runtime-spec/tree/v1.2.1) は、準備済みの container を実行する際の設定とライフサイクルを定義します。コードが何にアクセスできるかを知るには、選んだ [container runtime](container-runtime.md) とその設定を確認してください。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

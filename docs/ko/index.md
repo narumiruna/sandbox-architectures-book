@@ -18,7 +18,7 @@ API 몇 개를 호출하는 AI agent와 패키지를 설치하고 소프트웨�
 ## 참고 자료 활용하기 {#use-the-reference}
 
 - [Agent sandbox 아키텍처](agent-sandbox-architectures.md)는 실제 구현을 비교합니다. workload에 필요한 경계를 파악한 뒤 후보를 찾을 때 활용하세요.
-- [용어집](glossary.md)에서는 낯선 용어를 정의하고 자세한 설명으로 연결합니다.
+- [용어집](glossary/index.md)에서는 낯선 용어를 정의하고 자세한 설명으로 연결합니다.
 
 ## 책을 읽으며 생각해 볼 질문 {#questions-to-carry-through-the-book}
 

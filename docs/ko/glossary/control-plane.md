@@ -14,4 +14,4 @@ Control plane은 실행에 사용할 [runtime](runtime.md)을 선택하고, 특�
 
 많은 작업에 sandbox가 필요하다면 control plane으로 환경을 할당하고 작업이 끝난 뒤 정리한다. 서비스는 누가 환경을 만들거나 할당받을 수 있는지, 누구의 파일을 연결할 수 있는지 [authorization](authorization.md)을 통해 결정해야 한다. Control plane이 다른 [tenant](tenant.md)의 workspace를 sandbox에 잘못 할당하더라도 실행 경계는 그 오류를 바로잡을 수 없다. [패키징, 관리, 격리를 구분하기](../sandbox-isolation-boundaries.md#keep-packaging-management-and-isolation-separate)를 참고한다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

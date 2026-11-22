@@ -10,4 +10,4 @@ User space 位於作業系統的 [kernel](kernel.md) 之外，是應用程式和
 
 程式需要開啟檔案或執行其他 kernel 操作時，會發出 [system call](system-call.md)，通常是透過函式庫。[Linux system call 簡介](https://man7.org/linux/man-pages/man2/intro.2.html) 說明 kernel 如何處理請求並傳回結果。[user-space kernel](user-space-kernel.md) 則是在 host kernel 外部以軟體實作該介面。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

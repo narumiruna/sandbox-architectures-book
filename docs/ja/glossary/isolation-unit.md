@@ -12,4 +12,4 @@ Isolation unit は、同じ isolation boundary の内側で実行される workl
 
 同じシステムでも、別の層にはより小さな unit があり得ます。1 台の VM 内の process がそれぞれ異なるファイルシステムを見ていても、process ごとに別の guest kernel があるわけではありません。2 つの [tenant](tenant.md) が guest kernel を共有してはいけない場合は、VM の有無だけでなく、[control plane](control-plane.md) がそれらの workload をどう配置するかを確認します。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

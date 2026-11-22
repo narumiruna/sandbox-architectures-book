@@ -10,4 +10,4 @@
 
 [Mount namespace](namespace.md) を使うと、process のグループごとに何が mount されているかの見え方を変えられます。Linux の [`mount(2)` のドキュメント](https://man7.org/linux/man-pages/man2/mount.2.html) は、mount の設定とその基盤となるファイルシステムを区別しています。読み取り専用の bind mount は、その mount 経由の書き込みを遮断しますが、別の mount 経由でも元のファイルが読み取り専用になるわけではありません。ファイルの内容を隠すこともありません。[Workload](workload.md) が参照する必要のあるファイルだけを mount してください。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

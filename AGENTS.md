@@ -2,7 +2,7 @@
 
 ## Communication
 
-- Write book content in English and use the [glossary](docs/glossary.md) for shared terminology.
+- Write book content in English and use the [glossary](docs/glossary/index.md) for shared terminology.
   - [UNREVIEWED] For translated copies of the English original, follow the [translation edition rules](README.md#translation-editions).
 - Lead with the main point in plain language for readers with no prior knowledge, using one compact visual if it helps.
   - Keep caveats that change the takeaway in the introduction.
@@ -23,15 +23,21 @@
   - Use reputable secondary sources when primary evidence is insufficient, but cite primary sources for product-specific claims in the book.
   - Judge sources by accuracy, authority, relevance, and recency, not search rank; investigate conflicts before drawing a conclusion.
 - Link directly to evidence for important claims and decisions, naming the release or revision when behavior varies by version.
+- Use the [reference template](templates/reference.template.md) when saving a citation source as a Markdown record.
 - Separate verified facts from inferences and state what remains unknown or could not be verified.
 - Never invent facts, citations, URLs, or evidence.
 
 ## Documentation
 
 - Put published Markdown pages in `docs/` and add new chapters and reference indexes to `nav` in `zensical.toml`.
+- For questions within the book's scope, check what the book already covers before deciding whether to write back.
+  1. Use `docs/index.md` to find relevant chapters, search the English source pages under `docs/`, and check `docs/glossary/index.md` for terminology questions.
+  2. If the book already answers the question correctly and no important detail is missing, cite the relevant section without editing; otherwise, follow [Research and Verification](#research-and-verification) and write back only verified corrections or lasting findings that explain an important limitation or help readers make a technical decision.
+  3. Unless the user requests chat-only or read-only output, update the most relevant existing page without separate approval, follow the glossary workflow for term definitions, and ask before adding a chapter.
+  4. Run the strict build after a writeback and link to the changed section in the reply; commit or push only if the user requests that action.
 - Keep one glossary page per technical concept and link technical terms and proper names on first use in each book page's body when a relevant reference exists.
-  1. Search `docs/glossary.md` for the term, its abbreviations, and its alternate names before creating a page; reuse the existing page for the same concept.
-  2. For a newly introduced technical concept with no entry, explain it in `docs/glossary/<term>.md` and add a short definition and a link to that page in `docs/glossary.md`.
+  1. Search `docs/glossary/index.md` for the term, its abbreviations, and its alternate names before creating a page; reuse the existing page for the same concept.
+  2. For a newly introduced technical concept with no entry, create `docs/glossary/<term>.md` from the [glossary template](templates/glossary.template.md) and add a short definition and a link to that page in `docs/glossary/index.md`.
   3. Register each new term page in `project.extra.unlisted_pages` in `zensical.toml` with a path relative to `docs/`; do not add it to `project.nav`.
   4. Link the first use to the glossary page if one applies; otherwise, link to a relevant book page or a primary source such as official documentation.
 - Use the isolation-boundaries chapter for concepts and the architecture survey for implementation details, and distinguish the execution boundary from the control plane.

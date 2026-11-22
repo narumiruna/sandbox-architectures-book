@@ -16,4 +16,4 @@ Review the actual grants, not just the interface names. A program can also recei
 
 [WASI Preview 1](https://wasi.dev/releases/wasi-p1) uses core Wasm module imports under the name `wasi_snapshot_preview1`. [WASI 0.2 (Preview 2)](https://github.com/WebAssembly/WASI/blob/v0.2.0/preview2/README.md) uses the WebAssembly Component Model, which connects Wasm components through interfaces described in WIT, a language for naming functions and their data types. Check the version and interfaces the program expects against what the [runtime](runtime.md) and host provide. WASI does not provide a Linux kernel or make an ordinary Linux [native binary](native-binary.md) runnable as Wasm.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

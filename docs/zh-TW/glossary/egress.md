@@ -16,4 +16,4 @@ Sandbox 執行的測試會從測試伺服器讀取範例記錄。Gateway 允許�
 
 對外請求的回覆是 [ingress](ingress.md) 流量，因為它們進入 sandbox。網路控制措施可以允許 sandbox 主動建立的連線接收回覆，同時不讓外部用戶端建立新連線。當叢集的網路軟體強制執行 [Kubernetes 1.35 network policies](https://github.com/kubernetes/website/blob/03c191bcc446f9c15a9e68d6cd1154b53bde4291/content/en/docs/concepts/services-networking/network-policies.md#the-two-sorts-of-pod-isolation) 時，這些 policies 就是這樣運作的。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

@@ -12,4 +12,4 @@ Control group（簡稱 cgroup）將 Linux 行程分組，讓作業系統能量�
 
 使用 [namespaces](namespace.md) 分隔各自可見的資源，再用另一套 [policy](policy.md) 控制檔案和網路存取。這些控制措施的用途不同於資源用量統計和限制。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

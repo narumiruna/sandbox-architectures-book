@@ -37,4 +37,4 @@ flowchart TB
 
 설정이 필요한 요청과 이미 준비된 sandbox를 할당받는 요청을 비교한다. 독자가 측정에 무엇이 포함되었는지 알 수 있도록 어떤 파일이나 image가 이미 cache에 있었는지 명시한다. 여러 provisioning 경로의 예는 [Agent sandbox architectures](../agent-sandbox-architectures.md#what-is-changing-in-2026)를 참고한다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

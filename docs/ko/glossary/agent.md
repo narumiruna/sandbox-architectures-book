@@ -12,4 +12,4 @@ agent는 모델에 작업을 주고, 모델이 요청한 tool을 실행한 뒤, 
 
 다른 설계에서는 agent 애플리케이션 자체와 그 애플리케이션이 실행하는 로컬 명령을 함께 sandbox 안에서 실행한다. 두 설계를 구분하려면 각 [isolation boundary](isolation-boundary.md)에서 어느 코드가 [workload](workload.md)인지 확인한다. 경계 밖의 tool handler는 경계 안에서 요청이 들어와도 자체 권한을 사용한다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

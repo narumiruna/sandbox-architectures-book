@@ -12,4 +12,4 @@ guest 프로그램은 guest kernel에 [system calls](system-call.md)를 한다. 
 
 guest 내부의 관리자에게 host의 관리자 권한이 자동으로 주어지지는 않는다. 그렇더라도 guest에 의도적으로 노출하는 host 파일, 네트워크 서비스 또는 기타 리소스에는 각각 자체 접근 제어가 필요하다. 같은 VM에 있는 workload는 guest kernel을 공유한다. 이 workload들을 분리해야 한다면 [isolation unit](isolation-unit.md)을 확인한다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

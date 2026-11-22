@@ -12,4 +12,4 @@ Seccomp 是 Linux 的功能，可篩選 [system calls](system-call.md)，也就�
 
 請用 [mounts](mount.md) 控制哪些檔案可見，再用檔案存取規則控制可對檔案執行的操作。[control group](control-group.md) 處理的是另一件事：量測或限制資源用量。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

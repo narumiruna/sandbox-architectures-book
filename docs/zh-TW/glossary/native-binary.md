@@ -10,4 +10,4 @@ Native binary 是編譯成特定處理器可執行的指令，並針對特定作
 
 執行檔格式告訴作業系統如何載入程式。例如，Linux [ELF 執行檔](https://man7.org/linux/man-pages/man5/elf.5.html)會記錄其目標處理器架構。如果程式使用共用程式庫，環境還需要相容的[載入器和程式庫](https://man7.org/linux/man-pages/man8/ld.so.8.html)。執行程式所用的 kernel 介面也必須支援該程式的 [system calls](system-call.md)。僅有相符的處理器還不夠。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

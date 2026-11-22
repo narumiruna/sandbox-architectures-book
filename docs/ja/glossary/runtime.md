@@ -14,4 +14,4 @@ agent サービスは、[WebAssembly](webassembly.md) にコンパイルされ�
 
 [control plane](control-plane.md) は sandbox をいつどこで起動するかを決め、runtime はコードを実行するか、その環境を用意します。一つの製品が両方を担う場合もあります。[isolation boundary](isolation-boundary.md) を特定するには、何が分離を強制し、workload が host のどのリソースを使えるかを確認してください。たとえば、container runtime は、host kernel を共有する process を起動することも、別の kernel を持つ VM 内で process を動かすこともできます。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

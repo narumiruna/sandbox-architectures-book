@@ -14,4 +14,4 @@ Control plane は、実行用の [runtime](runtime.md) を選び、特定の Wor
 
 多数のジョブが Sandbox を必要とするときは、Control plane を使って環境を割り当て、ジョブの終了後に片付けます。サービスは [authorization](authorization.md) によって、誰が環境を作成または確保できるか、誰のファイルを接続するかを判断しなければなりません。Control plane が別の [tenant](tenant.md) の Workspace を Sandbox に割り当てても、実行境界ではその誤りを直せません。[パッケージ化、管理、隔離を分ける](../sandbox-isolation-boundaries.md#keep-packaging-management-and-isolation-separate)を参照してください。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

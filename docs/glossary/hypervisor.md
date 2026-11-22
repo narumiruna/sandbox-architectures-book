@@ -12,4 +12,4 @@ A hardware-backed hypervisor uses processor features to run guest instructions a
 
 The hypervisor does not decide whether a sandbox should see a project directory or reach an external service. Those decisions depend on what the surrounding system exposes and how it enforces [policy](policy.md).
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

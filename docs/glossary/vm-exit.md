@@ -10,4 +10,4 @@ A guest driver accesses a virtual device. If that access is configured to cause 
 
 A [system call](system-call.md) normally changes the [privilege level](cpu-privilege-level.md) from guest app to guest kernel without leaving the guest. A VM exit crosses the guest boundary. On KVM, it is also distinct from the host's [`KVM_RUN`](https://docs.kernel.org/virt/kvm/api.html#kvm-run) call returning to the VMM: some exits are handled and guest execution resumes without that call returning.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

@@ -12,4 +12,4 @@ Least privilege 是指只授予程式碼完成工作所需的權限。限制程�
 
 逐一確認每條允許的存取路徑。唯讀 [mount](mount.md) 會阻止透過該 mount 寫入，但無法阻止另一個工具寫入相同檔案。工具的處理程式必須強制執行自己的限制。Least privilege 能縮小 workload 可影響的範圍，但無法防止獲准操作造成損害。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

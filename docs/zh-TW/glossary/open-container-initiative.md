@@ -10,4 +10,4 @@
 
 [Image Specification v1.1.0](https://github.com/opencontainers/image-spec/tree/v1.1.0) 定義檔案系統變更和設定如何封裝。[Distribution Specification v1.1.0](https://github.com/opencontainers/distribution-spec/tree/v1.1.0) 定義工具如何將內容傳入及傳出 registry（儲存 container images 的服務）。[Runtime Specification v1.2.1](https://github.com/opencontainers/runtime-spec/tree/v1.2.1) 定義執行已備妥 container 所需的設定和生命週期。若要了解程式碼可存取哪些資源，請檢查所選的 [container runtime](container-runtime.md) 及其設定。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

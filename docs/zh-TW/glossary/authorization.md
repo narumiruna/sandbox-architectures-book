@@ -10,4 +10,4 @@ Authorization 是判斷身分已知的呼叫端是否可對特定資源執行某
 
 如果一項作業可以代替呼叫端傳回資料或做出變更，就要檢查 authorization。[Sandbox](sandbox.md) 可以限制指令碼能呼叫哪些工具，但每個工具仍須檢查該呼叫端能做什麼。完整範例請參閱 [工具的 authorization](../practice/design/tool-authorization.md)。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

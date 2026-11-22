@@ -12,4 +12,4 @@ The [control plane](control-plane.md) prepares instances, assigns them to reques
 
 A [snapshot](snapshot.md) is saved state. A service can restore snapshots to refill a warm pool, but keeping only snapshots still leaves restore work when a request arrives. A pool moves work earlier at the cost of holding resources while instances wait. Keep [tenant](tenant.md) data out of unassigned instances, and account for assignment and workspace setup when measuring readiness.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

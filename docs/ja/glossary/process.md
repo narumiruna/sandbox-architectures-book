@@ -12,4 +12,4 @@ agent が Lamp のテストランナーを起動すると、OS は `total.c` を
 
 ファイルを開く要求の経路は「[Sandbox isolation boundaries](../sandbox-isolation-boundaries.md#follow-a-request-to-open-a-file)」を参照してください。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

@@ -12,4 +12,4 @@ Microsoft Hypervisor は、guest のオペレーティングシステムが物�
 
 この Linux backend を、VMM が Windows 上で使える host API の [Windows Hypervisor Platform (WHP)](windows-hypervisor-platform.md) や、別の Linux host インターフェースである [KVM](kernel-based-virtual-machine.md) と混同しないでください。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

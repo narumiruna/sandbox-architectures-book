@@ -10,4 +10,4 @@ Operating-system process sandbox は、プログラムを [host kernel](kernel.m
 
 Linux では、[namespace](namespace.md) によって、mount 済みのファイルシステムやネットワークインターフェースの見え方を制限できます。[Linux 6.12 Landlock ガイド](https://docs.kernel.org/6.12/userspace-api/landlock.html#layers-of-file-path-access-rights) にあるようなパスベースのルールでは、ファイル階層に対する操作を制限できます。[Seccomp](seccomp.md) は system call をフィルタリングし、[cgroups](control-group.md) はリソース使用量を計測して制限します。これらの制御機能は互いに代用できません。Policy が何を許可し、sandbox が起動するプログラムだけでなく子 process にも適用されることを確認してください。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

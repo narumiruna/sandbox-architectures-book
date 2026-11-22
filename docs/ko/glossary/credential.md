@@ -12,4 +12,4 @@ Sandbox에 이슈 제목이 필요하다. Sandbox 외부에서 실행되는 [too
 
 [least privilege](least-privilege.md)를 적용한다. 작업에 필요한 동작과 리소스에만 접근 권한을 부여하고 유효 기간이 짧은 credential을 우선 사용한다. 코드에 credential이 아니라 결과만 필요하다면 host tool이나 [credential injection](credential-injection.md)으로 credential이 프로그램에 전달되지 않도록 할 수 있다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

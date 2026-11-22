@@ -12,4 +12,4 @@ Host 側は境界を設定し、それを越える手段を提供します。VM 
 
 Host は必ずしも [control plane](control-plane.md) ではありません。Sandbox の配置先は Control plane が決め、実行は別のマシンが担う場合があります。設計で「Host」と書かれていたら、どの境界を指すか、実際にリソースを提供するのはどのコンポーネントかを確認してください。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

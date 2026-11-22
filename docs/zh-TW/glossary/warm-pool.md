@@ -12,4 +12,4 @@ Warm pool 是一組在請求到來之前就準備好的 [sandboxes](sandbox.md)�
 
 [snapshot](snapshot.md) 是已儲存的狀態。服務可以用還原 snapshot 的方式補充 warm pool，但如果只保留 snapshot，請求到來時仍須執行還原。Pool 提早完成工作，代價是在實例等待期間占用資源。請勿在尚未分配的實例中放入 [tenant](tenant.md) 資料，並在量測就緒時間時納入分配和 workspace 設定所需的時間。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

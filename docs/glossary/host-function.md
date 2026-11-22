@@ -12,4 +12,4 @@ The language runtime supplies a way to call into the surrounding application. Fo
 
 A [tool](tool.md) is an operation offered to an agent or script; a host function is one way to make that operation callable from a language sandbox. Some host functions instead supply basic services, such as a clock. In either case, the handler must enforce the relevant [policy](policy.md) on its inputs, effects, and returned data. The script's own restrictions do not do that job for it.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

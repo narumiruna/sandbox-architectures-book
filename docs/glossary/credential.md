@@ -12,4 +12,4 @@ Anyone who obtains a valid [bearer token](https://www.rfc-editor.org/rfc/rfc6750
 
 Use [least privilege](least-privilege.md): prefer a short-lived credential that grants access only to the operations and resources needed for the task. When the code needs the result rather than the credential, a host tool or [credential injection](credential-injection.md) can keep the credential out of the program.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

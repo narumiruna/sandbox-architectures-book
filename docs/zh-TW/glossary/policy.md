@@ -14,4 +14,4 @@ Lamp 的測試 [sandbox](sandbox.md) 可以讀取 `total.c` 並寫入暫存輸�
 
 設定或測試 sandbox 時，請確認在每一道 [isolation boundary](isolation-boundary.md) 上，哪些操作應該成功，哪些應該失敗。如果同一資源既能透過 [mount](mount.md) 存取，也能透過工具存取，請檢查兩條路徑。在一條路徑遭拒，並不代表在另一條也會遭拒。請參閱[追蹤開啟檔案的請求](../sandbox-isolation-boundaries.md#follow-a-request-to-open-a-file)，了解檔案規則的兩個部分。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

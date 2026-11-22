@@ -12,4 +12,4 @@ The [virtual machine monitor](virtual-machine-monitor.md) sets up the virtual ha
 
 Measure boot and readiness separately. The guest may finish booting before the sandbox has attached the project's workspace or can run its first command. A [cold start](cold-start.md) can include a cold boot, but it can also use a [snapshot](snapshot.md) to skip booting the guest.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

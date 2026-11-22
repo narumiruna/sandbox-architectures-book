@@ -12,4 +12,4 @@ Inside the VM, programs ask the guest kernel for services such as opening files.
 
 A VM can run one workload or host several [containers](container.md). Those containers can have separate filesystems while still sharing the guest kernel. Check what gets its own VM and which disks, mounts, and network connections the surrounding sandbox exposes.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

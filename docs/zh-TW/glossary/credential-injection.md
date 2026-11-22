@@ -45,4 +45,4 @@ Token 只出現在 proxy 傳給 registry 的請求中。被拒絕的請求不會
 
 Proxy 必須只在核准的請求中把 credential 傳給指定的服務，並確保 credential 不會出現在 workload 可讀取的日誌中。目的地服務也必須可信任，不會在回覆中透露 credential。隱藏 token 並不會讓過於寬鬆的 [egress](egress.md) 規則變得安全：workload 仍可要求 proxy 執行 policy 允許的任何操作。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

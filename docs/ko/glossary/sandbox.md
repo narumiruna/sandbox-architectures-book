@@ -31,4 +31,4 @@ flowchart TB
 
 [virtual machine](virtual-machine.md)과 [restricted interpreter](restricted-interpreter.md)는 모두 sandbox로 쓸 수 있지만 서로 다른 종류의 코드를 실행한다. 같은 boundary를 사용하는 두 sandbox도 서로 다른 접근 권한을 부여할 수 있다. Sandbox를 비교할 때는 사용하는 기술뿐 아니라 무엇을 안으로 들이고 밖으로 내보낼 수 있는지도 나열한다. [Sandbox isolation boundaries](../sandbox-isolation-boundaries.md)를 참고한다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

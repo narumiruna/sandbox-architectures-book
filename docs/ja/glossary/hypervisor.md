@@ -12,4 +12,4 @@ Hypervisor は、[virtual machine](virtual-machine.md) が物理コンピュー�
 
 Sandbox にプロジェクトディレクトリを見せるか、外部サービスへの接続を許すかは、hypervisor が決めることではありません。何を公開し、[policy](policy.md) をどう適用するかは、周囲のシステムに依存します。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

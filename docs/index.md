@@ -18,7 +18,7 @@ Start with **Foundations**, then follow Lamp, a fictional coding task, from its 
 ## Use the reference
 
 - [Agent sandbox architectures](agent-sandbox-architectures.md) compares real implementations. Use it to find candidates after you know what boundary your workload needs.
-- [Glossary](glossary.md) defines unfamiliar terms and links to detailed explanations.
+- [Glossary](glossary/index.md) defines unfamiliar terms and links to detailed explanations.
 
 ## Questions to carry through the book
 

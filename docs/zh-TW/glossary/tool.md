@@ -12,4 +12,4 @@ Tool 介面說明呼叫者可以提出哪些請求。在語言 sandbox 中，[ho
 
 Sandbox 可以限制指令碼能呼叫哪些 tool，但無法將指令碼受到的限制套用到在外部執行的 handler。建置 tool 可以在適合該 [workload](workload.md) 的另一個 sandbox 中啟動工作。此時，指令碼邊界和建置邊界各自保護系統的不同部分。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

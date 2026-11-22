@@ -5,7 +5,7 @@ description: Scan Sandbox Architectures Book pages for unlinked technical terms 
 
 # Link book terms
 
-1. Read the link rules in `AGENTS.md` and the term index in `docs/glossary.md` from the repository root.
+1. Read the link rules in `AGENTS.md` and the term index in `docs/glossary/index.md` from the repository root.
    - Scan the requested files or directories; without a narrower scope, scan the book pages listed in `project.nav` and `project.extra.unlisted_pages` in `zensical.toml`.
    - If the user asks only to audit or report, do not edit files.
 2. Read each page from the start and identify the first use of each technical term or proper name in the body, including in lists and tables.

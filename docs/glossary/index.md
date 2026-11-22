@@ -1,0 +1,66 @@
+# Glossary
+
+Use this glossary alongside [Sandbox isolation boundaries](../sandbox-isolation-boundaries.md) and [Agent sandbox architectures](../agent-sandbox-architectures.md). Terms are in alphabetical order by full name. To look up a term, search this page for its full name or abbreviation. For example, `WebAssembly` and `Wasm` appear in the same entry and link to the same page. Each entry explains the term and gives an example.
+
+- **[Agent](agent.md)** — A system that uses a model to decide what to do next and can call tools to act. A sandbox may contain the entire agent or only the code it generates.
+- **[Allowlist](allowlist.md)** — A list of resources or actions that a policy permits. For example, an egress allowlist can limit outbound connections to specified services.
+- **[Artifact](artifact.md)** — A selected output kept after a job, such as a patch or test report.
+- **[Authorization](authorization.md)** — The decision about whether a known caller may perform an action on a specific resource.
+- **[Capability](capability.md)** — In this book, a resource or operation that code can use because the host granted it. For example, a tool that reads issues can grant that operation without providing a general network connection.
+- **[Code Mode](code-mode.md)** — A pattern in which a model writes a program that calls tools and combines their results. The term describes how the model uses tools, not how the program is isolated.
+- **[Cold boot](cold-boot.md)** — Starting a new VM by booting its guest operating system instead of restoring a running VM's saved state.
+- **[Cold start](cold-start.md)** — Bringing up an execution environment when none is ready to reuse. It may involve a boot, a snapshot restore, or the startup of a language runtime. Cold-start latency is the wait before the environment can do work.
+- **[Container](container.md)** — An execution environment for one or more processes, usually created from a container image. The runtime determines whether those processes share the host kernel, use a user-space kernel, or run inside a VM.
+- **[Container image](container-image.md)** — A packaged filesystem and configuration used to create a container. An image does not by itself contain the live state of its processes.
+- **[Container runtime](container-runtime.md)** — Software that creates and runs containers from images or prepared bundles. It applies the configured isolation and starts the workload processes.
+- **[Control group (cgroup)](control-group.md)** — A Linux mechanism that groups processes to account for or limit resources such as CPU and memory. A cgroup is not a filesystem or network boundary.
+- **[Control plane](control-plane.md)** — The part of a system that makes management decisions, such as where to place a sandbox and when to start or stop it. It is not the execution boundary.
+- **[CPU privilege level](cpu-privilege-level.md)** — A processor access level. On x86-64, kernels normally run at ring 0 and applications at ring 3, in both host and guest execution.
+- **[Credential](credential.md)** — A value that proves identity or grants access, such as an API token or private key. Code that receives a credential may be able to use it outside the intended tool call.
+- **[Credential injection](credential-injection.md)** — Adding a credential to a request on behalf of a workload. A proxy can add it only to approved requests so that workload code does not receive the credential itself.
+- **[Egress](egress.md)** — Network traffic that leaves an environment. Egress policy controls which destinations or services a workload can reach.
+- **[Engine isolate](engine-isolate.md)** — A separate execution environment within a language engine, such as V8, with its own managed state. It is not an operating-system process or a guest VM.
+- **[Extended Page Tables (EPT)](extended-page-tables.md)** — The Intel processor mechanism that maps guest physical addresses to host physical addresses.
+- **[Guest](guest.md)** — The operating system and programs running inside a VM. The **guest kernel** manages resources that the VM exposes to those programs.
+- **[Host](host.md)** — The system outside the sandbox that provides its resources. For a VM this is usually the machine or operating system running it; for a script sandbox it can also mean the application that embeds the runtime.
+- **[Host function](host-function.md)** — A function implemented outside a language sandbox and exposed to code running inside it. For example, the host can supply a function that reads a single project file or queries a service.
+- **[Hypervisor](hypervisor.md)** — Software that controls how guests use the machine's CPU and memory. Project documentation sometimes uses *hypervisor* and *virtual machine monitor* interchangeably; this book uses VMM for the component that manages the VM and its virtual devices.
+- **[Ingress](ingress.md)** — Network traffic that enters an environment. A preview URL for a web server inside a sandbox is one way to allow ingress.
+- **[Isolation boundary](isolation-boundary.md)** — The technical mechanism that separates a workload from resources or other workloads, such as a VM boundary or a language runtime. A policy decides what may cross it.
+- **[Isolation unit](isolation-unit.md)** — The set of workloads that share one instance of a boundary. For example, a VM per pod isolates pods from each other but does not give each container in a pod its own guest kernel.
+- **[Kernel](kernel.md)** — The core of an operating system. It manages processes, memory, files, and devices and handles requests from programs.
+- **[Kernel-based Virtual Machine (KVM)](kernel-based-virtual-machine.md)** — A Linux kernel virtualization interface that a VMM can use to run hardware-backed guests.
+- **[Least privilege](least-privilege.md)** — Giving a workload only the permissions needed for the task. For example, use a read-only workspace when the workload only needs to inspect files.
+- **[Microsoft Hypervisor (MSHV)](microsoft-hypervisor.md)** — The virtualization backend exposed to software on a supported Linux host through `/dev/mshv`.
+- **[MicroVM](microvm.md)** — A VM designed to reduce overhead, typically with fewer virtual devices than a general-purpose VM. It still runs a guest kernel.
+- **[Mount](mount.md)** — Making a filesystem or directory accessible at a path. A bind mount exposes an existing host directory without copying it. If the mount is writable, changes can immediately affect the host files.
+- **[Namespace](namespace.md)** — A Linux mechanism that gives processes a separate view of a resource, such as process IDs, filesystem mounts, or network interfaces. The processes still share a kernel.
+- **[Native binary](native-binary.md)** — A program compiled to machine code for a CPU and an operating system interface. A Linux native binary can run in a compatible Linux environment; it cannot run directly as a Wasm module.
+- **[Observability](observability.md)** — The ability to learn what a system did from recorded evidence such as status, timestamps, and logs.
+- **[Open Container Initiative (OCI)](open-container-initiative.md)** — The group that maintains open specifications for container images, distribution, and runtimes. OCI compatibility does not tell you which isolation boundary a runtime uses.
+- **[Operating-system process sandbox](operating-system-process-sandbox.md)** — A sandbox that runs native processes on the host kernel and uses operating-system controls to restrict their access. It does not boot a separate guest kernel.
+- **[Pod](pod.md)** — The Kubernetes unit of deployment for one or more containers that share a network environment and can share storage. Some runtimes give each pod its own VM.
+- **[Policy](policy.md)** — The rules that define which actions and resources a workload may use. A policy has an effect only if a trusted component enforces it.
+- **[Process](process.md)** — A running instance of a program, with its own state and access to resources.
+- **[Resident set size (RSS)](resident-set-size.md)** — The amount of a process's memory currently in physical memory.
+- **[Resource limit](resource-limit.md)** — A cap on how much of a resource a job may use, such as memory, CPU time, or disk space.
+- **[Restricted interpreter](restricted-interpreter.md)** — A program that executes only supported language features and built-ins. Code reaches outside the interpreter through operations that the host supplies, such as tool calls.
+- **[Runtime](runtime.md)** — Software that executes a workload or sets up the environment that runs it. A container runtime and a Wasm runtime operate at different layers; the word alone does not name a boundary.
+- **[Sandbox](sandbox.md)** — An execution environment that limits what code can access or affect. Its boundary, policy, and exposed resources determine what it isolates.
+- **[Sandbox session](sandbox-session.md)** — A run or period of use tracked as one unit by a sandbox service. It can keep a workspace and worker state across requests.
+- **[Seccomp](seccomp.md)** — A Linux feature that can filter the system calls a process makes. It does not by itself provide filesystem path rules.
+- **[Snapshot](snapshot.md)** — Saved state that a system can restore later. Depending on the implementation, it may include disk contents, memory and device state, or both. Snapshots that contain memory can also contain credentials or other secrets.
+- **[System call (syscall)](system-call.md)** — A request a program makes to a kernel, for example to open a file or create a process. A user-space kernel can implement this interface without forwarding each call directly to the host kernel.
+- **[Tenant](tenant.md)** — A user, team, or organization whose workloads or data a service treats as separate from others. A tenant and a sandbox session do not have to be the same thing.
+- **[Tool](tool.md)** — An operation an agent or script can invoke, such as looking up an issue or running a build. A script sandbox limits which tools it can call; each tool must still authorize what it does.
+- **[User space](user-space.md)** — Where applications and most services run, outside the kernel. Applications request kernel services through system calls.
+- **[User-space kernel](user-space-kernel.md)** — Software that implements an operating-system interface outside the host kernel. For example, gVisor handles Linux system calls in its Sentry component without booting a separate Linux guest kernel.
+- **[Virtual machine (VM)](virtual-machine.md)** — A virtual computer with its own operating-system kernel. Hardware-backed VMs use CPU virtualization features to separate guest execution from the host.
+- **[Virtual machine monitor (VMM)](virtual-machine-monitor.md)** — The component that creates or manages a VM, including its virtual devices. Firecracker is a VMM; a full agent sandbox can add workspace, network, and lifecycle management around it.
+- **[VM exit](vm-exit.md)** — A processor transition from guest execution to the hypervisor. The hypervisor can handle the event and resume the guest.
+- **[Warm pool](warm-pool.md)** — A set of sandboxes prepared before work arrives so requests can claim them without waiting for full setup. How far ahead they are prepared depends on the platform.
+- **[WebAssembly (Wasm)](webassembly.md)** — A portable executable format. A Wasm runtime checks memory access and exposes host services through explicit interfaces. Wasm code does not receive a filesystem or shell merely because it runs in a Wasm runtime.
+- **[WebAssembly System Interface (WASI)](webassembly-system-interface.md)** — A family of interfaces that a Wasm host can offer for operations such as accessing clocks or files. WASI does not mean every host resource is available by default.
+- **[Windows Hypervisor Platform (WHP)](windows-hypervisor-platform.md)** — A Windows API that VMMs can use to run hardware-backed guests.
+- **[Workload](workload.md)** — The code and processes that a sandbox runs. Depending on the task, a workload might be one generated script, a build, or an entire agent session.
+- **[Workspace](workspace.md)** — The set of files a job can work with, such as a copied checkout or a mounted directory.

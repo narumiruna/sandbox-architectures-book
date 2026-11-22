@@ -12,4 +12,4 @@ Issue tracker 在不同的 isolate 中執行兩個團隊的指令碼。一個指
 
 Isolate 不會限制 host function 代替指令碼執行的操作。請依照指令碼的權限檢查每項對外提供的操作，並確認平台如何限制 CPU 和記憶體用量。如果任務需要執行原生程式，請使用支援這類程式的獨立環境，例如 [operating-system process sandbox](operating-system-process-sandbox.md)。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

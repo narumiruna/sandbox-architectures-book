@@ -12,4 +12,4 @@ The agent can give the model a task, run a requested tool, and feed the result b
 
 A different design runs the agent application itself inside a sandbox, along with the local commands it launches. To tell the two designs apart, ask which code is the [workload](workload.md) at each [isolation boundary](isolation-boundary.md). A tool handler outside a boundary uses its own permissions, even when the request came from inside it.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

@@ -14,4 +14,4 @@ Lamp의 테스트 [sandbox](sandbox.md)는 `total.c`를 읽고 임시 출력을 
 
 Sandbox를 구성하거나 테스트할 때는 각 [isolation boundary](isolation-boundary.md)에서 어떤 작업이 성공해야 하고 어떤 작업이 실패해야 하는지 확인한다. 같은 리소스에 [mount](mount.md)와 tool 양쪽으로 접근할 수 있다면 두 경로를 모두 확인한다. 한 경로에서 접근을 거부해도 다른 경로에서까지 거부되는 것은 아니다. 파일 규칙을 이루는 두 부분은 [파일을 여는 요청 따라가기](../sandbox-isolation-boundaries.md#follow-a-request-to-open-a-file)를 참고한다.
 
-[Glossary로 돌아가기](../glossary.md)
+[Glossary로 돌아가기](index.md)

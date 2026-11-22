@@ -12,4 +12,4 @@ warm pool は、要求が届く前に準備しておく [sandboxes](sandbox.md) 
 
 [snapshot](snapshot.md) は保存済みの状態です。サービスは snapshot を復元して warm pool を補充できますが、snapshot だけを保持する場合、要求が届いてから復元する作業が残ります。プールは作業を前倒しする代わりに、待機中もリソースを確保します。未割り当てのインスタンスに [tenant](tenant.md) のデータを含めず、準備にかかる時間の測定には割り当てと workspace の設定も含めてください。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

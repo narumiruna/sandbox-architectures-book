@@ -12,4 +12,4 @@ A gateway can act as a *reverse proxy*: it accepts web requests from clients and
 
 Check what the route exposes and when it closes. A preview route need not expose other services in the sandbox, and it should close when the session ends. Replies from the preview server leave the sandbox as [egress](egress.md) traffic, even though the outside client started the connection.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)

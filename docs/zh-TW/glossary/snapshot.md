@@ -14,4 +14,4 @@ Snapshot 是系統日後可以還原的已儲存狀態。只有磁碟的 snapsho
 
 Snapshot 是已儲存的 artifact，不是由預先準備好的 sandbox 組成的 [warm pool](warm-pool.md)。服務可以使用 snapshot 補充 pool，也可以在需要 [cold start](cold-start.md) 時還原一份 snapshot。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

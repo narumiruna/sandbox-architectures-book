@@ -12,4 +12,4 @@ Linux는 자원에 따라 [서로 다른 namespace 유형](https://man7.org/linu
 
 namespace는 프로세스에 무엇이 보이는지를 정한다. 경로 기반 접근 제어는 프로세스가 파일에 어떤 작업을 할 수 있는지 결정하고, [seccomp](seccomp.md)는 system call을 필터링하며, [control groups](control-group.md)는 자원 사용량을 집계하거나 제한한다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

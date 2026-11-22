@@ -12,4 +12,4 @@ Issue 管理システムが、二つのチームのスクリプトを別々の I
 
 Isolate は、Host function がスクリプトに代わって行うことを制限しません。公開する操作を一つずつスクリプトの権限と照合し、プラットフォームが CPU とメモリーの使用量をどう制限するかも確認します。ネイティブプログラムの実行が必要なタスクには、[operating-system process sandbox](operating-system-process-sandbox.md) など、それに対応する別の環境を使います。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

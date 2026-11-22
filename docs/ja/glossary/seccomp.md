@@ -12,4 +12,4 @@ seccomp は、プログラムが kernel に送る要求である [system calls](
 
 見えるファイルは [mounts](mount.md) で制御し、それらに対する操作はファイルアクセス規則で制御してください。[control group](control-group.md) の役割はそれらと異なり、リソース使用量の測定や制限を行います。
 
-[用語集に戻る](../glossary.md)
+[用語集に戻る](index.md)

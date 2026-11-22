@@ -31,4 +31,4 @@ flowchart TB
 
 [virtual machine](virtual-machine.md) 和 [restricted interpreter](restricted-interpreter.md) 都可以用作 sandbox，但兩者能執行的程式碼類型不同。即使兩個 sandbox 採用相同的邊界，也可能授予不同的存取權限。比較時，除了採用的技術，還要列出哪些資源或資料可以跨越邊界。請參閱 [Sandbox isolation boundaries](../sandbox-isolation-boundaries.md)。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

@@ -12,4 +12,4 @@ hypervisor는 [virtual machines](virtual-machine.md)가 물리 컴퓨터의 프�
 
 sandbox에서 프로젝트 디렉터리를 볼 수 있게 할지, 외부 서비스에 연결할 수 있게 할지는 hypervisor가 결정하지 않는다. 이러한 결정은 주변 시스템이 무엇을 노출하고 [policy](policy.md)를 어떻게 적용하는지에 달려 있다.
 
-[용어집으로 돌아가기](../glossary.md)
+[용어집으로 돌아가기](index.md)

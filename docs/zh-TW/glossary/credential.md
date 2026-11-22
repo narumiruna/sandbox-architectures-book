@@ -12,4 +12,4 @@ Sandbox 需要一筆 issue 的標題。在 sandbox 外執行的 [tool](tool.md) 
 
 採用 [least privilege](least-privilege.md)：優先使用有效期短的 credential，只授予任務所需的操作和資源存取權。如果程式碼只需要結果，不需要 credential，可透過 host tool 或 [credential injection](credential-injection.md) 讓程式接觸不到 credential。
 
-[返回詞彙表](../glossary.md)
+[返回詞彙表](index.md)

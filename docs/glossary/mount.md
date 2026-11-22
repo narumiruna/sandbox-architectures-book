@@ -10,4 +10,4 @@ A code review sandbox sees the host's project directory at `/workspace`. The ser
 
 A [mount namespace](namespace.md) can give a process group its own view of what is mounted. The Linux [`mount(2)` documentation](https://man7.org/linux/man-pages/man2/mount.2.html) distinguishes the mount's settings from the underlying filesystem. A read-only bind mount blocks writes through that mount, but it does not make the underlying files read-only through other mounts. It also does not hide file contents. Only mount the files that the [workload](workload.md) needs to see.
 
-[Back to Glossary](../glossary.md)
+[Back to Glossary](index.md)
