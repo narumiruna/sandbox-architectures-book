@@ -8,8 +8,9 @@ An AI agent that calls a few APIs needs a different environment from an agent th
 
 1. [Sandbox isolation boundaries](sandbox-isolation-boundaries.md) introduces six ways to isolate a workload and explains when each is useful.
 2. [Agent sandbox architectures](agent-sandbox-architectures.md) compares implementations and covers recent developments.
+3. [From issue to patch](practice/design/from-issue-to-patch.md) starts the practical guide. Follow one coding task, then learn how to choose, operate, and verify its sandboxes.
 
-Use the [glossary](glossary.md) to look up unfamiliar terms in either chapter.
+Use the [glossary](glossary.md) to look up unfamiliar terms.
 
 As you compare designs, ask three questions:
 

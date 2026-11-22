@@ -26,6 +26,30 @@ nav = [
     ] },
   ] },
   { "Agent sandbox architectures" = "agent-sandbox-architectures.md" },
+  { "Sandboxes in practice" = [
+    { "Design" = [
+      { "From issue to patch" = "practice/design/from-issue-to-patch.md" },
+      { "Choosing a sandbox" = "practice/design/choosing-a-sandbox.md" },
+      { "Tool authorization" = "practice/design/tool-authorization.md" },
+      { "Deployment patterns" = "practice/design/deployment-patterns.md" },
+    ] },
+    { "Data and access" = [
+      { "Workspaces and artifacts" = "practice/data-and-access/workspaces-and-artifacts.md" },
+      { "Network policy" = "practice/data-and-access/network-policy.md" },
+      { "Credentials and identity" = "practice/data-and-access/credentials-and-identity.md" },
+      { "Multi-tenant isolation" = "practice/data-and-access/multi-tenant-isolation.md" },
+    ] },
+    { "Operations" = [
+      { "Control planes" = "practice/operations/control-planes.md" },
+      { "Sandbox lifecycle" = "practice/operations/sandbox-lifecycle.md" },
+      { "Resource limits" = "practice/operations/resource-limits.md" },
+      { "Observability and debugging" = "practice/operations/observability-and-debugging.md" },
+    ] },
+    { "Verification" = [
+      { "Measuring a sandbox" = "practice/verification/measuring-a-sandbox.md" },
+      { "Verifying access rules" = "practice/verification/verifying-access-rules.md" },
+    ] },
+  ] },
   { "Glossary" = "glossary.md" },
 ]
 
@@ -37,6 +61,8 @@ nav = [
 unlisted_pages = [
   "glossary/agent.md",
   "glossary/allowlist.md",
+  "glossary/artifact.md",
+  "glossary/authorization.md",
   "glossary/capability.md",
   "glossary/code-mode.md",
   "glossary/cold-boot.md",
@@ -65,13 +91,17 @@ unlisted_pages = [
   "glossary/mount.md",
   "glossary/namespace.md",
   "glossary/native-binary.md",
+  "glossary/observability.md",
   "glossary/open-container-initiative.md",
   "glossary/operating-system-process-sandbox.md",
   "glossary/pod.md",
   "glossary/policy.md",
+  "glossary/resident-set-size.md",
+  "glossary/resource-limit.md",
   "glossary/restricted-interpreter.md",
   "glossary/runtime.md",
   "glossary/sandbox.md",
+  "glossary/sandbox-session.md",
   "glossary/seccomp.md",
   "glossary/snapshot.md",
   "glossary/system-call.md",
@@ -86,6 +116,7 @@ unlisted_pages = [
   "glossary/webassembly.md",
   "glossary/windows-hypervisor-platform.md",
   "glossary/workload.md",
+  "glossary/workspace.md",
 ]
 
 [project.theme]

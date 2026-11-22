@@ -96,4 +96,4 @@ A **container image** packages a program and its dependencies. Identical images 
 
 One agent can use more than one boundary. It can read issue titles through a restricted script and send a test job to a Linux VM. In that design, the script sandbox limits which tools the script can invoke, and the VM limits what the test job can reach. Each tool still needs its own authorization: a sandbox does not make a tool with broad host access safe to expose.
 
-Next: [Agent sandbox architectures](agent-sandbox-architectures.md) surveys real implementations and shows how these boundaries fit into current agent platforms.
+See [From issue to patch](practice/design/from-issue-to-patch.md) for a worked example that combines both boundaries, or [Agent sandbox architectures](agent-sandbox-architectures.md) for a survey of real implementations.
