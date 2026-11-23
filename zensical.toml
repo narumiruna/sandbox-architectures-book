@@ -54,6 +54,7 @@ nav = [
   { "Reference" = [
     { "Agent sandbox architectures" = "agent-sandbox-architectures.md" },
     { "Agent Substrate" = "agent-substrate.md" },
+    { "Pi Codemode" = "pi-codemode.md" },
     { "Glossary" = "glossary/index.md" },
     { "References" = "references/index.md" },
   ] },
@@ -101,6 +102,7 @@ nav = [
     { "參考資料" = [
       { "Agent 的 sandbox 架構" = "zh-TW/agent-sandbox-architectures.md" },
       { "Agent Substrate" = "zh-TW/agent-substrate.md" },
+      { "Pi Codemode" = "zh-TW/pi-codemode.md" },
       { "術語表" = "zh-TW/glossary/index.md" },
       { "引用來源" = "zh-TW/references/index.md" },
     ] },
@@ -288,8 +290,12 @@ unlisted_pages = [
   "references/openshell-repository.md",
   "references/openshell-v0-1-9-network-rules.md",
   "references/openshell-v0-1-9-providers.md",
+  "references/pi-codemode-guide-v1-6-0.md",
   "references/pi-codemode-package-9c465268.md",
   "references/pi-codemode-readme-9c465268.md",
+  "references/pi-codemode-readme-v1-6-0.md",
+  "references/pi-containerization-v1-6-0.md",
+  "references/pi-security-v1-6-0.md",
   "references/postgresql-about.md",
   "references/prek-introduction.md",
   "references/psychoscript-repository.md",

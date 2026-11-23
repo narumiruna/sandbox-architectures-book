@@ -165,6 +165,17 @@ The host tool handler checks whether the caller may read the issue. The sandbox 
 
 A script with an unrestricted `bash` tool or a broad write-capable API is not low privilege merely because its interpreter has no direct I/O. Authorize each tool call at the host boundary. If a tool needs to execute native code, that tool can dispatch it to a separate Linux sandbox.
 
+[Pi Codemode](pi-codemode.md) runs the model's JavaScript in a fresh QuickJS Wasm instance. Its tools run outside that instance. See the chapter for the JSON bridge and the checks the host must enforce.
+
+### Where Pi runs {#where-pi-runs}
+
+Pi is the [agent](glossary/agent.md) harness: it calls the model, runs tools, and keeps the session. In [Pi v1.6.0](https://github.com/earendil-works/pi/blob/v1.6.0/packages/coding-agent/docs/security.md#choose-how-to-run-pi), running Pi directly on the host does not put the whole agent in a sandbox. The `codemode` boundary above applies to the JavaScript snippet, not to Pi or to the tools it calls.
+
+Pi's [isolation guide](https://github.com/earendil-works/pi/blob/v1.6.0/packages/coding-agent/docs/containerization.md#choose-an-isolation-method) describes two ways to run shell commands with a separate boundary:
+
+- **Keep Pi on the host and isolate selected tools.** The Gondolin example routes built-in tools and user `!` shell commands into a Linux microVM. Other extension tools still run on the host unless they also delegate their work.
+- **Isolate the whole Pi process.** Run Pi inside plain Docker, Docker Sandboxes, or NVIDIA OpenShell to put Pi, its built-in tools, and its extensions in the selected environment. Files, credentials, and network services you make available there remain accessible.
+
 ## What is changing in 2026
 
 1. **Provisioning is shifting from booting to restoring.** [E2B Runtime](https://github.com/e2b-dev/infra) restores pre-booted Firecracker templates and supports pausing and resuming sandboxes. [Vercel Sandbox](https://vercel.com/docs/sandbox) also uses Firecracker and exposes snapshots. [Amazon Bedrock AgentCore Runtime V2](https://aws.amazon.com/about-aws/whats-new/2026/11/new-agentcore-runtime-default/) became the default for new runtimes on November 12, 2026, and restores microVM sessions from prepared snapshots. Distinguish a [cold boot](glossary/cold-boot.md) from a snapshot restore. Measure the wait for a first usable command on each launch path. Check whether a snapshot contains disk state, memory, or both, and whether it can contain credentials.

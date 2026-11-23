@@ -165,6 +165,17 @@ Host tool handler 會查驗呼叫者是否有權讀取 issue。Sandbox 限制 sc
 
 如果 script 可使用不受限制的 `bash` tool 或寫入範圍很廣的 API，即使直譯器沒有直接的 I/O，它也不是低權限的。每次呼叫 tool 都要在 host 邊界進行授權。如果某個 tool 需要執行原生程式碼，可以把程式碼交給另一個 Linux sandbox 執行。
 
+[Pi Codemode](pi-codemode.md) 在新的 QuickJS Wasm 實例裡執行模型寫的 JavaScript，工具則在實例外執行。專頁說明 JSON 橋接方式，以及 host 必須負責的安全檢查。
+
+### Pi 在哪裡執行？ {#where-pi-runs}
+
+Pi 是 [agent](glossary/agent.md) harness，負責呼叫模型、執行 tool 和保存 session。直接在 host 啟動 [Pi v1.6.0](https://github.com/earendil-works/pi/blob/v1.6.0/packages/coding-agent/docs/security.md#choose-how-to-run-pi)，不會把整個 agent 放進 sandbox。上面的 `codemode` 只隔離 JavaScript 片段，不隔離 Pi 本身，也不隔離片段呼叫的 tool。
+
+Pi 的[隔離指南](https://github.com/earendil-works/pi/blob/v1.6.0/packages/coding-agent/docs/containerization.md#choose-an-isolation-method)列出兩種為 shell 指令加上隔離邊界的方式：
+
+- **Pi 留在 host，只隔離選定的 tool。** Gondolin 範例把內建 tool 和使用者的 `!` shell 指令送進 Linux microVM。其他 extension tool 仍在 host 上執行，除非也把工作交給隔離環境。
+- **隔離整個 Pi process。** 在一般 Docker、Docker Sandboxes 或 NVIDIA OpenShell 裡啟動 Pi，讓 Pi、內建 tool 和 extension 都在選定的環境中執行。你提供給該環境的檔案、憑證和網路服務仍可存取。
+
 ## 2026 年有哪些變化 {#what-is-changing-in-2026}
 
 1. **環境佈建正從開機轉向還原。** [E2B Runtime](https://github.com/e2b-dev/infra) 從已開機的 Firecracker 範本還原，並支援暫停與恢復 sandbox。[Vercel Sandbox](https://vercel.com/docs/sandbox) 也使用 Firecracker，並提供 snapshots。[Amazon Bedrock AgentCore Runtime V2](https://aws.amazon.com/about-aws/whats-new/2026/11/new-agentcore-runtime-default/) 於 2026 年 11 月 12 日成為新 runtime 的預設版本，並從預先準備的 snapshot 還原 microVM session。區分 [cold boot](glossary/cold-boot.md) 和從 snapshot 還原。分別量測各種啟動方式要等多久才能執行第一個可用的命令。確認 snapshot 包含磁碟狀態、記憶體，還是兩者都有，以及其中是否可能含有憑證。
