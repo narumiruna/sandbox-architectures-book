@@ -55,6 +55,7 @@ This index lists the source records shared by all editions. The book and reposit
 - [Firecracker: Lightweight Virtualization for Serverless Applications (NSDI 2020)](firecracker-nsdi-2020-paper.md)
 - [Git](git-project-homepage.md)
 - [Gondolin Agent Sandbox](gondolin-repository.md)
+- [Gondolin Snapshots (v0.14.0)](gondolin-snapshots-v0-14-0.md)
 - [Gondolin VM Backends: QEMU vs libkrun (main branch)](gondolin-vm-backends.md)
 - [gVisor Applications](gvisor-application-compatibility.md)
 - [gVisor Filesystem](gvisor-filesystem.md)

@@ -78,7 +78,7 @@ For [local workspaces](https://docs.docker.com/ai/sandboxes/security/isolation/#
 
 Choose local Docker Sandboxes when an agent needs both a local project and its own Docker Engine. For example, let the agent fix a backend bug, build an image, start a database with [Docker Compose](https://docs.docker.com/compose/), and run integration tests. The containers run inside the sandbox VM, not in your usual Docker environment.
 
-- **Embed a sandbox in your own application:** [Gondolin](https://github.com/earendil-works/gondolin#feature-highlights) also gives the workload a Linux microVM. Choose it when you want to define file access and outbound HTTP policy in JavaScript rather than run a coding agent through `sbx`.
+- **Embed a sandbox in your own application:** [Gondolin](https://github.com/earendil-works/gondolin#feature-highlights) also gives the workload a Linux microVM. Choose it when you want to define file access and outbound HTTP policy in JavaScript rather than run a coding agent through `sbx`. A [Gondolin v0.14.0 checkpoint](https://github.com/earendil-works/gondolin/blob/v0.14.0/docs/snapshots.md#shortcomings-and-gotchas) captures the root disk only. The VM boots again on restore, and you must manage mounted workspace data separately.
 - **Start sandboxes on demand from a service:** Compare [E2B Runtime](https://github.com/e2b-dev/infra) with the [Docker Sandboxes cloud API and SDK](https://docs.docker.com/ai/sandboxes-api/). Both provide programmatic provisioning. [Docker cloud sandboxes](https://docs.docker.com/ai/sandboxes/cloud/local-vs-cloud/) don't mount folders from the computer that starts them. Check the timeout and what happens at expiry before leaving a job unattended.
 
 ### Which workloads share a guest kernel?
@@ -173,7 +173,7 @@ Pi is the [agent](glossary/agent.md) harness: it calls the model, runs tools, an
 
 Pi's [isolation guide](https://github.com/earendil-works/pi/blob/v1.6.0/packages/coding-agent/docs/containerization.md#choose-an-isolation-method) describes two ways to run shell commands with a separate boundary:
 
-- **Keep Pi on the host and isolate selected tools.** The Gondolin example routes built-in tools and user `!` shell commands into a Linux microVM. Other extension tools still run on the host unless they also delegate their work.
+- **Keep Pi on the host and isolate selected tools.** The [Gondolin example](https://github.com/earendil-works/pi/blob/v1.6.0/packages/coding-agent/docs/containerization.md#route-tools-through-gondolin) routes built-in tool operations and user `!` shell commands into a Linux microVM. Other extension tools still run on the host unless they also delegate their work. The guest's `/workspace` is a writable mount of the host working directory, so edits persist on the host. Guest shell commands inherit Pi's environment variables, which can expose credentials even when Pi's stored login stays on the host.
 - **Isolate the whole Pi process.** Run Pi inside plain Docker, Docker Sandboxes, or NVIDIA OpenShell to put Pi, its built-in tools, and its extensions in the selected environment. Files, credentials, and network services you make available there remain accessible.
 
 ## What is changing in 2026

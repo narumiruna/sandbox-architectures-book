@@ -237,6 +237,7 @@ unlisted_pages = [
   "references/github-copilot-cloud-sandboxes.md",
   "references/github-copilot-session-data.md",
   "references/gondolin-repository.md",
+  "references/gondolin-snapshots-v0-14-0.md",
   "references/gondolin-vm-backends.md",
   "references/google-cloud-run-execution-environments.md",
   "references/google-cloud-storage-introduction.md",

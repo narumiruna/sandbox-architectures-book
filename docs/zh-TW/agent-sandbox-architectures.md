@@ -78,7 +78,7 @@ flowchart TB
 
 當 agent 需要存取本機專案，又需要自己的 Docker Engine 時，適合選用本機 Docker Sandboxes。例如，讓 agent 修正後端 bug、建置 image、用 [Docker Compose](https://docs.docker.com/compose/) 啟動資料庫，再跑整合測試。這些 containers 在 sandbox VM 裡執行，不會使用你平常的 Docker 環境。
 
-- **把 sandbox 嵌入自己的應用程式：** [Gondolin](https://github.com/earendil-works/gondolin#feature-highlights) 也提供 Linux microVM。若你想用 JavaScript 定義檔案存取和對外 HTTP 連線的 policy，而不是透過 `sbx` 啟動 coding agent，可考慮 Gondolin。
+- **把 sandbox 嵌入自己的應用程式：** [Gondolin](https://github.com/earendil-works/gondolin#feature-highlights) 也提供 Linux microVM。若你想用 JavaScript 定義檔案存取和對外 HTTP 連線的 policy，而不是透過 `sbx` 啟動 coding agent，可考慮 Gondolin。[Gondolin v0.14.0 的 checkpoint](https://github.com/earendil-works/gondolin/blob/v0.14.0/docs/snapshots.md#shortcomings-and-gotchas)只保存根磁碟。還原時 VM 會重新開機，掛載的 workspace 資料需要另外管理。
 - **由服務按需啟動 sandboxes：** 比較 [E2B Runtime](https://github.com/e2b-dev/infra) 和 [Docker Sandboxes 雲端 API 與 SDK](https://docs.docker.com/ai/sandboxes-api/)。兩者都能由程式建立 sandbox。[Docker 雲端 sandboxes](https://docs.docker.com/ai/sandboxes/cloud/local-vs-cloud/) 不會掛載發出啟動指令的電腦上的資料夾。要讓工作在無人操作時執行，先確認逾時設定和到期後的處理方式。
 
 ### 哪些 workload 共用 guest kernel？ {#which-workloads-share-a-guest-kernel}
@@ -173,7 +173,7 @@ Pi 是 [agent](glossary/agent.md) harness，負責呼叫模型、執行 tool 和
 
 Pi 的[隔離指南](https://github.com/earendil-works/pi/blob/v1.6.0/packages/coding-agent/docs/containerization.md#choose-an-isolation-method)列出兩種為 shell 指令加上隔離邊界的方式：
 
-- **Pi 留在 host，只隔離選定的 tool。** Gondolin 範例把內建 tool 和使用者的 `!` shell 指令送進 Linux microVM。其他 extension tool 仍在 host 上執行，除非也把工作交給隔離環境。
+- **Pi 留在 host，只隔離選定的 tool。** [Gondolin 範例](https://github.com/earendil-works/pi/blob/v1.6.0/packages/coding-agent/docs/containerization.md#route-tools-through-gondolin)把內建 tool 的操作和使用者的 `!` shell 指令送進 Linux microVM。其他 extension tool 仍在 host 上執行，除非也把工作交給隔離環境。範例把 host 的工作目錄掛載到 guest 的 `/workspace`，且允許寫入，因此修改會寫回 host。Guest 的 shell 指令會繼承 Pi 的環境變數，即使 Pi 儲存的登入資料留在 host，這些變數仍可能讓 guest 取得憑證。
 - **隔離整個 Pi process。** 在一般 Docker、Docker Sandboxes 或 NVIDIA OpenShell 裡啟動 Pi，讓 Pi、內建 tool 和 extension 都在選定的環境中執行。你提供給該環境的檔案、憑證和網路服務仍可存取。
 
 ## 2026 年有哪些變化 {#what-is-changing-in-2026}
